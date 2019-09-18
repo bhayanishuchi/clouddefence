@@ -1,0 +1,55 @@
+var bodyParser = require('body-parser')
+var express = require('express');
+var cors = require('cors');
+const UserController = require('./controllers/usercontroller');
+var mongoose = require('mongoose');
+var url = "mongodb://localhost:27017/mydb";
+
+mongoose.connect(url, function(err, db) {
+    if (err) throw err;
+    console.log("Database created!");
+});
+
+
+var app = express();
+
+
+app.use(cors());
+app.all('*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    next();
+});
+
+
+app.use(bodyParser.json())
+
+app.post('/', [UserController.create]);
+
+app.put('/cluster/:id/stack',[UserController.updatecnoxstack]);
+app.put('/cluster/:id/monitor',[UserController.updatemonitorurl]);
+app.put('/cluster/:id/scanner',[UserController.updatescannerurl]);
+app.put('/cluster/:id/resources',[UserController.updatecount]);
+app.post('/logevent',[UserController.createlogevent]);
+app.get('/cluster',[UserController.findAllcluster]);
+app.get('/unseccluster',[UserController.findunseccluster]);
+app.get('/log',[UserController.findAlllogevent]);
+app.get('/totals',[UserController.findAlltotals]);
+app.get('/lists',[UserController.findAllstacklist]);
+
+
+
+app.listen(8080, () =>
+    console.log(`Example app listening on port 8080!`),
+);
+
+let server = require('http').createServer(app);
+server.listen(process.env.PORT || 3000);
+let io = require('socket.io').listen(server);
+global.io = io;
+
+
+io.on('connection', function(socket) {
+    app.io = io;
+});

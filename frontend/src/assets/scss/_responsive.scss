@@ -1,0 +1,413 @@
+/* ================================================== 
+*	Project Name 	:  Cloud Defense
+*	File 			:  Responsive CSS Base
+*	Version 		:  1.0.0
+*	Last change 	:  12 September 2019
+*	Author 			:  ----------
+*	Developer:		:  Rakibul Islam Dewan
+
+*	css code for responsive layout To make Responsive
+================================================== */
+
+/* ==================================================
+*	1 - media screen and (max-width: 1440px)
+*	2 - media screen and (max-width: 1280px)
+*	3 - media screen and (max-width: 1199px)
+*	4 - media screen and (max-width: 991px)
+*	5 - media screen and (max-width: 767px)
+*	6 - media screen and (max-width: 680px)
+*	7 - media screen and (max-width: 580px)
+*	8 - media screen and (max-width: 480px)
+*	9 - media screen and (max-width: 320px)
+================================================== */
+
+
+
+
+
+/*  ====================================================================================================
+1 - media screen and (max-width: 1440px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 1440px) {
+
+	/* global - start */
+	.container {
+		max-width: 100%;
+	}
+	/* global - end */
+
+}
+
+/* ====================================================================================================
+1 - media screen and (max-width: 1440px) - end
+==================================================================================================== */
+
+
+
+
+
+/*  ====================================================================================================
+2 - media screen and (max-width: 1280px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 1280px) {
+
+	/* header - start */
+	.header-section .main-menubar > ul > li {
+		margin-right: 25px;
+	}
+	/* header - end */
+
+}
+
+/* ====================================================================================================
+2 - media screen and (max-width: 1280px) - end
+==================================================================================================== */
+
+
+
+
+
+/*  ====================================================================================================
+3 - media screen and (max-width: 1199px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 1199px) {
+
+	/* global - start */
+	body {
+		font-size: 14px;
+	}
+	.item-wrapper {
+		padding: 40px;
+	}
+	.item-wrapper .wrapper-head {
+		margin: -40px;
+		padding: 20px;
+		margin-bottom: 40px;
+	}
+	/* global - end */
+
+	/* header - start */
+	.header-section .main-menubar {
+		padding: 5px 0px;
+	}
+	.header-section .main-menubar > ul > li > a,
+	.header-section .main-menubar > ul > li button {
+		font-size: 14px;
+	}
+	/* header - end */
+
+	/* home - start */
+	.acmeinc-section .item-wrapper .operationslog-content .operationslog-items-list > ul > li .operationslog-item p {
+		font-size: 14px;
+	}
+	.acmeinc-section .item-wrapper .operationslog-content .operationslog-items-list > ul > li .operationslog-item p .item-icon {
+		width: 25px;
+		height: 25px;
+		font-size: 14px;
+		line-height: 25px;
+		margin-right: 5px;
+	}
+	.acmeinc-section .item-wrapper .operationslog-content .operationslog-items-list > ul > li .operationslog-item {
+		padding: 15px 0px;
+	}
+	/* home - end */
+
+	/* home 2 - start */
+	.funfact-section .item-wrapper > ul > li .funfact-item .item-title {
+		font-size: 20px;
+	}
+	.funfact-section .item-wrapper > ul > li .funfact-item .item-icon > img {
+		height: 45px;
+	}
+	/* home 2 - end */
+
+}
+
+/* ====================================================================================================
+3 - media screen and (max-width: 1199px) - end
+==================================================================================================== */
+
+
+
+
+
+/* ====================================================================================================
+4 - media screen and (max-width: 991px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 991px) {
+
+	/* global - start */
+	body {
+		padding-top: 66px;
+	}
+	.sec-ptb-60 {
+		padding: 40px 0px;
+	}
+	.section-title {
+		text-align: center;
+	}
+	.item-wrapper {
+		min-height: auto;
+	}
+	/* global - start */
+
+	/* header - start */
+	.header-section .main-search {
+		display: none;
+	}
+	.header-section .main-menubar {
+		display: none;
+	}
+	.header-section {
+		padding: 20px 0px;
+	}
+	.header-section .brand-logo .mobile-menu-btn {
+		font-size: 26px;
+		display: inline-block;
+	}
+	/* header - end */
+
+	/* home 2 - start */
+	.funfact-section .item-wrapper > ul > li .funfact-item {
+		padding: 30px 20px;
+	}
+	.funfact-section .item-wrapper > ul > li .funfact-item .item-title {
+		font-size: 16px;
+	}
+
+	.cnox-protection-section .cnox-protection-table .table-container .table td,
+	.cnox-protection-section .cnox-protection-table .table-container .table th {
+		font-size: 18px;
+		padding: 15px 20px;
+	}
+	.cnox-protection-section .cnox-protection-table .table-container .table td input[type=checkbox],
+	.cnox-protection-section .cnox-protection-table .table-container .table th input[type=checkbox] {
+		width: 25px;
+		height: 25px;
+		margin-right: 20px;
+	}
+	.cnox-protection-section .cnox-protection-table .btns-group > ul > li > button {
+		height: 50px;
+		font-size: 18px;
+		min-width: 140px;
+		line-height: 50px;
+		padding: 0px 20px;
+	}
+	/* home 2 - end */
+
+}
+
+/* ====================================================================================================
+4 - media screen and (max-width: 991px) - end
+==================================================================================================== */
+
+
+
+
+
+/* ====================================================================================================
+5 - media screen and (max-width: 767px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 767px) {}
+
+/* ====================================================================================================
+5 - media screen and (max-width: 767px) - end
+==================================================================================================== */
+
+
+
+
+
+/* ====================================================================================================
+6 - media screen and (max-width: 680px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 680px) {}
+
+/* ====================================================================================================
+6 - media screen and (max-width: 680px) - end
+==================================================================================================== */
+
+
+
+
+
+
+/* ====================================================================================================
+7 - media screen and (max-width: 580px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 580px) {
+
+	/* global - start */
+	body {
+		padding-top: 53px;
+	}
+	.item-wrapper {
+		padding: 40px 20px;
+	}
+	.item-wrapper .wrapper-head {
+		margin: -40px -20px;
+		padding: 15px;
+		margin-bottom: 40px;
+	}
+	.mb-60 {
+		margin-bottom: 30px;
+	}
+
+	#backtotop {
+		width: 40px;
+		height: 40px;
+		bottom: 60px;
+	}
+	#backtotop #scroll {
+		font-size: 18px;
+		line-height: 42px;
+	}
+	/* global - end */
+
+	/* header - start */
+	.header-section .brand-logo .brand-link {
+		max-width: 120px;
+	}
+	.header-section {
+		padding: 15px 0px;
+	}
+	.header-section .brand-logo .mobile-menu-btn {
+		font-size: 23px;
+	}
+	/* header - end */
+
+	/* footer - start */
+	.footer-section {
+		padding: 20px 0px;
+	}
+	.footer-section p {
+		font-size: 14px;
+	}
+	/* footer - end */
+
+	/* home - start */
+	.acmeinc-section .item-wrapper .risk-content {
+		padding: 15px;
+	}
+
+	.acmeinc-section .item-wrapper .risk-content .risk-items-list > ul > li .risk-item {
+		height: 45px;
+		padding: 0px 15px;
+		line-height: 45px;
+	}
+	.acmeinc-section .item-wrapper .risk-content .risk-items-list > ul > li .risk-item .item-title {
+		font-size: 16px;
+	}
+	.acmeinc-section .item-wrapper .risk-content .risk-items-list > ul > li .risk-item .remove-btn > img {
+		height: 18px;
+	}
+	.acmeinc-section .item-wrapper .risk-content .risk-items-list > ul > li {
+		margin-bottom: 15px;
+	}
+	.acmeinc-section .item-wrapper .item-title {
+		font-size: 18px;
+	}
+
+	.acmeinc-section .item-wrapper .resources-items-wrap > ul > li {
+		width: 100%;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 0px !important;
+		}
+	}
+	/* home - end */
+
+	/* home 2 - start */
+	.funfact-section .item-wrapper > ul > li {
+		width: 100%;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 0px !important;
+		}
+	}
+
+	.cnox-protection-section .cnox-protection-table .table-container .table td,
+	.cnox-protection-section .cnox-protection-table .table-container .table th {
+		font-size: 12px;
+		padding: 10px 15px;
+	}
+	.cnox-protection-table .table-container .table td input[type=checkbox],
+	.cnox-protection-section .cnox-protection-table .table-container .table th input[type=checkbox] {
+		width: 20px;
+		height: 20px;
+		margin-top: 0px;
+		margin-right: 5px;
+	}
+
+	.cnox-protection-section .cnox-protection-table .btns-group > ul > li > button {
+		height: 40px;
+		font-size: 16px;
+		min-width: auto;
+		line-height: 40px;
+		padding: 0px 20px;
+	}
+
+	.modal .modal-dialog .modal-content {
+		padding: 15px;
+	}
+	.modal .modal-dialog .modal-content .modal-header {
+		margin-bottom: 15px;
+	}
+	.modal .modal-dialog .modal-content .modal-body .info-list .item-title {
+		font-size: 18px;
+		margin-bottom: 15px;
+	}
+	.modal .modal-dialog .modal-content .modal-body .info-list > ul > li strong {
+		display: block;
+		min-width: auto;
+	}
+	.modal .modal-dialog .modal-content .modal-body .info-list > ul > li {
+		font-size: 16px;
+	}
+	.modal .modal-dialog .modal-content .modal-body .info-list > ul > li .select-option {
+		width: 100%;
+		float: none;
+		margin-top: 0px;
+	}
+	/* home 2 - end */
+
+}
+
+/* ====================================================================================================
+7 - media screen and (max-width: 580px) - end
+==================================================================================================== */
+
+
+
+
+
+/* ====================================================================================================
+8 - media screen and (max-width: 480px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 480px) {}
+
+/* ====================================================================================================
+8 - media screen and (max-width: 480px) - end
+==================================================================================================== */
+
+
+
+
+
+/* ====================================================================================================
+9 - media screen and (max-width: 320px) - start
+==================================================================================================== */
+
+@media screen and (max-width: 320px) {}
+
+/* ====================================================================================================
+9 - media screen and (max-width: 320px) - end
+==================================================================================================== */

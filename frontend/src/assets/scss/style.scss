@@ -1,0 +1,20 @@
+/* table of content - start
+==================================================================================================== */
+/* ==================================================
+Project Name 	:  Cloud Defense
+File 			:  CSS Base
+Version 		:  1.0.0
+Last change 	:  12 September 2019
+Author 			:  ----------
+Developer:		:  Rakibul Islam Dewan
+================================================== */
+/* table of content - end
+==================================================================================================== */
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap');
+
+@import "variable";
+@import "reset";
+@import "header";
+@import "footer";
+@import "_home.scss";
+@import "_responsive.scss";

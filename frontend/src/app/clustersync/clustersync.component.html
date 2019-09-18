@@ -1,0 +1,170 @@
+<app-header></app-header>
+<!-- funfact-section - start
+		================================================== -->
+<section id="funfact-section" class="funfact-section sec-ptb-60 clearfix">
+  <div class="container">
+    <div class="item-wrapper ul-li clearfix">
+      <ul class="clearfix">
+        <li>
+          <div class="funfact-item text-center" (click)="getAllCluster()">
+								<span class="item-icon">
+									<img src="assets/images/icons/icon_6.png" alt="icon_not_found">
+								</span>
+            <h3 class="item-title mb-0">All Clusters</h3>
+          </div>
+        </li>
+        <li>
+          <div class="funfact-item text-center" (click)="getUnsecuredCluster()">
+								<span class="item-icon">
+									<img src="assets/images/icons/icon_7.png" alt="icon_not_found">
+								</span>
+            <h3 class="item-title mb-0">Unsecured Clusters</h3>
+          </div>
+        </li>
+        <li>
+          <div class="funfact-item text-center">
+								<span class="item-icon">
+									<img src="assets/images/icons/icon_8.png" alt="icon_not_found">
+								</span>
+            <h3 class="item-title mb-0">Add Cluster</h3>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- funfact-section - end
+    ================================================== -->
+
+
+<!-- cnox-protection-section - start
+    ================================================== -->
+<section id="cnox-protection-section" class="cnox-protection-section sec-ptb-60 pt-0 clearfix">
+  <div class="container">
+    <form #clusterForm="ngForm" name="form">
+      <div class="cnox-protection-table">
+        <div class="table-container">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>
+                <input type="checkbox">
+                Name
+              </th>
+              <th>CNOX Protection</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+
+        <div class="table-container tbody-container scroll-bar">
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let data of clusterlist; let i = index">
+              <td>
+                <input type="checkbox" id="selectedCluster{{i}}" required
+                       [ngModel]="selectedCluster == i"
+                       (ngModelChange)="$event ? selectedCluster = i : selectedCluster = -1"
+                       [disabled]="selectedCluster >= 0 && selectedCluster != i"
+                       name="selectedCluster" (change)="onClusterChange(data)">
+                {{data.cluster_name}}
+              </td>
+              <td>
+              <span>
+
+                <img class="dot-img"
+                     [src]="data.cnox_stack === 'gold_stack'? '../../assets/images/icons/icon_11.png':
+                            data.cnox_stack=== 'silver_stack'? '../../assets/images/icons/icon_12.png':
+                            data.cnox_stack=== 'bronze_stack' ? '../../assets/images/icons/icon_9.png':
+                            '../../assets/images/icons/icon_10.png'" alt="icon_not_found">
+                {{data.cnox_stack? data.cnox_stack: "Unsecured"}}
+              </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="btns-group ul-li-right clearfix">
+          <ul class="clearfix">
+            <li>
+              <button type="button" class="bg-default-orange" data-toggle="modal" data-target="#view-modal">
+                View
+              </button>
+            </li>
+            <li>
+              <button type="button" class="bg-light-gray" (click)="openModal()">
+                Secure
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </form>
+    <div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="info-list ul-li-block clearfix">
+              <h3 class="item-title">k8s - nyc - 22</h3>
+              <ul class="clearfix">
+                <li>
+                  <strong>CNOX Stack:</strong> Gold - Stack <img class="dot-img" src="assets/images/icons/icon_11.png"
+                                                                 alt="icon_not_found">
+                </li>
+                <li>
+                  <strong>Monitoring url:</strong> https://172.16.5
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="backdrop" [ngStyle]="{'display':display}"></div>
+
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="onCloseHandled()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="info-list ul-li-block clearfix">
+              <h3 class="item-title">{{clusterData.cluster_name}}</h3>
+              <ul class="clearfix">
+                <li>
+                  <strong>CNOX Stack:</strong>
+                  <div class="select-option">
+                    <select (change)="onStackChange($event)" [value]='selectedStack'>
+<!--                      <option data-display="Select">Nothing</option>-->
+                      <option value="" selected="selected" disabled>Select</option>
+                      <option value="bronze_stack" selected>Bronze</option>
+                      <option value="silver_stack">Silver</option>
+                      <option value="gold_stack">Gold</option>
+                    </select>
+                  </div>
+                </li>
+              </ul>
+              <button type="submit" class="push-btn bg-default-orange" (click)="onCloseHandled()">PUSH</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- cnox-protection-section - end
+    ================================================== -->
+
+<app-footer></app-footer>

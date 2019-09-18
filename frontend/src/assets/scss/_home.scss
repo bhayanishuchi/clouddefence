@@ -1,0 +1,356 @@
+/* home page - start
+==================================================================================================== */
+
+/* acmeinc section - start
+================================================== */
+.acmeinc-section {
+
+	.item-wrapper {
+		.item-title {
+			font-size: 25px;
+		}
+
+		.risk-content {
+			padding: 30px;
+			background-color: $pure-white;
+			box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+			.risk-items-list {
+				height: 330px;
+				overflow-y: scroll;
+				padding-right: 15px;
+				>ul {
+					>li {
+						margin-bottom: 30px;
+						&:last-child {
+							margin-bottom: 0px !important;
+						}
+						.risk-item {
+							height: 60px;
+							padding: 0px 20px;
+							line-height: 60px;
+							background-color: #ebebeb;
+							.item-title {
+								font-size: 22px;
+								color: $default-black;
+							}
+							.remove-btn {
+								float: right;
+								>img {
+									height: 30px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.resources-items-wrap {
+			margin-left: -10px;
+			margin-right: -10px;
+			>ul {
+				width: 100%;
+				>li {
+					width: 50%;
+					padding-left: 10px;
+					padding-right: 10px;
+					.resource-item {
+						padding: 50px 0px;
+						padding-bottom: 0px;
+						box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+						.item-icon {
+							width: 100px;
+							height: 100px;
+							display: flex;
+							align-items: center;
+							margin: 0px auto 20px;
+							>img {
+								height: 90px;
+								margin: auto;
+							}
+						}
+						.value-text {
+							display: block;
+							font-size: 40px;
+							margin-bottom: 20px;
+							color: $default-color;
+						}
+						.item-title {
+							font-size: 21px;
+							padding: 25px 15px;
+							color: $default-black;
+							font-weight: $fw-medium;
+							font-family: $heading-font;
+							border-top: 1px solid $light-gray;
+						}
+					}
+				}
+			}
+		}
+
+		.operationslog-content {
+			padding: 20px;
+			background-color: $pure-white;
+			box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+			.operationslog-items-list {
+				height: 315px;
+				overflow-y: scroll;
+				padding-right: 15px;
+				>ul {
+					>li {
+						border-bottom: 1px solid $deep-gray;
+						&:last-child {
+							border-bottom: none;
+						}
+						.operationslog-item {
+							padding: 15px;
+							p {
+								font-size: 21px;
+								font-weight: $fw-medium;
+								font-family: $heading-font;
+								.item-icon {
+									width: 30px;
+									height: 30px;
+									font-size: 16px;
+									line-height: 30px;
+									margin-right: 10px;
+									color: $pure-white;
+									text-align: center;
+									border-radius: 100%;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.scroll-bar::-webkit-scrollbar {
+	width: 10px;
+}
+.scroll-bar::-webkit-scrollbar-track {
+	background-color: $light-gray;
+}
+.scroll-bar::-webkit-scrollbar-thumb {
+	background-color: $default-orange;
+}
+/* acmeinc section - end
+================================================== */
+
+
+
+/* funfact section - start
+================================================== */
+.funfact-section {
+	.item-wrapper {
+		min-height: auto;
+		>ul {
+			width: 100%;
+			>li {
+				width: 33.333%;
+				padding-left: 15px;
+				padding-right: 15px;
+				.funfact-item {
+					padding: 40px 30px;
+					background-color: $pure-white;
+					border-bottom: 3px solid $default-orange;
+					box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+					.item-icon {
+						width: 70px;
+						height: 70px;
+						display: flex;
+						align-items: center;
+						margin: 0px auto 20px;
+						>img {
+							margin: auto;
+							height: 60px;
+						}
+					}
+					.item-title {
+						font-size: 25px;
+						font-weight: $fw-bold;
+					}
+				}
+			}
+		}
+	}
+}
+/* funfact section - end
+================================================== */
+
+
+
+/* cnox protection section - start
+================================================== */
+.cnox-protection-section {
+	.cnox-protection-table {
+		background-color: $pure-white;
+		box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+		.table-container {
+			.table {
+				margin-bottom: 0px;
+				td,th {
+					border: none;
+					font-size: 21px;
+					padding: 20px 30px;
+					font-weight: $fw-bold;
+					vertical-align: center;
+					input[type=checkbox] {
+						float: left;
+						width: 30px;
+						height: 30px;
+						outline: none;
+						margin-top: 3px;
+						cursor: pointer;
+						appearance: none;
+						margin-right: 30px;
+						position: relative;
+						border: 2px solid $deep-gray;
+						background-color: $pure-white;
+						transition: $default-transition;
+						&:before {
+							top: 50%;
+							left: 50%;
+							opacity: 0;
+							line-height: 1;
+							font-size: 16px;
+							content: '\f00c';
+							font-weight: 400;
+							color: $pure-white;
+							position: absolute;
+							transition: $default-transition;
+							transform: translate(-50%, -50%);
+							font-family: 'Font Awesome 5 Pro';
+						}
+						&:checked {
+							border-color: $default-green;
+							background-color: $default-green;
+							&:before {
+								opacity: 1;
+							}
+						}
+					}
+				}
+				thead {
+					box-shadow: 0px 0px 11.83px 1.17px rgba(0, 0, 0, 0.1);
+					th {
+						color: $default-black;
+					}
+				}
+				tbody {
+					td {
+						color: $default-color;
+						border-bottom: 1px solid $deep-gray;
+						>span {
+							>img {
+								line-height: 1;
+								margin-right: 15px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.tbody-container {
+			height: 524px;
+			overflow-y: scroll;
+		}
+
+		.btns-group {
+			padding: 40px 30px;
+			>ul {
+				>li {
+					margin-right: 15px;
+					&:last-child {
+						margin-right: 0px !important;
+					}
+					>button {
+						height: 60px;
+						font-size: 22px;
+						min-width: 160px;
+						line-height: 60px;
+						padding: 0px 30px;
+						text-align: center;
+						font-weight: $fw-bold;
+						color: $default-black;
+					}
+					.bg-default-orange {
+						color: $pure-white;
+					}
+				}
+			}
+		}
+	}
+}
+/* cnox protection section - end
+================================================== */
+
+
+
+/* section - start
+================================================== */
+.modal {
+	.modal-dialog {
+		.modal-content {
+			padding: 30px;
+			border-radius: 0px;
+			.modal-header {
+				padding: 0px;
+				border-bottom: none;
+				margin-bottom: 30px;
+			}
+			.modal-body {
+				padding: 0px;
+				.info-list {
+					.item-title {
+						font-size: 25px;
+						margin-bottom: 20px;
+						color: $default-orange;
+					}
+					>ul {
+						>li {
+							margin-bottom: 5px;
+							&:last-child {
+								margin-bottom: 0px !important;
+							}
+							font-size: 21px;
+							font-weight: $fw-medium;
+							font-family: $heading-font;
+							strong {
+								min-width: 160px;
+								color: $default-black;
+								font-weight: $fw-bold;
+								font-family: $body-font;
+							}
+							.select-option {
+								width: 200px;
+								float: right;
+								margin-top: -8px;
+							}
+						}
+					}
+					.push-btn {
+						width: 100%;
+						height: 50px;
+						display: block;
+						font-size: 21px;
+						margin-top: 20px;
+						line-height: 50px;
+						text-align: center;
+						color: $pure-white;
+						font-weight: $fw-bold;
+					}
+				}
+			}
+		}
+	}
+}
+/* section - end
+================================================== */
+
+/* home page - end
+==================================================================================================== */

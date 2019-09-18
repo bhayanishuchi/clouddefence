@@ -1,0 +1,53 @@
+// default font - start
+// ==================================================
+$body-font: 'Lato', sans-serif;
+$heading-font: 'Roboto', sans-serif;
+// default font - end
+// ==================================================
+
+// font weight - start
+// ==================================================
+
+// common font weight - start
+$fw-thin: 100;
+$fw-bold: 700;
+$fw-black: 900;
+$fw-light: 300;
+$fw-regular: 400;
+// common font weight - end
+
+// Roboto - start
+$fw-medium: 500;
+// Roboto - end
+
+// font weight - end
+// ==================================================
+
+// default colors - start
+// ==================================================
+$default-red: #e60d36;
+$default-pink: #e60d36;
+$default-green: #1abf16;
+$default-color: #8c8c8c;
+$default-black: #48454e;
+$default-orange: #f56417;
+// default colors - end
+// ==================================================
+
+// custom colors - start
+// ==================================================
+$pure-white: #ffffff;
+$pure-black: #000000;
+
+$deep-gray: #e1e1e1;
+$light-gray: #f5f6fa;
+// custom colors - end
+// ==================================================
+
+
+
+// transition - start
+// ==================================================
+$default-transition: all .3s ease-in-out;
+// transition - end
+// ==================================================
