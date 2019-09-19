@@ -12,7 +12,7 @@ import {UserService} from "./service/socket.service";
 import {FormsModule} from "@angular/forms";
 import {ChartsModule} from "ng2-charts";
 
-const config: SocketIoConfig = { url: 'http://localhost:3000/', options: {} };
+const config: SocketIoConfig = { url: 'http://34.208.221.82:3000/', options: {} };
 
 @NgModule({
   declarations: [
