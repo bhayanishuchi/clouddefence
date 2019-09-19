@@ -56,7 +56,9 @@ exports.create = (req, res) => {
             Silver : silver,
             Bronze : bronze
         }
-        socket.emit('list',result);
+        if(socket !== undefined) {
+            socket.emit('list', result);
+        }
         return res.send(result);
     });
 };
@@ -68,7 +70,9 @@ exports.updatecnoxstack = (req,res) => {
     if(query.cnox_stack){
     Cluster.updateOne(object, query, function(err, result) {
         if (err) throw err;
-        socket.emit('updatecnoxstack',result);
+        if(socket !== undefined) {
+            socket.emit('updatecnoxstack', result);
+        }
         return res.send('Stack successfully updated to'+ result);
     });
     }else{
@@ -84,7 +88,9 @@ exports.updatemonitorurl = (req,res) => {
     if(query.monitor_url) {
         Cluster.updateOne(object, query, function (err, result) {
             if (err) throw err;
-            socket.emit('updatemonitorurl',result);
+            if(socket !== undefined) {
+                socket.emit('updatemonitorurl', result);
+            }
             return res.send(result);
             // return res.send('monitor url sucessfullly updated');
         });
@@ -101,7 +107,9 @@ exports.updatescannerurl = (req,res) => {
     if(query.scanner_url) {
         Cluster.updateOne(object, query, function (err, result) {
             if (err) throw err;
-            socket.emit('updatescannerurl',result);
+            if(socket !== undefined) {
+                socket.emit('updatescannerurl', result);
+            }
             return res.send(result);
             // return res.send('scanner url sucessfullly updated');
         });
@@ -117,7 +125,9 @@ exports.updatecount = (req,res) => {
     if(query.Nodes & query.Pods & query.Services) {
         Cluster.updateMany(object, query, function (err, result) {
             if (err) throw err;
-            socket.emit('updatecount',result);
+            if(socket !== undefined) {
+                socket.emit('updatecount', result);
+            }
             return res.send(result);
         });
     }else{
@@ -149,7 +159,9 @@ exports.findAllcluster = (req, res) => {
     Cluster.find({}).exec((err, result) => {
         if (err) throw err;
         console.log(result);
-        socket.emit('cluster',result);
+        if(socket !== undefined) {
+            socket.emit('cluster', result);
+        }
         return res.send(result);
     });
 
@@ -160,7 +172,10 @@ exports.findunseccluster = (req, res) => {
     Cluster.find({cnox_stack : {$in: ['','unsecured']}}).exec((err, result) => {
         if (err) throw err;
         console.log(result);
-        socket.emit('unseccluster',result);
+        if(socket !== undefined) {
+            socket.emit('unseccluster', result);
+
+        }
         return res.send(result);
     });
 
@@ -168,16 +183,20 @@ exports.findunseccluster = (req, res) => {
 
 exports.findAlllogevent = (req, res) => {
     const socket = req.app.io;
+    console.log('soc', socket);
     Logtable.find({}).exec((err, result) => {
         if (err) throw err;
         console.log(result);
-        socket.emit('logs',result);
+        if(socket !== undefined) {
+            socket.emit('logs', result);
+        }
         return res.send(result);
     });
 };
 
 exports.findAlltotals = (req, res) => {
     const socket = req.app.io;
+    console.log('soc', socket);
     console.log('socket', Object.keys(socket.nsps['/'].sockets)[0])
     Cluster.find({}).exec((err, result) => {
         if (err) throw err;
@@ -194,7 +213,9 @@ exports.findAlltotals = (req, res) => {
             TotalPods : totalPods,
             TotalServices : totalServices
         }
-        socket.emit('totals',result);
+        if(socket !== undefined) {
+            socket.emit('totals', result);
+        }
         return res.send(result);
     });
 
@@ -242,7 +263,9 @@ exports.findAllstacklist = (req, res) => {
             Silver : silver,
             Bronze : bronze
         }
-        socket.emit('list',result);
+        if(socket !== undefined) {
+            socket.emit('list', result);
+        }
         return res.send(result);
     });
 
