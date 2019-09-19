@@ -5,7 +5,7 @@ var Cluster = require('../models/cluster');
 var Logtable = require('../models/logtable');
 
 exports.create = (req, res) => {
-    var myobj = new Cluster({ cluster_name: req.body.cluster_name, cnox_stack: req.body.cnox_stack, Nodes: req.body.Nodes, Pods: req.body.Pods,
+    var myobj = new Cluster({ cluster_name: req.body.cluster_name, cnox_stack: req.body.cnox_stack,cnox_endpoint:req.cnox_endpoint, Nodes: req.body.Nodes, Pods: req.body.Pods,
         Services: req.body.Services, monitor_url: req.body.monitor_url, scanner_url: req.body.scanner_url});
     console.log("myobj", myobj);
     myobj.save(function(err, res) {
