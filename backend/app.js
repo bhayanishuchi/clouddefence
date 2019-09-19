@@ -45,11 +45,14 @@ app.listen(3001, () =>
 );
 
 let server = require('http').createServer(app);
-server.listen(3000);
+server.listen(3000, () => {
+    console.log(`server listening on port 3000`);
+});
 let io = require('socket.io').listen(server);
 global.io = io;
 
 
 io.on('connection', function(socket) {
+    console.log('client connected');
     app.io = io;
 });
