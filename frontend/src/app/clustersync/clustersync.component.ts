@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MainService} from '../main.service';
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "../service/socket.service";
+import {Socket} from "ngx-socket-io";
 
 @Component({
   selector: 'app-clustersync',
@@ -15,11 +17,18 @@ export class ClustersyncComponent implements OnInit {
   selectedStack = '';
 
   constructor(private mainservice: MainService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private socket: Socket,
+              private userService: UserService) {
 
   }
 
   ngOnInit() {
+    const that = this;
+    this.userService.cluster(this.socket, function (data) {
+      console.log('socket cluster', data);
+      that.clusterlist = data;
+    });
     this.getAllCluster();
   }
 

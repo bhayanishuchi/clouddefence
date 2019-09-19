@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    const socket1 = this.userService.newconnection();
+    const socket = this.userService.newconnection();
+    const that = this;
     this.mainservice.getUnsecCluster()
       .subscribe(response => {
         this.clusterlist = response;
@@ -51,8 +52,23 @@ export class DashboardComponent implements OnInit {
         ['Bronze','Nodes:'+ res.Bronze.TotalNodes]];
       this.pieChartData = [res.Gold.Totalstack, res.Silver.Totalstack, res.Bronze.Totalstack];
     });
-    this.userService.hello(this.socket, function (data) {
-      console.log('data', data);
+    this.userService.logs(socket, function (data) {
+      console.log('socket logs', data);
+      that.logeventlist = data;
+    });
+    this.userService.totals(socket, function (data) {
+      console.log('socket totals', data);
+      that.totalCounts = data;
+    });
+    this.userService.list(socket, function (res) {
+      console.log('socket list', res);
+      that.pieChartLabels = [['Gold','Nodes:'+ res.Gold.TotalNodes],['Silver','Nodes:'+ res.Silver.TotalNodes],
+        ['Bronze','Nodes:'+ res.Bronze.TotalNodes]];
+      that.pieChartData = [res.Gold.Totalstack, res.Silver.Totalstack, res.Bronze.Totalstack];
+    });
+    this.userService.unseccluster(socket, function (data) {
+      console.log('socket unseccluster', data);
+      that.clusterlist = data;
     });
   }
 

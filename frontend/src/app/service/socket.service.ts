@@ -14,6 +14,63 @@ export class UserService {
     return this.socket;
   }
 
+  logs(UserSocket, cb) {
+    UserSocket.on('logs', function (data) {
+      cb(data);
+    });
+  }
+
+  totals(UserSocket, cb) {
+    UserSocket.on('totals', function (data) {
+      cb(data);
+    });
+  }
+
+  list(UserSocket, cb) {
+    UserSocket.on('list', function (data) {
+      cb(data);
+    });
+  }
+
+  unseccluster(UserSocket, cb) {
+    UserSocket.on('unseccluster', function (data) {
+      cb(data);
+    });
+  }
+
+  cluster(UserSocket, cb) {
+    UserSocket.on('cluster', function (data) {
+      cb(data);
+    });
+  }
+
+  updatecount(UserSocket, cb) {
+    UserSocket.on('updatecount', function (data) {
+      cb(data);
+    });
+  }
+
+  updatescannerurl(UserSocket, cb) {
+    UserSocket.on('updatescannerurl', function (data) {
+      cb(data);
+    });
+  }
+
+  updatemonitorurl(UserSocket, cb) {
+    UserSocket.on('updatemonitorurl', function (data) {
+      cb(data);
+    });
+  }
+
+  updatecnoxstack(UserSocket, cb) {
+    UserSocket.on('updatecnoxstack', function (data) {
+      cb(data);
+    });
+  }
+
+
+
+
   login(name, password, cb) {
     const that = this;
     this.socket.emit('new user', [name, password], function (data, msg) {
@@ -25,12 +82,7 @@ export class UserService {
     });
   }
 
-  hello(mysocket, cb) {
-    mysocket.on('hi', function (data) {
-      console.log('from service', data);
-      cb([data]);
-    });
-  }
+
 
   loadMessage(cb) {
     this.socket.on('load old msgs', function (data) {

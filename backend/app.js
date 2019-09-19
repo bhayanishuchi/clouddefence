@@ -41,11 +41,11 @@ app.get('/lists',[UserController.findAllstacklist]);
 
 
 app.listen(3001, () =>
-    console.log(`Example app listening on port 8080!`),
+    console.log(`Example app listening on port 3001!`),
 );
 
 let server = require('http').createServer(app);
-server.listen(process.env.PORT || 3000);
+server.listen(3000);
 let io = require('socket.io').listen(server);
 global.io = io;
 

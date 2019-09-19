@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   api : "http://34.208.221.82:3001"
+  // api : "http://localhost:3001"
 };
 
 /*
