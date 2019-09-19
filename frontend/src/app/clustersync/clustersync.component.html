@@ -62,11 +62,8 @@
             <tbody>
             <tr *ngFor="let data of clusterlist; let i = index">
               <td>
-                <input type="checkbox" id="selectedCluster{{i}}" required
-                       [ngModel]="selectedCluster == i"
-                       (ngModelChange)="$event ? selectedCluster = i : selectedCluster = -1"
-                       [disabled]="selectedCluster >= 0 && selectedCluster != i"
-                       name="selectedCluster" (change)="onClusterChange(data)">
+                <input type="checkbox" [checked]="data.checked" required
+                       name="selectedCluster" (change)="onClusterChange(data,i)">
                 {{data.cluster_name}}
               </td>
               <td>
@@ -87,7 +84,7 @@
         <div class="btns-group ul-li-right clearfix">
           <ul class="clearfix">
             <li>
-              <button type="button" class="bg-default-orange" data-toggle="modal" data-target="#view-modal">
+              <button type="button" class="bg-default-orange" (click)="openView()">
                 View
               </button>
             </li>
@@ -101,25 +98,33 @@
 
       </div>
     </form>
-    <div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
+
+    <div class="backdrop" [ngStyle]="{'display':viewDisplay}"></div>
+
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':viewDisplay}">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" (click)="closeView()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="info-list ul-li-block clearfix">
-              <h3 class="item-title">k8s - nyc - 22</h3>
+              <h3 class="item-title">{{clusterData.cluster_name}}</h3>
               <ul class="clearfix">
                 <li>
-                  <strong>CNOX Stack:</strong> Gold - Stack <img class="dot-img" src="assets/images/icons/icon_11.png"
-                                                                 alt="icon_not_found">
+                  <strong>CNOX Stack:</strong> {{clusterData.cnox_stack}} <img class="dot-img"
+                                                                               [src]="clusterData.cnox_stack === 'gold_stack'? '../../assets/images/icons/icon_11.png':
+                            clusterData.cnox_stack=== 'silver_stack'? '../../assets/images/icons/icon_12.png':
+                            clusterData.cnox_stack=== 'bronze_stack' ? '../../assets/images/icons/icon_9.png':
+                            '../../assets/images/icons/icon_10.png'" alt="icon_not_found">
                 </li>
                 <li>
-                  <strong>Monitoring url:</strong> https://172.16.5
+                  <strong>Monitoring url:</strong> {{clusterData.monitor_url}}
+                </li>
+                <li>
+                  <strong>Scanner url:</strong> {{clusterData.scanner_url}}
                 </li>
               </ul>
             </div>

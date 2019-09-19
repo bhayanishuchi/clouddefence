@@ -14,6 +14,7 @@ export class ClustersyncComponent implements OnInit {
   selectedCluster;
   clusterData: any = {};
   display = 'none';
+  viewDisplay = 'none';
   selectedStack = '';
 
   constructor(private mainservice: MainService,
@@ -40,26 +41,46 @@ export class ClustersyncComponent implements OnInit {
   }
 
   openModal() {
-    if (this.selectedCluster === undefined) {
+    let length = Object.keys(this.clusterData).length;
+    if (length > 0) {
+      this.display = 'block';
+    } else {
       alert('Please select any one cluster');
       this.display = 'none';
+
+    }
+  }
+
+  openView() {
+    let length = Object.keys(this.clusterData).length;
+    if (length > 0) {
+      this.viewDisplay = 'block';
     } else {
-      this.display = 'block';
+      alert('Please select any one cluster');
+      this.viewDisplay = 'none';
+
     }
   }
 
   onCloseHandled() {
     this.display = 'none';
-    let data = {
-      stack_name:  this.selectedStack
-    };
-    console.log('stackrespone', data, this.clusterData._id);
-    // this.mainservice.updateStack(this.clusterData._id, data).subscribe((res) => {
-    //   console.log('stackrespone', res);
-    // });
+    this.mainservice.updateStack(this.clusterData.cluster_name, this.selectedStack).subscribe((res) => {
+      console.log('stackrespone', res);
+    });
   }
 
-  onClusterChange(data) {
+  closeView() {
+    this.viewDisplay = 'none';
+
+  }
+
+  onClusterChange(data,index) {
+    console.log('stackrespone', data, this.selectedCluster);
+    this.clusterlist.forEach((x,i)=>{
+      if(index !== i){
+        x.checked = false;
+      }
+    })
     this.clusterData = data;
   }
 
@@ -69,6 +90,9 @@ export class ClustersyncComponent implements OnInit {
   getUnsecuredCluster() {
     this.mainservice.getUnsecCluster()
       .subscribe(response => {
+        response.forEach((x)=>{
+          x.checked = false;
+        })
         this.clusterlist = response;
       });
   }

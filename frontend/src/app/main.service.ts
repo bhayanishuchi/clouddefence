@@ -7,6 +7,7 @@ import {environment} from "../environments/environment";
 })
 export class MainService {
   newapi = environment.api;
+  clusterapi = environment.clusterapi;
 
   constructor(private http: HttpClient) { }
 
@@ -25,8 +26,9 @@ export class MainService {
   getTotalList() {
     return this.http.get<any>(this.newapi + '/lists');
   }
-  // updateStack(id, cluster) {
-  //    return this.http.post<any>(this.newapi + 'cnox_endpoint/clusters/' + ' id + '/cnox_stack' +  cluster');
-  //  }
+  updateStack(clustername, cnox_stack) {
+    console.log('clusterapi', this.clusterapi)
+     return this.http.post<any>(this.clusterapi + '/cluster/' + clustername  + '/' +  cnox_stack, {});
+   }
 
 }

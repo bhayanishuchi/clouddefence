@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  api : "http://34.208.221.82:3001"
+  api : "http://34.208.221.82:3001",
   // api : "http://localhost:3001"
+  clusterapi : "http://54.190.146.108:8888"
 };
 
 /*
