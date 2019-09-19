@@ -62,8 +62,8 @@
             <tbody>
             <tr *ngFor="let data of clusterlist; let i = index">
               <td>
-                <input type="checkbox" [checked]="data.checked" required
-                       name="selectedCluster" (change)="onClusterChange(data,i)">
+                <input type="checkbox" [(ngModel)]="data.checked" required
+                       name="selectedCluster" (click)="onClusterChange(data,i)">
                 {{data.cluster_name}}
               </td>
               <td>
@@ -121,10 +121,10 @@
                             '../../assets/images/icons/icon_10.png'" alt="icon_not_found">
                 </li>
                 <li>
-                  <strong>Monitoring url:</strong> {{clusterData.monitor_url}}
+                  <strong>Monitoring url:</strong> <a target="_blank" href="{{clusterData.monitor_url}}">{{clusterData.monitor_url}}</a>
                 </li>
                 <li>
-                  <strong>Scanner url:</strong> {{clusterData.scanner_url}}
+                  <strong>Scanner url:</strong> <a target="_blank" href="{{clusterData.scanner_url}}">{{clusterData.scanner_url}}</a>
                 </li>
               </ul>
             </div>

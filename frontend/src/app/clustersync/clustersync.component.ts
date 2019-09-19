@@ -28,6 +28,9 @@ export class ClustersyncComponent implements OnInit {
     const that = this;
     this.userService.cluster(this.socket, function (data) {
       console.log('socket cluster', data);
+      data.forEach((x)=>{
+        x.checked = false;
+      })
       that.clusterlist = data;
     });
     this.getAllCluster();
@@ -36,6 +39,9 @@ export class ClustersyncComponent implements OnInit {
   getAllCluster() {
     this.mainservice.getCluster()
       .subscribe(response => {
+        response.forEach((x)=>{
+          x.checked = false;
+        });
         this.clusterlist = response;
     });
   }
@@ -75,12 +81,13 @@ export class ClustersyncComponent implements OnInit {
   }
 
   onClusterChange(data,index) {
-    console.log('stackrespone', data, this.selectedCluster);
+    console.log('stackrespone', data);
     this.clusterlist.forEach((x,i)=>{
       if(index !== i){
+        console.log('in if', index, i);
         x.checked = false;
       }
-    })
+    });
     this.clusterData = data;
   }
 
@@ -92,7 +99,7 @@ export class ClustersyncComponent implements OnInit {
       .subscribe(response => {
         response.forEach((x)=>{
           x.checked = false;
-        })
+        });
         this.clusterlist = response;
       });
   }
