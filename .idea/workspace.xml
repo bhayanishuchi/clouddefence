@@ -28,7 +28,7 @@
   </component>
   <component name="ProjectId" id="1R36OxK4ytrPg0LyRILuVNZ87V3" />
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="envir&#9;FILE&#9;file://E:/clouddefence/frontend/src/environments/environment.prod.ts" />
+    <property name="SearchEverywhereHistoryKey" value="start&#9;FILE&#9;file://E:/clouddefence/frontend/start.sh&#10;envir&#9;FILE&#9;file://E:/clouddefence/frontend/src/environments/environment.prod.ts" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -36,7 +36,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="E:/clouddefence/frontend/node_modules/tslint" />
+    <property name="node.js.selected.package.tslint" value="E:\clouddefence\frontend\node_modules\tslint" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -55,7 +55,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="app.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/app.js" working-dir="$PROJECT_DIR$/backend">
+    <configuration name="app.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/app.js" working-dir="$PROJECT_DIR$/backend">
       <method v="2" />
     </configuration>
     <recent_temporary>
