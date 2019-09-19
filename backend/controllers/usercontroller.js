@@ -197,7 +197,7 @@ exports.findAlllogevent = (req, res) => {
 exports.findAlltotals = (req, res) => {
     const socket = req.app.io;
     console.log('soc', socket);
-    console.log('socket', Object.keys(socket.nsps['/'].sockets)[0])
+    // console.log('socket', Object.keys(socket.nsps['/'].sockets)[0])
     Cluster.find({}).exec((err, result) => {
         if (err) throw err;
         let totalNodes = 0;
