@@ -122,6 +122,7 @@ exports.updatecount = (req,res) => {
     const socket = req.app.io;
     var object = {cluster_name : req.params.cluster_name}
     var query = { Nodes: req.body.nodes, Pods: req.body.pods, Services:req.body.services};
+    console.log('req.body', req.body, query)
     if(query.Nodes & query.Pods & query.Services) {
         Cluster.updateMany(object, query, function (err, result) {
             if (err) throw err;
