@@ -27,10 +27,10 @@ app.use(bodyParser.json())
 
 app.post('/', [UserController.create]);
 
-app.put('/cluster/:id/stack',[UserController.updatecnoxstack]);
-app.put('/cluster/:id/monitor',[UserController.updatemonitorurl]);
-app.put('/cluster/:id/scanner',[UserController.updatescannerurl]);
-app.put('/cluster/:id/resources',[UserController.updatecount]);
+app.put('/cluster/:cluster_name/stack',[UserController.updatecnoxstack]);
+app.put('/cluster/:cluster_name/monitor',[UserController.updatemonitorurl]);
+app.put('/cluster/:cluster_name/scanner',[UserController.updatescannerurl]);
+app.put('/cluster/:cluster_name/resources',[UserController.updatecount]);
 app.post('/logevent',[UserController.createlogevent]);
 app.get('/cluster',[UserController.findAllcluster]);
 app.get('/unseccluster',[UserController.findunseccluster]);
