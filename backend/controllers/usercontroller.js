@@ -271,3 +271,12 @@ exports.findAllstacklist = (req, res) => {
     });
 
 };
+
+exports.delete = (req,res) => {
+    var myquery = { ID: req.params.id};
+    Cluster.deleteOne(myquery).exec((err, obj) => {
+        if (err) throw err;
+        console.log("1 document deleted");
+        return res.send('Received a DELETE HTTP method' + req.params.id );
+    });
+}
