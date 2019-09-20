@@ -65,7 +65,7 @@ exports.create = (req, res) => {
 
 exports.updatecnoxstack = (req,res) => {
     const socket = req.app.io;
-    var object = {_id : req.params.id}
+    var object = {cluster_name : req.params.cluster_name}
     var query = { cnox_stack: req.body.cnox_stack };
     if(query.cnox_stack){
     Cluster.updateOne(object, query, function(err, result) {
