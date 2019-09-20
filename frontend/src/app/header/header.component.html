@@ -43,8 +43,8 @@
       <div class="col-lg-5 col-md-12 col-sm-12">
         <div class="main-menubar ul-li-right clearfix">
           <ul class="clearfix">
-            <li class="active"><a href="">Dashboard</a></li>
-            <li><a [routerLink]="['/cluster']">Cluster Sync</a></li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Dashboard</a></li>
+            <li routerLinkActive="active" ><a [routerLink]="['/cluster']">Cluster Sync</a></li>
             <li><a href="#!">Policy</a></li>
             <li><a href="#!">Events</a></li>
             <li>
@@ -70,8 +70,8 @@
 
     <div class="menu-list ul-li-block clearfix">
       <ul class="clearfix">
-        <li class="active"><a href="">Dashboard</a></li>
-        <li><a href="/cluster">Cluster Sync</a></li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Dashboard</a></li>
+        <li routerLinkActive="active" ><a [routerLink]="['/cluster']">Cluster Sync</a></li>
         <li><a href="#!">Policy</a></li>
         <li><a href="#!">Events</a></li>
       </ul>

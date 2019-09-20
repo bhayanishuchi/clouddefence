@@ -26,9 +26,9 @@ export class MainService {
   getTotalList() {
     return this.http.get<any>(this.newapi + '/lists');
   }
-  updateStack(clustername, cnox_stack) {
-    console.log('clusterapi', this.clusterapi)
-     return this.http.post<any>(this.clusterapi + '/cluster/' + clustername  + '/' +  cnox_stack, {});
-   }
+  updateStack(clustername, data) {
+    console.log('stack', data)
+     return this.http.post<any>(this.clusterapi + '/cluster/' + clustername  + '/cnox_stack', data);
+  }
 
 }

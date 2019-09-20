@@ -62,8 +62,8 @@
             <tbody>
             <tr *ngFor="let data of clusterlist; let i = index">
               <td>
-                <input type="checkbox" [(ngModel)]="data.checked" required
-                       name="selectedCluster" (click)="onClusterChange(data,i)">
+                <input type="checkbox" [(ngModel)]="data.checked" required id="selectedCluster{{i}}"
+                       name="selectedCluster{{i}}" (change)="onClusterChange(data,i)">
                 {{data.cluster_name}}
               </td>
               <td>

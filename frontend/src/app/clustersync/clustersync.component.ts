@@ -70,7 +70,9 @@ export class ClustersyncComponent implements OnInit {
 
   onCloseHandled() {
     this.display = 'none';
-    this.mainservice.updateStack(this.clusterData.cluster_name, this.selectedStack).subscribe((res) => {
+    let stack_name =  {"stack_name": this.selectedStack};
+    console.log('stack',stack_name)
+    this.mainservice.updateStack(this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
     });
   }
@@ -84,7 +86,6 @@ export class ClustersyncComponent implements OnInit {
     console.log('stackrespone', data);
     this.clusterlist.forEach((x,i)=>{
       if(index !== i){
-        console.log('in if', index, i);
         x.checked = false;
       }
     });
