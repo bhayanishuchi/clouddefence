@@ -83,7 +83,7 @@ exports.updatecnoxstack = (req,res) => {
 
 exports.updatemonitorurl = (req,res) => {
     const socket = req.app.io;
-    var object = {_id : req.params.id}
+    var object = {cluster_name : req.params.cluster_name}
     var query = { monitor_url: req.body.monitor_url };
     if(query.monitor_url) {
         Cluster.updateOne(object, query, function (err, result) {
@@ -102,7 +102,7 @@ exports.updatemonitorurl = (req,res) => {
 
 exports.updatescannerurl = (req,res) => {
     const socket = req.app.io;
-    var object = {_id : req.params.id}
+    var object = {cluster_name : req.params.cluster_name}
     var query = { scanner_url: req.body.scanner_url };
     if(query.scanner_url) {
         Cluster.updateOne(object, query, function (err, result) {
@@ -120,7 +120,7 @@ exports.updatescannerurl = (req,res) => {
 
 exports.updatecount = (req,res) => {
     const socket = req.app.io;
-    var object = {_id : req.params.id}
+    var object = {cluster_name : req.params.cluster_name}
     var query = { Nodes: req.body.nodes, Pods: req.body.pods, Services:req.body.services};
     if(query.Nodes & query.Pods & query.Services) {
         Cluster.updateMany(object, query, function (err, result) {
