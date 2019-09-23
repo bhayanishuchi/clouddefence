@@ -37,7 +37,7 @@ app.get('/unseccluster',[UserController.findunseccluster]);
 app.get('/log',[UserController.findAlllogevent]);
 app.get('/totals',[UserController.findAlltotals]);
 app.get('/lists',[UserController.findAllstacklist]);
-app.delete('/deletecluster/:id',[UserController.delete]);
+app.delete('/deletecluster/:cluster_name',[UserController.delete]);
 
 
 

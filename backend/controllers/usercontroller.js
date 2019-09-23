@@ -280,11 +280,11 @@ exports.findAllstacklist = (req, res) => {
 
 };
 exports.delete = (req, res) => {
-    var myquery = {_id: req.params.id};
+    var myquery = {cluster_name: req.params.cluster_name};
     Cluster.deleteOne(myquery).exec((err, obj) => {
         if (err) throw err;
         console.log("1 document deleted");
-        return res.send('Received a DELETE HTTP method' + req.params.id);
+        return res.send('Received a DELETE HTTP method' + req.params.cluster_name);
     });
 }
 
