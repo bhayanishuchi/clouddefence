@@ -89,7 +89,7 @@
               </button>
             </li>
             <li>
-              <button type="button" class="bg-light-gray" (click)="openModal()">
+              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor" (click)="openModal()">
                 Secure
               </button>
             </li>

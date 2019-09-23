@@ -11,11 +11,11 @@ import {Socket} from "ngx-socket-io";
 })
 export class ClustersyncComponent implements OnInit {
   clusterlist: any = [];
-  selectedCluster;
   clusterData: any = {};
   display = 'none';
   viewDisplay = 'none';
   selectedStack = '';
+  btncolor= false;
 
   constructor(private mainservice: MainService,
               private http: HttpClient,
@@ -50,9 +50,11 @@ export class ClustersyncComponent implements OnInit {
     let length = Object.keys(this.clusterData).length;
     if (length > 0) {
       this.display = 'block';
+      this.btncolor = true;
     } else {
       alert('Please select any one cluster');
       this.display = 'none';
+      this.btncolor = false;
 
     }
   }
@@ -83,13 +85,19 @@ export class ClustersyncComponent implements OnInit {
   }
 
   onClusterChange(data,index) {
-    console.log('stackrespone', data);
-    this.clusterlist.forEach((x,i)=>{
-      if(index !== i){
+    this.clusterData = data;
+    this.clusterlist.forEach((x, i) => {
+      if (index !== i) {
         x.checked = false;
+      } else if (index === i && x.checked === false) {
+        this.clusterData = {};
+        this.btncolor = false;
+      } else {
+        this.btncolor = true;
       }
     });
-    this.clusterData = data;
+    console.log('stackrespone', this.clusterData);
+
   }
 
   onStackChange(event) {
