@@ -157,14 +157,79 @@ strong {
     border-radius: 0px;
     border: solid 1px $deep-gray;
     &:after {
+      top: 50%;
       right: 20px;
+      width: auto;
+      height: auto;
+      border: none;
+      line-height: 1;
+      margin-top: 0px;
+      font-weight: 900;
+      content: '\f0d7';
+      transform-origin: 0%;
+      transform: translateY(-50%);
+      font-family: 'Font Awesome 5 Pro';
     }
     .list {
+      width: 100%;
       margin-top: 1px;
       border-radius: 0px;
       .option {
         font-size: 14px;
         padding: 0px 20px;
+      }
+    }
+  }
+}
+
+.onoff-switch {
+  width: 166px;
+  position: relative;
+  background-color: red;
+  input {
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+    position: absolute;
+  }
+  label {
+    z-index: 1;
+    width: 100%;
+    display: table;
+    cursor: pointer;
+    position: relative;
+    background-color: $light-gray;
+    &:before {
+      top: 0px;
+      left: 0px;
+      width: 50%;
+      bottom: 0px;
+      opacity: 1;
+      content: '';
+      z-index: -1;
+      position: absolute;
+      background-color: $pure-white;
+      transition: $default-transition;
+      border: 2px solid $default-orange;
+    }
+    >span {
+      width: 50%;
+      float: left;
+      height: 50px;
+      font-size: 18px;
+      line-height: 50px;
+      text-align: center;
+      font-weight: $fw-bold;
+      display: inline-block;
+    }
+  }
+  &:checked {
+    ~label {
+      &:before {
+        left: 83px;
+      }
+      >span {
+        color: $default-orange;
       }
     }
   }
@@ -272,7 +337,28 @@ strong {
 /* button style - start
 ================================================== */
 .custom-btn {
+  height: 60px;
+  font-size: 22px;
+  min-width: 160px;
+  line-height: 60px;
+  padding: 0px 30px;
+  text-align: center;
+  font-weight: $fw-bold;
+  color: $default-black;
   &:hover {}
+}
+.bg-default-orange {
+  color: $pure-white;
+  &:hover {
+    color: $pure-white;
+  }
+}
+
+.bg-light-gray {
+  color: $default-black;
+  &:hover {
+    color: $default-black;
+  }
 }
 /* button style - end
 ================================================== */

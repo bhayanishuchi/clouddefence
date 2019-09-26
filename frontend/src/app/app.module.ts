@@ -11,9 +11,11 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {UserService} from "./service/socket.service";
 import {FormsModule} from "@angular/forms";
 import {ChartsModule} from "ng2-charts";
+import { NiceSelectModule } from "ng-nice-select";
 
 
 import {environment} from "../environments/environment";
+import { PolicyComponent } from './policy/policy.component';
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -23,7 +25,8 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     DashboardComponent,
     ClustersyncComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PolicyComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     AppRoutingModule,
     ChartsModule,
     HttpClientModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    NiceSelectModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

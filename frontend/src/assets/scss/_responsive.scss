@@ -51,6 +51,16 @@
 2 - media screen and (max-width: 1280px) - start
 ==================================================================================================== */
 
+@media screen and (max-width: 1300px) {
+
+	/* header - start */
+	.header-section .main-menubar > ul > li {
+		margin-right: 30px;
+	}
+	/* header - end */
+
+}
+
 @media screen and (max-width: 1280px) {
 
 	/* header - start */
@@ -124,6 +134,24 @@
 	}
 	/* home 2 - end */
 
+	/* tabs - start */
+	.policy-section .policy-central .uploaded-file > ul > li .file-content .item-title {
+		font-size: 14px;
+	}
+	.policy-section .policy-central .uploaded-file > ul > li {
+		margin-right: 30px;
+	}
+	.policy-section .policy-central .uploaded-file > ul > li .file-size {
+		padding-left: 0px;
+	}
+	.policy-section .policy-central .uploaded-file > ul > li .icon {
+		max-width: 30px;
+	}
+	.policy-section .policy-central .upload-field .item-title {
+		font-size: 16px;
+	}
+	/* tabs - end */
+
 }
 
 /* ====================================================================================================
@@ -152,6 +180,11 @@
 	}
 	.item-wrapper {
 		min-height: auto;
+	}
+	.custom-btn {
+		height: 50px;
+		font-size: 18px;
+		line-height: 50px;
 	}
 	/* global - start */
 
@@ -198,6 +231,18 @@
 		padding: 0px 20px;
 	}
 	/* home 2 - end */
+
+	/* tabs - start */
+	.policy-section .tab-container .policy-tabs-nav > ul > li > a {
+		font-size: 14px;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li {
+		width: 130px;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li:before {
+		width: 80px;
+	}
+	/* tabs - end */
 
 }
 
@@ -268,6 +313,22 @@
 	#backtotop #scroll {
 		font-size: 18px;
 		line-height: 42px;
+	}
+
+	.custom-btn {
+		height: 40px;
+		font-size: 16px;
+		min-width: auto;
+		line-height: 40px;
+	}
+
+	.onoff-switch label > span {
+		height: 40px;
+		font-size: 16px;
+		line-height: 40px;
+	}
+	.onoff-switch {
+		width: 140px;
 	}
 	/* global - end */
 
@@ -377,6 +438,57 @@
 		margin-top: 0px;
 	}
 	/* home 2 - end */
+
+	/* tabs - start */
+	.policy-section .policy-central .uploaded-file > ul > li {
+		width: 100%;
+		margin-right: 0px;
+		margin-bottom: 15px;
+		&:last-child {
+			margin-bottom: 0px !important;
+		}
+	}
+	.policy-section .tab-container .policy-tabs-nav > ul {
+		display: table;
+	}
+	.policy-section .tab-container .policy-tabs-nav > ul > li {
+		width: 100%;
+		margin-bottom: 2px;
+		&:last-child {
+			margin-bottom: 0px !important;
+		}
+	}
+	.policy-section .tab-container .tab-content {
+		padding: 20px;
+	}
+
+	.policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li {
+		width: 50%;
+		margin-bottom: 20px;
+	}
+
+	.policy-section .tab-container .tab-content .tab-pane .input-items-list > ul > li {
+		width: 100%;
+		margin-right: 0px;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .input-items-list > ul > li .select-option {
+		width: 100%;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .input-items-list > ul > li .onoff-switch label > span {
+		height: 40px;
+		font-size: 14px;
+		line-height: 40px;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .input-items-list > ul > li .form-item {
+		width: 100%;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .input-items-list > ul > li .title-text {
+		min-width: auto;
+	}
+	.policy-section .tab-container .tab-content .tab-pane .btns-group > ul > li {
+		margin-right: 5px;
+	}
+	/* tabs - end */
 
 }
 
