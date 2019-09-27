@@ -12,17 +12,17 @@ export class PolicyComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.policiesField.stack = '';
+    this.policiesField.stack = 'bronze_stack';
     this.policiesField.resource = 'performance-btn';
     this.policiesField.upgrade = 'true';
-    this.policiesField.dashboard = '';
+    this.policiesField.dashboard = 'grafana';
     this.policiesField.alerting = 'false';
     this.policiesField.ha = 'true';
-    this.policiesField.storageSize = '';
-    this.policiesField.imageRegistry = '';
+    this.policiesField.storageSize = '512Mb';
+    this.policiesField.imageRegistry = 'dockerHub';
     this.policiesField.frequency = '';
     this.policiesField.externalDb = 'true';
-    this.policiesField.storage = '';
+    this.policiesField.storage = '1Gb';
   }
 
   onSubmit() {

@@ -73,9 +73,12 @@ export class ClustersyncComponent implements OnInit {
   onCloseHandled() {
     this.display = 'none';
     let stack_name =  {"stack_name": this.selectedStack};
-    console.log('stack',stack_name)
+    console.log('stack',stack_name);
     this.mainservice.updateStack(this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
+      if(this.clusterData.cnox_stack === "unsecured") {
+        alert(this.clusterData.cluster_name + " is secured.");
+      }
     });
   }
 
