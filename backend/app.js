@@ -31,7 +31,7 @@ app.put('/cluster/:cluster_name/stack',[UserController.updatecnoxstack]);
 app.put('/cluster/:cluster_name/monitor',[UserController.updatemonitorurl]);
 app.put('/cluster/:cluster_name/scanner',[UserController.updatescannerurl]);
 app.put('/cluster/:cluster_name/resources',[UserController.updatecount]);
-app.put('/cluster/:cluster_name/compliance ',[UserController.updatecomplianceurl]);
+app.put('/cluster/:cluster_name/compliance',[UserController.updatecomplianceurl]);
 app.post('/logevent',[UserController.createlogevent]);
 app.get('/cluster',[UserController.findAllcluster]);
 app.get('/unseccluster',[UserController.findunseccluster]);
