@@ -62,6 +62,12 @@ export class UserService {
     });
   }
 
+  updatecomplianceurl(UserSocket, cb) {
+    UserSocket.on('updatecomplianceurl', function (data) {
+      cb(data);
+    });
+  }
+
   updatecnoxstack(UserSocket, cb) {
     UserSocket.on('updatecnoxstack', function (data) {
       cb(data);

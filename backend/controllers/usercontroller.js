@@ -13,7 +13,8 @@ exports.create = (req, res) => {
         Pods: req.body.Pods,
         Services: req.body.Services,
         monitor_url: req.body.monitor_url,
-        scanner_url: req.body.scanner_url
+        scanner_url: req.body.scanner_url,
+        compliance_url: req.body.compliance_url
     });
     console.log("myobj", myobj);
     myobj.save(function (err, res) {
@@ -110,6 +111,30 @@ exports.updatescannerurl = (req, res) => {
         });
     } else {
         console.log("scanner_url is empty");
+    }
+};
+
+exports.updatecomplianceurl = (req, res) => {
+    const socket = req.app.io;
+    var object = {cluster_name: req.params.cluster_name}
+    var query = {compliance_url: req.body.compliance_url};
+    if (query.compliance_url) {
+        Cluster.updateOne(object, query, function (err, result) {
+            if (err) throw err;
+            if (socket !== undefined) {
+                socket.emit('updatecomplianceurl', result);
+            }
+            findSocketTotalunseccluster(req)
+                .then(findSocketTotalStackList(req))
+                .then(findSocketAllTotal(req))
+                .then(findSocketLogEvent(req))
+                .then(findSocketAllcluster(req))
+                .then((data) => {
+                    return res.send(data);
+                })
+        });
+    } else {
+        console.log("compliance_url is empty");
     }
 };
 

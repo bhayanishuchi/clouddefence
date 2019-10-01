@@ -9,7 +9,8 @@ var clusterSchema = mongoose.Schema({
     Pods : Number,
     Services : Number,
     monitor_url : String,
-    scanner_url :String
+    scanner_url :String,
+    compliance_url: String
 });
 
 var Cluster = mongoose.model('Cluster', clusterSchema);
