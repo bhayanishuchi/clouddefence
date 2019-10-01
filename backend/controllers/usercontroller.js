@@ -21,20 +21,20 @@ exports.create = (req, res) => {
         if (err) {
             console.log("errorr")
             throw err
+        } else{
+            console.log("cluster inserted");
+            findSocketTotalunseccluster(req)
+                .then(findSocketTotalStackList(req))
+                .then(findSocketAllTotal(req))
+                .then(findSocketLogEvent(req))
+                .then(findSocketAllcluster(req))
+                .then((data) => {
+                    return res.send(data);
+                })
         }
-        ;
-        console.log("cluster inserted");
     });
     // return res.send('Received a POST HTTP method');
-    const socket = req.app.io;
-    findSocketTotalunseccluster(req)
-        .then(findSocketTotalStackList(req))
-        .then(findSocketAllTotal(req))
-        .then(findSocketLogEvent(req))
-        .then(findSocketAllcluster(req))
-        .then((data) => {
-            return res.send(data);
-        })
+
 };
 
 exports.updatecnoxstack = (req, res) => {
