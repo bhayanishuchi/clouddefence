@@ -17,7 +17,7 @@ exports.create = (req, res) => {
         compliance_url: req.body.compliance_url
     });
     console.log("myobj", myobj);
-    myobj.save(function (err, res) {
+    myobj.save(function (err, res1) {
         if (err) {
             console.log("errorr")
             throw err
