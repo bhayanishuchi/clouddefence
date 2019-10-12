@@ -16,10 +16,10 @@ exports.create = (req, res) => {
         scanner_url: req.body.scanner_url,
         compliance_url: req.body.compliance_url
     });
-    console.log("myobj", myobj);
+
     myobj.save(function (err, res1) {
         if (err) {
-            console.log("errorr")
+            console.log("errorr", err)
             throw err
         } else{
             console.log("cluster inserted");
@@ -59,6 +59,7 @@ exports.updatecnoxstack = (req, res) => {
         });
     } else {
         console.log("cnox_stack is empty");
+        return res.send('cnox_stack is empty');
     }
 
 };
@@ -85,6 +86,7 @@ exports.updatemonitorurl = (req, res) => {
         });
     } else {
         console.log("monitor_url is empty");
+        return res.send('monitor_url is empty');
     }
 
 };
@@ -111,6 +113,7 @@ exports.updatescannerurl = (req, res) => {
         });
     } else {
         console.log("scanner_url is empty");
+        return res.send('scanner_url is empty');
     }
 };
 
@@ -135,6 +138,7 @@ exports.updatecomplianceurl = (req, res) => {
         });
     } else {
         console.log("compliance_url is empty");
+        return res.send('compliance_url is empty');
     }
 };
 
@@ -142,7 +146,6 @@ exports.updatecount = (req, res) => {
     const socket = req.app.io;
     var object = {cluster_name: req.params.cluster_name};
     var query = {Nodes: req.body.nodes, Pods: req.body.pods, Services: req.body.services};
-    console.log('req.body', req.body, query, object);
     if (query.Nodes && query.Pods && query.Services) {
         Cluster.findOneAndUpdate(object, query, function (err, result) {
             if (err) throw err;
@@ -157,6 +160,7 @@ exports.updatecount = (req, res) => {
         });
     } else {
         console.log("count are empty");
+        return res.send('count are empty');
     }
 };
 
@@ -193,7 +197,6 @@ exports.findAllcluster = (req, res) => {
     const socket = req.app.io;
     Cluster.find({}).exec((err, result) => {
         if (err) throw err;
-        console.log(result);
         if (socket !== undefined) {
             socket.emit('cluster', result);
         }
@@ -206,7 +209,6 @@ exports.findunseccluster = (req, res) => {
     const socket = req.app.io;
     Cluster.find({cnox_stack: {$in: ['', 'unsecured']}}).exec((err, result) => {
         if (err) throw err;
-        console.log(result);
         if (socket !== undefined) {
             socket.emit('unseccluster', result);
 
@@ -221,7 +223,6 @@ exports.findAlllogevent = (req, res) => {
     Logtable.find({}).sort({timestamp: -1})
         .exec((err, result) => {
             if (err) throw err;
-            console.log(result);
             if (socket !== undefined) {
                 socket.emit('logs', result);
             }
@@ -231,7 +232,6 @@ exports.findAlllogevent = (req, res) => {
 
 exports.findAlltotals = (req, res) => {
     const socket = req.app.io;
-    // console.log('socket', Object.keys(socket.nsps['/'].sockets)[0])
     Cluster.find({}).exec((err, result) => {
         if (err) throw err;
         let totalNodes = 0;
@@ -382,7 +382,6 @@ const findSocketLogEvent = function (req) {
         const socket = req.app.io;
         Logtable.find({}).sort({timestamp:-1}).exec((err, result) => {
             if (err) throw err;
-            console.log(result);
             if (socket !== undefined) {
                 socket.emit('logs', result);
             }
@@ -393,7 +392,6 @@ const findSocketLogEvent = function (req) {
 const findSocketAllTotal = function (req) {
     return new Promise((resolve, reject) => {
         const socket = req.app.io;
-        // console.log('socket', Object.keys(socket.nsps['/'].sockets)[0])
         Cluster.find({}).exec((err, result) => {
             if (err) throw err;
             let totalNodes = 0;

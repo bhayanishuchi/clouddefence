@@ -2,6 +2,7 @@ var bodyParser = require('body-parser')
 var express = require('express');
 var cors = require('cors');
 const UserController = require('./controllers/usercontroller');
+const CustomerController = require('./controllers/customerController');
 var mongoose = require('mongoose');
 var url = "mongodb://localhost:27017/mydb";
 
@@ -39,6 +40,8 @@ app.get('/log',[UserController.findAlllogevent]);
 app.get('/totals',[UserController.findAlltotals]);
 app.get('/lists',[UserController.findAllstacklist]);
 app.delete('/deletecluster/:cluster_name',[UserController.delete]);
+app.post('/createcustomer',[CustomerController.create]);
+app.delete('/deletecustomer',[CustomerController.delete]);
 
 
 
