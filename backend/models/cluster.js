@@ -9,6 +9,7 @@ var clusterSchema = mongoose.Schema({
     Pods : Number,
     Services : Number,
     monitor_url : String,
+    license_key : String,
     scanner_url :String,
     compliance_url: String
 });

@@ -40,8 +40,8 @@ app.get('/log',[UserController.findAlllogevent]);
 app.get('/totals',[UserController.findAlltotals]);
 app.get('/lists',[UserController.findAllstacklist]);
 app.delete('/deletecluster/:cluster_name',[UserController.delete]);
-app.post('/createcustomer',[CustomerController.create]);
-app.delete('/deletecustomer',[CustomerController.delete]);
+app.post('/customer',[CustomerController.create]);
+app.delete('/customer',[CustomerController.delete]);
 
 
 
@@ -51,7 +51,7 @@ app.listen(3001, () =>
 
 let server = require('http').createServer(app);
 server.listen(3000, () => {
-    console.log(`server listening on port 3000`);
+    console.log(`socket listening on port 3000`);
 });
 let io = require('socket.io').listen(server);
 global.io = io;

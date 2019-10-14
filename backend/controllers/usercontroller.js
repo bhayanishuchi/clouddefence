@@ -1,38 +1,68 @@
 // var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
-var mongoose = require('mongoose');
+// var url = "mongodb://localhost:27017/mydb";
+// var mongoose = require('mongoose');
 var Cluster = require('../models/cluster');
 var Logtable = require('../models/logtable');
+var Customer = require('../models/customer');
 
 exports.create = (req, res) => {
-    var myobj = new Cluster({
-        cluster_name: req.body.cluster_name,
-        cnox_stack: req.body.cnox_stack,
-        cnox_endpoint: req.cnox_endpoint,
-        Nodes: req.body.Nodes,
-        Pods: req.body.Pods,
-        Services: req.body.Services,
-        monitor_url: req.body.monitor_url,
-        scanner_url: req.body.scanner_url,
-        compliance_url: req.body.compliance_url
-    });
+    if (req.body.cluster_name) {
+        Cluster.find({cluster_name: req.body.cluster_name}, function (err, data) {
+            if (err) {
+                console.log('err', err);
+                res.send(err);
+            } else {
+                if (data.length > 0) {
+                    console.log('This cluster_name already Exist, try other cluster_name');
+                    res.send('This cluster_name already Exist, try other cluster_name');
+                } else {
+                    Customer.findOne({name:req.body.customer_name, status: 'Activate'},function (err,customer) {
+                        if(err){
+                            console.log('err', err);
+                            res.send(err);
+                        } else {
+                            if(customer !== null){
+                                var myobj = new Cluster({
+                                    cluster_name: req.body.cluster_name,
+                                    cnox_stack: req.body.cnox_stack,
+                                    cnox_endpoint: req.cnox_endpoint,
+                                    Nodes: req.body.Nodes,
+                                    license_key: customer.customer_id,
+                                    Pods: req.body.Pods,
+                                    Services: req.body.Services,
+                                    monitor_url: req.body.monitor_url,
+                                    scanner_url: req.body.scanner_url,
+                                    compliance_url: req.body.compliance_url
+                                });
+                                myobj.save(function (err, res1) {
+                                    if (err) {
+                                        console.log("errorr", err)
+                                        throw err
+                                    } else {
+                                        console.log("cluster inserted");
+                                        findSocketTotalunseccluster(req)
+                                            .then(findSocketTotalStackList(req))
+                                            .then(findSocketAllTotal(req))
+                                            .then(findSocketLogEvent(req))
+                                            .then(findSocketAllcluster(req))
+                                            .then((data) => {
+                                                return res.send(data);
+                                            })
+                                    }
+                                });
+                            } else {
+                                console.log('Customer Not Found');
+                                res.send('Customer Not Found');
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    } else {
+        res.send('Required Parameter cluster_name is missing')
+    }
 
-    myobj.save(function (err, res1) {
-        if (err) {
-            console.log("errorr", err)
-            throw err
-        } else{
-            console.log("cluster inserted");
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-        }
-    });
     // return res.send('Received a POST HTTP method');
 
 };
@@ -174,7 +204,8 @@ exports.createlogevent = (req, res) => {
             if (err) {
                 console.log("errorr")
                 throw err
-            };
+            }
+            ;
             console.log("logevent inserted");
             findSocketTotalunseccluster(req)
                 .then(findSocketTotalStackList(req))
@@ -380,7 +411,7 @@ const findSocketTotalunseccluster = function (req) {
 const findSocketLogEvent = function (req) {
     return new Promise((resolve, reject) => {
         const socket = req.app.io;
-        Logtable.find({}).sort({timestamp:-1}).exec((err, result) => {
+        Logtable.find({}).sort({timestamp: -1}).exec((err, result) => {
             if (err) throw err;
             if (socket !== undefined) {
                 socket.emit('logs', result);

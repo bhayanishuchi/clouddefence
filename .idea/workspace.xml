@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/customerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/customerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/usercontroller.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/usercontroller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/cluster.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/cluster.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/customer.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +19,8 @@
     <session id="-845701080">
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="Angular2LanguageService" value="4" />
-          <entry key="TsLintLanguageService" value="5" />
+          <entry key="Angular2LanguageService" value="5" />
+          <entry key="TsLintLanguageService" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -26,7 +28,7 @@
           <entry key="css" value="1" />
           <entry key="html" value="2" />
           <entry key="ico" value="1" />
-          <entry key="js" value="7" />
+          <entry key="js" value="11" />
           <entry key="png" value="1" />
           <entry key="scss" value="1" />
           <entry key="ts" value="13" />
@@ -37,7 +39,7 @@
           <entry key="CSS" value="1" />
           <entry key="HTML" value="2" />
           <entry key="Image" value="2" />
-          <entry key="JavaScript" value="7" />
+          <entry key="JavaScript" value="11" />
           <entry key="SCSS" value="1" />
           <entry key="TypeScript" value="13" />
         </counts>
@@ -45,56 +47,39 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="11" />
-          <entry key="js" value="68" />
+          <entry key="js" value="507" />
           <entry key="ts" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="11" />
-          <entry key="JavaScript" value="68" />
+          <entry key="JavaScript" value="507" />
           <entry key="TypeScript" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.56" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="9" column="38" selection-start-line="8" selection-start-column="2" selection-end-line="9" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.prod.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/controllers/usercontroller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+            <state relative-caret-position="22">
+              <caret line="1" column="2" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
               <folding>
-                <element signature="e#285#651#0" />
+                <element signature="e#1744#2480#0" />
               </folding>
             </state>
           </provider>
@@ -103,8 +88,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+            <state relative-caret-position="230">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/controllers/customerController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
             </state>
           </provider>
         </entry>
@@ -150,10 +144,12 @@
         <option value="$PROJECT_DIR$/frontend/src/app/policy/policy.component.html" />
         <option value="$PROJECT_DIR$/frontend/src/app/service/socket.service.ts" />
         <option value="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.html" />
-        <option value="$PROJECT_DIR$/backend/models/cluster.js" />
-        <option value="$PROJECT_DIR$/backend/app.js" />
         <option value="$PROJECT_DIR$/frontend/src/environments/environment.ts" />
         <option value="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" />
+        <option value="$PROJECT_DIR$/backend/models/customer.js" />
+        <option value="$PROJECT_DIR$/backend/app.js" />
+        <option value="$PROJECT_DIR$/backend/controllers/customerController.js" />
+        <option value="$PROJECT_DIR$/backend/models/cluster.js" />
         <option value="$PROJECT_DIR$/backend/controllers/usercontroller.js" />
       </list>
     </option>
@@ -185,7 +181,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,6 +198,12 @@
               <item name="clouddefence" type="462c0819:PsiDirectoryNode" />
               <item name="backend" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="clouddefence" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clouddefence" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="clouddefence" type="b2602c69:ProjectViewProjectNode" />
@@ -226,6 +227,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -293,12 +295,13 @@
       <workItem from="1569563922161" duration="6172000" />
       <workItem from="1569913843911" duration="10689000" />
       <workItem from="1569933905141" duration="73000" />
-      <workItem from="1570081344230" duration="1650000" />
+      <workItem from="1570081344230" duration="3196000" />
+      <workItem from="1570859076255" duration="7158000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40169000" />
+    <option name="totallyTimeSpent" value="48873000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -318,8 +321,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.44617563" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.52691215" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -401,144 +404,6 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>7</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>8</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>18</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>19</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>20</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>23</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>9</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>10</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>11</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>12</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>13</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>14</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>16</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>15</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>24</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>25</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>26</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>27</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>28</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>29</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>30</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/backend/controllers/usercontroller.js</url>
-          <line>31</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="37" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.css">
@@ -688,16 +553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="968">
           <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/models/cluster.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
         </state>
       </provider>
     </entry>
@@ -718,33 +573,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.prod.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+        <state relative-caret-position="176">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/models/cluster.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="27" column="34" lean-forward="true" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        <state relative-caret-position="230">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.ts">
+    <entry file="file://$PROJECT_DIR$/backend/models/customer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="9" column="38" selection-start-line="8" selection-start-column="2" selection-end-line="9" selection-end-column="38" />
+        <state relative-caret-position="198">
+          <caret line="9" column="10" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/controllers/customerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/controllers/usercontroller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        <state relative-caret-position="22">
+          <caret line="1" column="2" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
           <folding>
-            <element signature="e#285#651#0" />
+            <element signature="e#1744#2480#0" />
           </folding>
         </state>
       </provider>

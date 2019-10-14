@@ -3,7 +3,10 @@ var mongoose = require('mongoose');
 var customerSchema = mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     customer_id :String,
-    name : String,
+    name : {
+        type: String,
+        unique: true,
+    },
     status :String,
 });
 
