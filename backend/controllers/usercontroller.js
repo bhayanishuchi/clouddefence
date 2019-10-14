@@ -16,7 +16,7 @@ exports.create = (req, res) => {
                     console.log('This cluster_name already Exist, try other cluster_name');
                     res.send('This cluster_name already Exist, try other cluster_name');
                 } else {
-                    Customer.findOne({name:req.body.customer_name, status: 'Activate'},function (err,customer) {
+                    Customer.findOne({customer_id:req.body.customer_id, status: 'Activate'},function (err,customer) {
                         if(err){
                             console.log('err', err);
                             res.send(err);

@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/customerController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/customerController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/usercontroller.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/usercontroller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/cluster.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/cluster.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/customer.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +16,8 @@
     <session id="-845701080">
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="Angular2LanguageService" value="5" />
-          <entry key="TsLintLanguageService" value="6" />
+          <entry key="Angular2LanguageService" value="6" />
+          <entry key="TsLintLanguageService" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -28,10 +25,10 @@
           <entry key="css" value="1" />
           <entry key="html" value="2" />
           <entry key="ico" value="1" />
-          <entry key="js" value="11" />
+          <entry key="js" value="13" />
           <entry key="png" value="1" />
           <entry key="scss" value="1" />
-          <entry key="ts" value="13" />
+          <entry key="ts" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -39,48 +36,77 @@
           <entry key="CSS" value="1" />
           <entry key="HTML" value="2" />
           <entry key="Image" value="2" />
-          <entry key="JavaScript" value="11" />
+          <entry key="JavaScript" value="13" />
           <entry key="SCSS" value="1" />
-          <entry key="TypeScript" value="13" />
+          <entry key="TypeScript" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="11" />
-          <entry key="js" value="507" />
+          <entry key="js" value="590" />
           <entry key="ts" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="11" />
-          <entry key="JavaScript" value="507" />
+          <entry key="JavaScript" value="590" />
           <entry key="TypeScript" value="12" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.56" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.71" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/controllers/usercontroller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="1" column="2" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+            <state relative-caret-position="482">
+              <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
               <folding>
-                <element signature="e#1744#2480#0" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/models/customer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="4" column="15" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/models/cluster.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="11" column="15" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frontend/src/environments/environment.prod.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -88,17 +114,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="142">
+              <caret line="42" column="43" lean-forward="true" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/controllers/customerController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
+            <state relative-caret-position="482">
+              <caret line="57" column="11" lean-forward="true" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -148,9 +174,9 @@
         <option value="$PROJECT_DIR$/frontend/src/environments/environment.prod.ts" />
         <option value="$PROJECT_DIR$/backend/models/customer.js" />
         <option value="$PROJECT_DIR$/backend/app.js" />
-        <option value="$PROJECT_DIR$/backend/controllers/customerController.js" />
         <option value="$PROJECT_DIR$/backend/models/cluster.js" />
         <option value="$PROJECT_DIR$/backend/controllers/usercontroller.js" />
+        <option value="$PROJECT_DIR$/backend/controllers/customerController.js" />
       </list>
     </option>
   </component>
@@ -232,7 +258,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="envir&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;en&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.ts&#10;env&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;app&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/app.module.ts&#10;envi&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.ts&#10;socket&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/service/socket.service.ts&#10;cluster&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/clustersync/clustersync.component.ts&#10;start&#9;FILE&#9;file://E:/clouddefence/frontend/start.sh" />
+    <property name="SearchEverywhereHistoryKey" value="envi&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;envir&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;en&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.ts&#10;env&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;app&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/app.module.ts&#10;socket&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/service/socket.service.ts&#10;cluster&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/clustersync/clustersync.component.ts&#10;start&#9;FILE&#9;file://E:/clouddefence/frontend/start.sh" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src" />
@@ -297,11 +323,13 @@
       <workItem from="1569933905141" duration="73000" />
       <workItem from="1570081344230" duration="3196000" />
       <workItem from="1570859076255" duration="7158000" />
+      <workItem from="1571048444847" duration="1717000" />
+      <workItem from="1571050301291" duration="3946000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48873000" />
+    <option name="totallyTimeSpent" value="54536000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -314,7 +342,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -331,7 +358,7 @@
       <window_info anchor="bottom" id="TypeScript" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.41926345" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.18271954" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -587,41 +614,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/models/cluster.js">
+    <entry file="file://$PROJECT_DIR$/backend/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="24" lean-forward="true" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+        <state relative-caret-position="142">
+          <caret line="42" column="43" lean-forward="true" selection-start-line="42" selection-start-column="43" selection-end-line="42" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/app.js">
+    <entry file="file://$PROJECT_DIR$/backend/models/cluster.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="242">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/models/customer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="10" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/controllers/customerController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        <state relative-caret-position="88">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/controllers/usercontroller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="2" lean-forward="true" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+        <state relative-caret-position="482">
+          <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
           <folding>
-            <element signature="e#1744#2480#0" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/controllers/customerController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="57" column="11" lean-forward="true" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
         </state>
       </provider>
     </entry>

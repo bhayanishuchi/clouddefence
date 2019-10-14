@@ -49,7 +49,12 @@ exports.delete = (req, res) => {
         Customer.deleteOne(myquery).exec((err, obj) => {
             if (err) throw err;
             console.log("1 customer deleted");
-            return res.send('Customer Deleted, Name: ' + req.body.name);
+            let a ={
+                "status":200,
+                "Message": "Customer Deleted Successfully"
+            }
+            // return res.send('Customer Deleted, Name: ' + req.body.name);
+            return res.send(a);
         });
     } else {
         res.status(500).send('Body parameter NAME is missing')
