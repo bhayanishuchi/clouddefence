@@ -4,7 +4,7 @@ var clusterSchema = mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     cluster_name :String,
     cnox_stack : String,
-    cnox_endpoint :String,
+    cnox_engine_url :String,
     Nodes : Number,
     Pods : Number,
     Services : Number,

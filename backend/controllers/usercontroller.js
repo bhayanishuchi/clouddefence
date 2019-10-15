@@ -25,7 +25,7 @@ exports.create = (req, res) => {
                                 var myobj = new Cluster({
                                     cluster_name: req.body.cluster_name,
                                     cnox_stack: req.body.cnox_stack,
-                                    cnox_endpoint: req.cnox_endpoint,
+                                    cnox_engine_url: req.cnox_engine_url,
                                     Nodes: req.body.Nodes,
                                     license_key: customer.customer_id,
                                     Pods: req.body.Pods,
