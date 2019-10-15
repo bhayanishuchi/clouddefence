@@ -74,7 +74,7 @@ export class ClustersyncComponent implements OnInit {
     this.display = 'none';
     let stack_name =  {"stack_name": this.selectedStack};
     console.log('stack',stack_name);
-    this.mainservice.updateStack(this.clusterData.cluster_name, stack_name).subscribe((res) => {
+    this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
       if(this.clusterData.cnox_stack === "unsecured") {
         alert(this.clusterData.cluster_name + " is secured.");
@@ -88,6 +88,7 @@ export class ClustersyncComponent implements OnInit {
   }
 
   onClusterChange(data,index) {
+    console.log('clusterData', data)
     this.clusterData = data;
     this.clusterlist.forEach((x, i) => {
       if (index !== i) {
@@ -106,6 +107,7 @@ export class ClustersyncComponent implements OnInit {
   onStackChange(event) {
     this.selectedStack = event.target.value;
   }
+
   getUnsecuredCluster() {
     this.mainservice.getUnsecCluster()
       .subscribe(response => {
