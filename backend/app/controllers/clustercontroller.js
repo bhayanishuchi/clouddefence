@@ -133,7 +133,7 @@ exports.createCluster = (req, res) => {
     let validatingInputs = () => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            if (req.body.customer_id) {
+            if (req.body.license_key) {
                 if (req.body.cluster_name) {
                     resolve();
                 } else {
@@ -141,7 +141,7 @@ exports.createCluster = (req, res) => {
                     reject(apiResponse);
                 }
             } else {
-                let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                let apiResponse = response.generate(true, "Required Parameter license_key is missing", 400, null);
                 reject(apiResponse);
             }
         });
@@ -150,7 +150,7 @@ exports.createCluster = (req, res) => {
     let checkCustomer = () => {
         console.log("checkCustomer");
         return new Promise((resolve, reject) => {
-            Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
+            Customer.findOne({customer_id: req.body.license_key}, function (err, customerDetail) {
                 if (err) {
                     logger.error("Internal Server error while fetching customer", "createCustomer => checkCustomer()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -266,7 +266,7 @@ exports.putCnoxEngineUrl = (req, res) => {
                     reject(apiResponse);
                 } else if (check.isEmpty(clusterData)) {
                     logger.error("Cluster not found", "putCnoxEngineUrl => checkCluster()", 5);
-                    let apiResponse = response.generate(true, "Cluster not found", 400, null);
+                    let apiResponse = response.generate(true, "Cluster not found", 401, null);
                     reject(apiResponse);
                 } else {
                     resolve(clusterData);
