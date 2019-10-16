@@ -1108,7 +1108,7 @@ exports.deleteCnoxStack = (req, res) => {
     let updateCluster = (clusterData) => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            clusterData.cnox_stack = '';
+            clusterData.cnox_stack = 'Stack delete in progress';
             clusterData.save();
             resolve(clusterData)
         });
