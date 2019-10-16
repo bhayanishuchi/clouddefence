@@ -1,0 +1,23 @@
+.login-content .lc-block {
+  margin-left: -240px !important;
+}
+
+@media ( min-height: 300px ) and ( max-height: 500px )
+{
+  .login-content .lc-block {
+    margin-top: 50px !important;
+  }
+}/*
+@media ( min-height: 200px ) and ( max-height: 300px )
+{
+  .login-content .lc-block {
+    margin-top: 0px !important;
+  }
+}*/
+@media ( min-height: 600px ) and ( max-height: 1200px )
+{
+  .login-content .lc-block {
+    margin-top: 120px !important;
+  }
+}
+

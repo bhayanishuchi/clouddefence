@@ -35,4 +35,8 @@ export class MainService {
     return this.http.post<any>(cnoxEngineUrl + '/cluster/' + clustername + '/cnox_stack', data);
   }
 
+  deleteStack(clustername) {
+    return this.http.delete(this.newapi + '/cluster/' + clustername + '/cnox_stack');
+  }
+
 }

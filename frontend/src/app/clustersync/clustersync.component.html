@@ -22,7 +22,7 @@
           </div>
         </li>
         <li>
-          <div class="funfact-item text-center">
+          <div class="funfact-item text-center" (click)="openClusterModal()">
 								<span class="item-icon">
 									<img src="assets/images/icons/icon_8.png" alt="icon_not_found">
 								</span>
@@ -89,8 +89,13 @@
               </button>
             </li>
             <li>
-              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor" (click)="openModal()">
+              <button type="button" [ngClass]="(this.clusterData.cnox_stack === 'unsecured') ? 'bg-default-orange': 'bg-light-gray'" (click)="openModal()">
                 Secure
+              </button>
+            </li>
+            <li>
+              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor" (click)="deleteStack()">
+                Delete
               </button>
             </li>
           </ul>
@@ -164,6 +169,26 @@
                 </li>
               </ul>
               <button type="submit" class="push-btn bg-default-orange" (click)="onCloseHandled()">PUSH</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="backdrop" [ngStyle]="{'display':clusterDisplay}"></div>
+
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':clusterDisplay}">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="onCloseCluster()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="info-list ul-li-block clearfix">
+              <div style="overflow-y: scroll; height: 200px">{{text}}</div>
+              <button type="submit" class="push-btn bg-default-orange" (click)="copyText(text)">Copy to clipboard</button>
             </div>
           </div>
         </div>

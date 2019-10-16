@@ -14,8 +14,10 @@ export class ClustersyncComponent implements OnInit {
   clusterData: any = {};
   display = 'none';
   viewDisplay = 'none';
+  clusterDisplay = 'none';
   selectedStack = '';
-  btncolor= false;
+  btncolor = false;
+  text = 'The finance ministry has extended the deadline for filing income tax return (ITR) for FY2018-19 by individuals to August 31, 2019 from July 31, 2019. The extension is a much needed relief as there were multiple problems being faced by individuals in filing ITR by July 31Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.';
 
   constructor(private mainservice: MainService,
               private http: HttpClient,
@@ -28,7 +30,7 @@ export class ClustersyncComponent implements OnInit {
     const that = this;
     this.userService.cluster(this.socket, function (data) {
       console.log('socket cluster', data);
-      data.forEach((x)=>{
+      data.forEach((x) => {
         x.checked = false;
       })
       that.clusterlist = data;
@@ -39,11 +41,11 @@ export class ClustersyncComponent implements OnInit {
   getAllCluster() {
     this.mainservice.getCluster()
       .subscribe(response => {
-        response.forEach((x)=>{
+        response.forEach((x) => {
           x.checked = false;
         });
         this.clusterlist = response;
-    });
+      });
   }
 
   openModal() {
@@ -72,11 +74,11 @@ export class ClustersyncComponent implements OnInit {
 
   onCloseHandled() {
     this.display = 'none';
-    let stack_name =  {"stack_name": this.selectedStack};
-    console.log('stack',stack_name);
+    let stack_name = {"stack_name": this.selectedStack};
+    console.log('stack', stack_name);
     this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
-      if(this.clusterData.cnox_stack === "unsecured") {
+      if (this.clusterData.cnox_stack === "unsecured") {
         alert(this.clusterData.cluster_name + " is secured.");
       }
     });
@@ -87,7 +89,7 @@ export class ClustersyncComponent implements OnInit {
 
   }
 
-  onClusterChange(data,index) {
+  onClusterChange(data, index) {
     console.log('clusterData', data)
     this.clusterData = data;
     this.clusterlist.forEach((x, i) => {
@@ -111,11 +113,41 @@ export class ClustersyncComponent implements OnInit {
   getUnsecuredCluster() {
     this.mainservice.getUnsecCluster()
       .subscribe(response => {
-        response.forEach((x)=>{
+        response.forEach((x) => {
           x.checked = false;
         });
         this.clusterlist = response;
       });
   }
 
+  deleteStack() {
+    this.mainservice.deleteStack(this.clusterData.cluster_name)
+      .subscribe((res) => {
+        this.getAllCluster();
+        console.log('res', res);
+      });
+  }
+
+  openClusterModal() {
+    this.clusterDisplay = 'block';
+  }
+
+  onCloseCluster() {
+    this.clusterDisplay = 'none';
+  }
+
+  copyText(val: string) {
+    console.log('text', val)
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
 }
