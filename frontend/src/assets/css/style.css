@@ -113,7 +113,6 @@ strong {
     padding: 0px 20px;
     border: 1px solid #e1e1e1;
     -webkit-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out; }
     .form-item input:focus {
       outline: none;
@@ -133,7 +132,6 @@ strong {
     text-align: center;
     color: #f56417;
     -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     background-color: #ffffff; }
 
@@ -146,7 +144,6 @@ strong {
     min-height: 100px;
     border: 1px solid #e1e1e1;
     -webkit-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out; }
     .form-textarea textarea:focus {
       outline: none;
@@ -174,10 +171,8 @@ strong {
     font-weight: 900;
     content: '\f0d7';
     -webkit-transform-origin: 0%;
-    -ms-transform-origin: 0%;
     transform-origin: 0%;
     -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     font-family: 'Font Awesome 5 Pro'; }
   .select-option .nice-select .list {
@@ -215,7 +210,6 @@ strong {
       position: absolute;
       background-color: #ffffff;
       -webkit-transition: all 0.3s ease-in-out;
-      -o-transition: all 0.3s ease-in-out;
       transition: all 0.3s ease-in-out;
       border: 2px solid #f56417; }
     .onoff-switch label > span {
@@ -231,6 +225,43 @@ strong {
     left: 83px; }
   .onoff-switch:checked ~ label > span {
     color: #f56417; }
+
+.check-btn input {
+  float: left;
+  width: 20px;
+  height: 20px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-right: 5px;
+  position: relative;
+  border: 1px solid #e1e1e1;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+  .check-btn input:before {
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    line-height: 1;
+    cursor: pointer;
+    font-size: 14px;
+    content: '\f00c';
+    font-weight: 400;
+    color: #ffffff;
+    position: absolute;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-family: 'Font Awesome 5 Pro'; }
+  .check-btn input:checked {
+    border-color: #f56417;
+    background-color: #f56417; }
+    .check-btn input:checked:before {
+      opacity: 1; }
 
 :-moz-placeholder {
   text-transform: capitalize; }
@@ -412,7 +443,6 @@ strong {
 a,
 button {
   -webkit-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
 
 /* transition - end
@@ -475,7 +505,6 @@ button {
   position: fixed;
   background-color: #ffffff;
   -webkit-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.09);
   box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.09); }
@@ -498,7 +527,6 @@ button {
     overflow-y: scroll;
     background-color: #ffffff;
     -webkit-transition: 0.6s cubic-bezier(1, 0, 0, 1);
-    -o-transition: 0.6s cubic-bezier(1, 0, 0, 1);
     transition: 0.6s cubic-bezier(1, 0, 0, 1); }
     .sidebar-menu-wrapper .sidebar-menu .mCustomScrollBox {
       overflow: visible !important; }
@@ -550,7 +578,6 @@ button {
     position: fixed;
     background: rgba(0, 0, 0, 0.7);
     -webkit-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out; }
   .sidebar-menu-wrapper .overlay.active {
     opacity: 1;
@@ -558,6 +585,9 @@ button {
 
 .sidebar-menu::-webkit-scrollbar {
   width: 0px; }
+#register-section {
+	background: #fff;
+}
 
 /* sidebar menu - end
 ================================================== */
@@ -752,7 +782,6 @@ button {
         border: 2px solid #e1e1e1;
         background-color: #ffffff;
         -webkit-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out; }
         .cnox-protection-section .cnox-protection-table .table-container .table td input[type=checkbox]:before, .cnox-protection-section .cnox-protection-table .table-container .table th input[type=checkbox]:before {
           top: 50%;
@@ -765,10 +794,8 @@ button {
           color: #ffffff;
           position: absolute;
           -webkit-transition: all 0.3s ease-in-out;
-          -o-transition: all 0.3s ease-in-out;
           transition: all 0.3s ease-in-out;
           -webkit-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
           font-family: 'Font Awesome 5 Pro'; }
         .cnox-protection-section .cnox-protection-table .table-container .table td input[type=checkbox]:checked, .cnox-protection-section .cnox-protection-table .table-container .table th input[type=checkbox]:checked {
@@ -945,7 +972,6 @@ button {
             position: absolute;
             background-color: #ffffff;
             -webkit-transition: all 0.3s ease-in-out;
-            -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
             border: 2px solid #f56417; }
           .policy-section .tab-container .policy-tabs-nav > ul > li > a:hover {
@@ -982,7 +1008,6 @@ button {
         margin-bottom: 15px;
         font-weight: 500;
         -webkit-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out; }
       .policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li .radio-btn input {
         width: 20px;
@@ -997,7 +1022,6 @@ button {
         border: 2px solid #e1e1e1;
         background-color: #f5f6fa;
         -webkit-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out; }
         .policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li .radio-btn input:before {
           top: 50%;
@@ -1010,10 +1034,8 @@ button {
           position: absolute;
           border-radius: 100%;
           -webkit-transition: all 0.3s ease-in-out;
-          -o-transition: all 0.3s ease-in-out;
           transition: all 0.3s ease-in-out;
           -webkit-transform: translate(-50%, -50%);
-          -ms-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
           background-color: #f56417; }
         .policy-section .tab-container .tab-content .tab-pane .security-resources > ul > li .radio-btn input:checked {
@@ -1056,6 +1078,81 @@ button {
 /* policy section - end
 ================================================== */
 /* home page - end
+==================================================================================================== */
+/* register pages - start
+==================================================================================================== */
+.check-btn-wrp a {
+	float: right;
+	color: #8c8c8c;
+}
+.check-btn {
+	display: inline-block;
+	width: 50%;
+}
+.register-form.mb-30 {
+	margin-bottom: 87px;
+}
+.register-section {
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .register-section:before {
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 50%;
+    content: '';
+    z-index: -1;
+    position: absolute;
+    background-color: #f56417; }
+  .register-section .content-wrapper {
+    margin: auto;
+    height: auto;
+    max-width: 33.333%; }
+    .register-section .content-wrapper .register-form {
+      position: relative;
+      padding: 60px 40px;
+      padding-right: 50px;
+      background-color: #ffffff;
+      -webkit-box-shadow: 0px 5px 30px 1px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 5px 30px 1px rgba(0, 0, 0, 0.2); }
+      .register-section .content-wrapper .register-form .submit-btn {
+        top: 50%;
+        right: -25px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        position: absolute;
+        color: #ffffff;
+        border-radius: 100%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        background-color: #f56417;
+        -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2); }
+      .register-section .content-wrapper .register-form .form-item {
+        margin-bottom: 20px; }
+        .register-section .content-wrapper .register-form .form-item input {
+          padding-left: 50px; }
+        .register-section .content-wrapper .register-form .form-item .form-btn {
+          left: 5px;
+          right: unset; }
+    .register-section .content-wrapper .forget-pass > a {
+      font-size: 16px;
+      padding: 5px 20px;
+      color: #ffffff;
+      border-radius: 45px;
+      background-color: #ff9800;
+      text-decoration: underline; }
+
+/* register pages - end
 ==================================================================================================== */
 /* ================================================== 
 *	Project Name 	:  Cloud Defense
@@ -1158,7 +1255,12 @@ button {
     max-width: 30px; }
   .policy-section .policy-central .upload-field .item-title {
     font-size: 16px; }
-  /* tabs - end */ }
+  /* tabs - end */
+  /* login - start */
+ .register-section .content-wrapper {
+	max-width: 450px !important;
+}
+  /* login - end */ }
 
 /* ====================================================================================================
 3 - media screen and (max-width: 1199px) - end
@@ -1234,6 +1336,39 @@ button {
 /* ====================================================================================================
 6 - media screen and (max-width: 680px) - start
 ==================================================================================================== */
+@media screen and (max-width: 680px) {
+  /* login - start */
+  .register-section .content-wrapper {
+    max-width: 70%; }
+  .register-section .content-wrapper .register-form {
+	padding: 40px 14px;
+	padding-right: 14px;
+}
+ .check-btn label {
+	font-size: 12px;
+} 
+.check-btn-wrp a {
+	
+	font-size: 12px;
+}
+.check-btn input {
+
+	margin-top: -1px;
+	
+} 
+    
+    
+  .register-section .content-wrapper .register-form .submit-btn {
+    width: 100%;
+    position: static;
+    -webkit-transform: unset;
+    transform: unset;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 45px;
+    margin-bottom: 20px; }
+  /* login - end */ }
+
 /* ====================================================================================================
 6 - media screen and (max-width: 680px) - end
 ==================================================================================================== */
@@ -1387,6 +1522,12 @@ button {
 /* ====================================================================================================
 8 - media screen and (max-width: 480px) - start
 ==================================================================================================== */
+@media screen and (max-width: 480px) {
+  /* login - start */
+  .register-section .content-wrapper {
+    max-width: 100%; }
+  /* login - end */ }
+
 /* ====================================================================================================
 8 - media screen and (max-width: 480px) - end
 ==================================================================================================== */

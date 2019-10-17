@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {MainService} from "../main.service";
 
 @Component({
   selector: 'app-login',
@@ -9,20 +11,22 @@ export class LoginComponent implements OnInit {
 
   user: any = {}
 
-  constructor() {
+  constructor(private router: Router,
+              private mainService: MainService) {
   }
 
   ngOnInit() {
   }
 
-  onConfirmPassword() {
-    console.log('password', this.user, this.user.password, this.user.confirmPassword);
-    if (this.user.password !== this.user.confirmPassword) {
-      alert('Confirm Password is not match');
-    }
-  }
 
   onSubmit() {
+    this.router.navigate(['/register']);
+    // this.mainService.shareData(this.user);
+   /* if (res.password === '') {
+      this.router.navigate(['/register']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }*/
     console.log('user', this.user);
   }
 

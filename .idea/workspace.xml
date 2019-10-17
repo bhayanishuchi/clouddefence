@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/controllers/clustercontroller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/controllers/policycontroller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/models/policy.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/models/user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/routes/cluster.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/app/routes/policy.js" afterDir="false" />
+    <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="change field name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/controllers/usercontroller.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/controllers/usercontroller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/app/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/routes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/main.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/main.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/animate.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/app.min.1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/app.min.2.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/custom.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/fontawesome-all.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/fontawesome-all.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/nice-select.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/nice-select.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/images/logo/logo_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/images/logo/logo_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +43,7 @@
     <property name="SearchEverywhereHistoryKey" value="envi&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;envir&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;en&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.ts&#10;env&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/environments/environment.prod.ts&#10;app&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/app.module.ts&#10;socket&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/service/socket.service.ts&#10;cluster&#9;FILE&#9;file://E:/Shuchi/clouddefence/frontend/src/app/clustersync/clustersync.component.ts&#10;start&#9;FILE&#9;file://E:/clouddefence/frontend/start.sh" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src/assets/images" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -49,11 +57,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/assets/images" />
+      <recent name="$PROJECT_DIR$/frontend/src/assets/css" />
       <recent name="E:\Shuchi\clouddefence\frontend\src\assets\images\icons" />
       <recent name="E:\Shuchi\clouddefence\frontend\src\assets\scss" />
       <recent name="E:\Shuchi\clouddefence\frontend\src\assets\js" />
-      <recent name="E:\Shuchi\clouddefence\frontend\src\assets\images" />
-      <recent name="E:\Shuchi\clouddefence\frontend\src\assets\fonts" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -100,7 +108,32 @@
       <workItem from="1571048444847" duration="1717000" />
       <workItem from="1571050301291" duration="4210000" />
       <workItem from="1571115938867" duration="960000" />
+      <workItem from="1571294584686" duration="6649000" />
+      <workItem from="1571305329533" duration="2779000" />
+      <workItem from="1571308879767" duration="7500000" />
     </task>
+    <task id="LOCAL-00001" summary="User and policy table and api">
+      <created>1571218957156</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571218957156</updated>
+    </task>
+    <task id="LOCAL-00002" summary="minor message change">
+      <created>1571219989488</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1571219989488</updated>
+    </task>
+    <task id="LOCAL-00003" summary="change field name">
+      <created>1571220705508</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1571220705508</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -142,5 +175,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="User and policy table and api" />
+    <MESSAGE value="minor message change" />
+    <MESSAGE value="change field name" />
+    <option name="LAST_COMMIT_MESSAGE" value="change field name" />
   </component>
 </project>

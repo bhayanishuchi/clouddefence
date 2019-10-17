@@ -1,0 +1,194 @@
+#!/bin/bash
+
+#
+# Copyright 2019 Cloud Defense Authors
+#
+
+exit_with_print_usage () {
+    echo "Usage: deploy-cnox <clusterName> <licenseKey>"
+    exit
+}
+
+echo_with_exit() {
+   echo "$*"
+   exit
+}
+
+if [ $# -ne 2 ]; then
+    echo "Missing arguments"
+    exit_with_print_usage
+fi
+
+if [ -z "$1" ]; then
+    echo "clusterName empty"
+    exit_with_print_usage
+fi
+export CLUSTER_NAME=$1
+
+if [ -z "$2" ]; then
+    echo "licenseKey empty"
+    exit_with_print_usage
+fi
+export LICENSE_KEY=$2
+
+# TODO: extract only the cred needed for the provided context
+# TODO: add cnox registry secret creation
+
+create_kubecreds_secret () {
+    echo "preparing kube credential secrets ..."
+    KUBE_CREDS_FILE=$(mktemp)
+    kubectl config view --raw -o yaml > "${KUBE_CREDS_FILE}"
+    kubectl delete secret cnoxkubecreds --wait --ignore-not-found
+    kubectl create secret generic cnoxkubecreds --from-file=cnoxkubecreds="${KUBE_CREDS_FILE}"
+    rm -f "${KUBE_CREDS_FILE}"
+}
+
+create_cnox_deployment () {
+    echo "cleaning up old cnox deployment (if any) ..."
+    kubectl delete service cnoxengine --wait --ignore-not-found
+    kubectl delete deployment cnoxengine --wait --ignore-not-found
+    echo "deploying cnox ..."
+    generate_cnox_deployment | kubectl apply -f -
+    generate_cnox_service | kubectl apply -f -
+}
+
+# TODO: check if kubectl is pointing to valid supported kubernetes
+#       cluster with ver >= CNOX_MIN_VER && <= CNOX_MAX_VER
+check_prerequisite () {
+    requiredCmds=( curl jq kubectl )
+    for cmd in "${requiredCmds[@]}"
+    do
+        if ! command -v "${cmd}" >> /dev/null
+        then
+            echo_with_exit "${cmd} command missing. Please install ${cmd} and retry"
+        fi
+    done
+}
+
+stack_post_data() {
+  cat << EOF
+  {
+     "cluster_name" : "$CLUSTER_NAME",
+     "cnox_stack" : "unsecured",
+     "cnox_engine_url" : "",
+     "customer_id": "$LICENSE_KEY",
+     "Nodes" : "",
+     "Pods" : "0",
+     "Services" : "0",
+     "monitor_url" : "",
+     "scanner_url" :""
+  }
+EOF
+}
+
+create_dashboard_stack() {
+    TEMPOUTFILE=$(mktemp)
+    TEMPERRFILE=$(mktemp)
+    CNOX_CLOUD_SERVICE_URL="http://34.208.221.82:3000/"
+    respStatus=$(curl --silent --connect-timeout 10 --write-out "%{http_code}" --output "${TEMPOUTFILE}" --header "Content-Type: application/json" --data "$(stack_post_data)" "${CNOX_CLOUD_SERVICE_URL}" 2> "${TEMPERRFILE}")
+    if [ "$respStatus" == "000" ]; then
+        cat "${TEMPERRFILE}"
+        echo_with_exit "Couldn't reach CNOX license server. Please check your network connection and retry"
+    fi
+    respMesg=$(jq .message < "${TEMPOUTFILE}" )
+
+    case $respStatus in
+    200)
+        echo "Successfully validated CNOX license key"
+        echo "Deploying CNOX ..."
+        ;;
+    401)
+        case $respMesg in
+        '"Customer Not Found"')
+            echo_with_exit "Invalid License Key. Please check and retry"
+            ;;
+        '"Customer Inactive"')
+            echo_with_exit "Invalid License Key. Please check and retry"
+            ;;
+        '"Cluster Already Exists"')
+            echo "Cluster already exist. Cleanup (if needed) and re-install cnox"
+            ;;
+        esac
+        ;;
+    esac
+
+    # TODO: handle the case if CLUSTER_NAME already exist
+    rm -f "$TEMPOUTFILE" "$TEMPERRFILE"
+}
+
+create_cnox_config () {
+    kubectl delete configmap cnoxengine --ignore-not-found
+    kubectl create configmap cnoxengine --from-literal=clusterName="${CLUSTER_NAME}" --from-literal=licenseKey="${LICENSE_KEY}"
+}
+
+generate_cnox_deployment() {
+  cat << CNOX_DEPLOYMENT_EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cnoxengine
+  labels:
+    app: cnoxengine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cnoxengine
+  template:
+    metadata:
+      labels:
+        app: cnoxengine
+    spec:
+      containers:
+      - name: cnoxengine
+        image: quay.io/srics/cnoxengine:latest
+        command: ["/cnox/bin/engine"]
+        ports:
+        - containerPort: 8888
+        env:
+        - name: KUBECONFIG
+          value: "/cnox/credentials/cnoxkubecreds"
+        - name: CLUSTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: cnoxengine
+              key: clusterName
+        - name: LICENSE_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: cnoxengine
+              key: licenseKey
+        volumeMounts:
+        - name: cnox-kube-creds
+          mountPath: "/cnox/credentials"
+          readOnly: true
+      volumes:
+      - name: cnox-kube-creds
+        secret:
+          secretName: cnoxkubecreds
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: cnox-registry-secret
+CNOX_DEPLOYMENT_EOF
+}
+
+generate_cnox_service() {
+    cat << CNOX_SERVICE_EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: cnoxengine
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8888
+  selector:
+    app: cnoxengine
+CNOX_SERVICE_EOF
+}
+
+check_prerequisite
+create_dashboard_stack
+create_cnox_config
+create_kubecreds_secret
+create_cnox_deployment

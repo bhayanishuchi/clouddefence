@@ -7,9 +7,19 @@ import {environment} from "../environments/environment";
 })
 export class MainService {
   newapi = environment.api;
+  sharedData: any = {};
 
   constructor(private http: HttpClient) {
   }
+
+  setShareData(data) {
+     this.sharedData = data;
+  }
+
+  getShareData() {
+     return this.sharedData;
+  }
+
 
   getCluster() {
     return this.http.get<any>(this.newapi + '/cluster');
@@ -37,6 +47,11 @@ export class MainService {
 
   deleteStack(clustername) {
     return this.http.delete(this.newapi + '/cluster/' + clustername + '/cnox_stack');
+  }
+
+
+  changeStack(clustername, stack) {
+    return this.http.put(this.newapi + '/cluster/' + clustername + '/stack', stack);
   }
 
 }

@@ -17,6 +17,7 @@ import { NiceSelectModule } from "ng-nice-select";
 import {environment} from "../environments/environment";
 import { PolicyComponent } from './policy/policy.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -28,7 +29,8 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     HeaderComponent,
     FooterComponent,
     PolicyComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const response = require('./../libs/responseLib')
 const logger = require('./../libs/loggerLib');
 const check = require('../libs/checkLib')
+const tokenLib = require('../libs/tokenLib')
 
 const User = mongoose.model('User');
 const Customer = mongoose.model('Customer');
+const tokenCol = mongoose.model('tokenCollection');
 
 let createUser = (req, res) => {
 
@@ -102,6 +104,197 @@ let createUser = (req, res) => {
         });
 };
 
+let loginUser = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.body.username && req.body.customername && req.body.password) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter username or customername or password is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({name: req.body.customername}, function (err, customerDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "loginUser => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer Not Exists", "loginUser => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer Not Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(customerDetail);
+                }
+            })
+        });
+    }; // end of checkCustomer
+
+    let pwdMatch = (userDetails) => {
+        console.log("pwdMatch");
+        return new Promise((resolve, reject) => {
+            let password = req.body.password
+            userDetails.comparePassword(password, function (err, match) {
+                if (err) {
+                    logger.error("Internal Server Error while compare password", "loginUser => pwdMatch()", 5);
+                    let apiResponse = response.generate(true, "Internal Server Error while compare password", 500, null);
+                    reject(apiResponse);
+                } else {
+                    if (match === true) {
+                        generateToken(userDetails)
+                            .then((finaltokens)=>{
+                                resolve(finaltokens);
+                            })
+                            .catch((e)=>{
+                                reject(e)
+                            })
+
+                    } else {
+                        logger.error("Wrong Password", "loginUser => pwdMatch()", 5);
+                        let apiResponse = response.generate(true, "Wrong Password", 401, null);
+                        reject(apiResponse);
+                    }
+                }
+            });
+        });
+    } // end of pwdMatch function
+
+    let generateToken = (user) => {
+        console.log("generateToken");
+        return new Promise((resolve, reject) => {
+            tokenLib.generateToken(user, (err, tokenDetails) => {
+                if (err) {
+                    logger.error("Failed to generate token", "userController => generateToken()", 10);
+                    let apiResponse = response.generate(true, "Failed to generate token", 500, null);
+                    reject(apiResponse);
+                } else {
+                    let finalObject = user.toObject();
+                    delete finalObject.__v;
+                    tokenDetails.userId = user._id
+                    tokenDetails.userDetails = finalObject;
+                    saveToken(tokenDetails)
+                        .then((savetokenres)=>{
+                            resolve(savetokenres);
+                        })
+                        .catch((e)=>{
+                            reject(e)
+                        })
+                }
+            });
+        });
+    }; // end of generateToken
+
+    let saveToken = (tokenDetails) => {
+        console.log("saveToken");
+        return new Promise((resolve, reject) => {
+            tokenCol.findOne({userId: tokenDetails.userId})
+                .exec((err, retrieveTokenDetails) => {
+                    if (err) {
+                        let apiResponse = response.generate(true, "Failed to save token", 500, null);
+                        reject(apiResponse);
+                    }
+                    // player is logging for the first time
+                    else if (check.isEmpty(retrieveTokenDetails)) {
+                        let newAuthToken = new tokenCol({
+                            userId: tokenDetails.userId,
+                            authToken: tokenDetails.token,
+                            // we are storing this is due to we might change this from 15 days
+                            tokenSecret: tokenDetails.tokenSecret,
+                            tokenGenerationTime: new Date().getTime()
+                        });
+
+                        newAuthToken.save((err, newTokenDetails) => {
+                            if (err) {
+                                let apiResponse = response.generate(true, "Failed to save token", 500, null);
+                                reject(apiResponse);
+                            } else {
+                                let responseBody = {
+                                    authToken: newTokenDetails.authToken,
+                                    userDetails: tokenDetails.userDetails
+                                };
+                                resolve(responseBody);
+                            }
+                        });
+                    }
+                    // user has already logged in need to update the token
+                    else {
+                        retrieveTokenDetails.authToken = tokenDetails.token;
+                        retrieveTokenDetails.tokenSecret = tokenDetails.tokenSecret;
+                        retrieveTokenDetails.tokenGenerationTime = new Date().getTime();
+                        retrieveTokenDetails.save((err, newTokenDetails) => {
+                            if (err) {
+                                let apiResponse = response.generate(true, "Failed to save token", 500, null);
+                                reject(apiResponse);
+                            } else {
+                                delete tokenDetails._id;
+                                delete tokenDetails.__v;
+                                let responseBody = {
+                                    authToken: newTokenDetails.authToken,
+                                    userDetails: tokenDetails.userDetails
+                                };
+                                resolve(responseBody);
+                            }
+                        });
+                    }
+                });
+        });
+
+    }; // end of saveToken
+
+    let checkUser = (customerData) => {
+        console.log("checkUser");
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                username: req.body.username,
+                customer_id: customerData.customer_id
+            }, function (err, userDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(userDetail)) {
+                    logger.error("User Already Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "User Already Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    if (userDetail.password && userDetail.password !== '' && userDetail.password !== null) {
+                        Promise.all([pwdMatch(userDetail)])
+                            .then((data)=>{
+                                console.log('data', data);
+                                resolve({user: userDetail, password: true, tokens: data});
+                            })
+                            .catch((e)=>{
+                                reject(e);
+                            })
+                    } else {
+                        console.log('else data');
+                        resolve({user: userDetail, password: false, tokens: []});
+                    }
+                }
+            })
+        });
+    }; // end of checkUser
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(checkUser)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
 let deleteUser = (req, res) => {
 
     let validatingInputs = () => {
@@ -119,7 +312,10 @@ let deleteUser = (req, res) => {
     let checkUser = () => {
         console.log("checkUser");
         return new Promise((resolve, reject) => {
-            User.find({username: req.params.username, customer_id: req.params.customer_id}, function (err, customerDetail) {
+            User.find({
+                username: req.params.username,
+                customer_id: req.params.customer_id
+            }, function (err, customerDetail) {
                 if (err) {
                     logger.error("Internal Server error while fetching user", "deleteUser => checkUser()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -138,7 +334,10 @@ let deleteUser = (req, res) => {
     let removeUser = () => {
         console.log("removeUser");
         return new Promise((resolve, reject) => {
-            User.findOneAndRemove({username: req.params.username , customer_id: req.params.customer_id}, function (err, user) {
+            User.findOneAndRemove({
+                username: req.params.username,
+                customer_id: req.params.customer_id
+            }, function (err, user) {
                 if (err) {
                     logger.error("Internal Server error while delete user", "deleteUser => removeUser()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -166,5 +365,6 @@ let deleteUser = (req, res) => {
 
 module.exports = {
     createUser: createUser,
+    loginUser: loginUser,
     deleteUser: deleteUser,
 }

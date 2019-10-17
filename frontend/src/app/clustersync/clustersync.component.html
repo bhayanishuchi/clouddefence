@@ -68,13 +68,23 @@
               </td>
               <td>
               <span>
-
-                <img class="dot-img"
-                     [src]="data.cnox_stack === 'gold_stack'? '../../assets/images/icons/icon_11.png':
+                <div *ngIf="data.showProgress;else other_content" >
+                  <label>Preparing Stack</label>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" style="width:80%;">
+                        80%
+                    </div>
+                </div>
+                </div>
+                <ng-template #other_content>
+                   <img class="dot-img"
+                        [src]="data.cnox_stack === 'gold_stack'? '../../assets/images/icons/icon_11.png':
                             data.cnox_stack=== 'silver_stack'? '../../assets/images/icons/icon_40.png':
                             data.cnox_stack=== 'bronze_stack' ? '../../assets/images/icons/icon_9.png':
                             '../../assets/images/icons/icon_10.png'" alt="icon_not_found">
-                {{data.cnox_stack? data.cnox_stack: "Unsecured"}}
+                  {{data.cnox_stack ? data.cnox_stack : "Unsecured"}}
+                </ng-template>
+
               </span>
               </td>
             </tr>
@@ -89,12 +99,15 @@
               </button>
             </li>
             <li>
-              <button type="button" [ngClass]="(this.clusterData.cnox_stack === 'unsecured') ? 'bg-default-orange': 'bg-light-gray'" (click)="openModal()">
+              <button type="button"
+                      [ngClass]="(this.clusterData.cnox_stack === 'unsecured' || this.clusterData.cnox_stack === '') ? 'bg-default-orange': 'bg-light-gray'"
+                      (click)="openModal()">
                 Secure
               </button>
             </li>
             <li>
-              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor" (click)="deleteStack()">
+              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor"
+                      (click)="deleteStack()">
                 Delete
               </button>
             </li>
@@ -106,7 +119,7 @@
 
     <div class="backdrop" [ngStyle]="{'display':viewDisplay}"></div>
 
-    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':viewDisplay}">
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':viewDisplay}">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -126,13 +139,17 @@
                             '../../assets/images/icons/icon_10.png'" alt="icon_not_found">
                 </li>
                 <li>
-                  <strong>Monitoring url:</strong> <a target="_blank" title="{{clusterData.monitor_url}}" href="{{clusterData.monitor_url}}">Click here for Monitoring</a>
+                  <strong>Monitoring url:</strong> <a target="_blank" title="{{clusterData.monitor_url}}"
+                                                      href="{{clusterData.monitor_url}}">Click here for Monitoring</a>
                 </li>
                 <li>
-                  <strong>Scanner url:</strong> <a target="_blank" title="{{clusterData.scanner_url}}" href="{{clusterData.scanner_url}}">Click here for Image Scanning</a>
+                  <strong>Scanner url:</strong> <a target="_blank" title="{{clusterData.scanner_url}}"
+                                                   href="{{clusterData.scanner_url}}">Click here for Image Scanning</a>
                 </li>
                 <li>
-                  <strong>Compliance url:</strong> <a target="_blank" title="{{clusterData.compliance_url}}" href="{{clusterData.compliance_url}}">Click here for Compliance</a>
+                  <strong>Compliance url:</strong> <a target="_blank" title="{{clusterData.compliance_url}}"
+                                                      href="{{clusterData.compliance_url}}">Click here for
+                  Compliance</a>
                 </li>
               </ul>
             </div>
@@ -143,11 +160,11 @@
 
     <div class="backdrop" [ngStyle]="{'display':display}"></div>
 
-    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" (click)="onCloseHandled()">
+            <button type="button" class="close" (click)="closeView()">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -159,7 +176,7 @@
                   <strong>CNOX Stack:</strong>
                   <div class="select-option">
                     <select (change)="onStackChange($event)" [value]='selectedStack'>
-<!--                      <option data-display="Select">Nothing</option>-->
+                      <!--                      <option data-display="Select">Nothing</option>-->
                       <option value="" selected="selected" disabled>Select</option>
                       <option value="bronze_stack" selected>Bronze Stack</option>
                       <option value="silver_stack">Silver Stack</option>
@@ -168,7 +185,7 @@
                   </div>
                 </li>
               </ul>
-              <button type="submit" class="push-btn bg-default-orange" (click)="onCloseHandled()">PUSH</button>
+              <button type="submit" class="push-btn bg-default-orange" (click)="onStackUpdate()">PUSH</button>
             </div>
           </div>
         </div>
@@ -177,7 +194,7 @@
 
     <div class="backdrop" [ngStyle]="{'display':clusterDisplay}"></div>
 
-    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':clusterDisplay}">
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':clusterDisplay}">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -187,8 +204,10 @@
           </div>
           <div class="modal-body">
             <div class="info-list ul-li-block clearfix">
-              <div style="overflow-y: scroll; height: 200px">{{text}}</div>
-              <button type="submit" class="push-btn bg-default-orange" (click)="copyText(text)">Copy to clipboard</button>
+              <div style="overflow-y: scroll; height: 200px">{{fileContent}}</div>
+              <button type="submit" class="push-btn bg-default-orange" (click)="copyText(fileContent)">Copy to
+                clipboard
+              </button>
             </div>
           </div>
         </div>

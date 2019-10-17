@@ -17,7 +17,8 @@ export class ClustersyncComponent implements OnInit {
   clusterDisplay = 'none';
   selectedStack = '';
   btncolor = false;
-  text = 'The finance ministry has extended the deadline for filing income tax return (ITR) for FY2018-19 by individuals to August 31, 2019 from July 31, 2019. The extension is a much needed relief as there were multiple problems being faced by individuals in filing ITR by July 31Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.Last month, the income tax department had extended the deadline for filing income tax return to August 31. According to the fake order circulating on social media, the income tax filing deadline has been extended to 30th September.';
+  fileContent = '';
+  showProgress = false;
 
   constructor(private mainservice: MainService,
               private http: HttpClient,
@@ -27,6 +28,11 @@ export class ClustersyncComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.http.get('assets/file/deploy-cnox', {responseType: 'text'})
+      .subscribe(data => {
+        this.fileContent = data;
+      });
+
     const that = this;
     this.userService.cluster(this.socket, function (data) {
       console.log('socket cluster', data);
@@ -72,20 +78,28 @@ export class ClustersyncComponent implements OnInit {
     }
   }
 
-  onCloseHandled() {
+  onStackUpdate() {
     this.display = 'none';
     let stack_name = {"stack_name": this.selectedStack};
     console.log('stack', stack_name);
     this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
+      this.showProgress = true;
       if (this.clusterData.cnox_stack === "unsecured") {
-        alert(this.clusterData.cluster_name + " is secured.");
+        // alert(this.clusterData.cluster_name + " is secured.");
       }
+    }, error => {
+      this.clusterlist.filter((x) => {
+        if (x.cluster_name === this.clusterData.cluster_name) {
+          x.showProgress = true;
+        }
+      });
     });
   }
 
   closeView() {
     this.viewDisplay = 'none';
+    this.display = 'none';
 
   }
 
@@ -102,8 +116,6 @@ export class ClustersyncComponent implements OnInit {
         this.btncolor = true;
       }
     });
-    console.log('stackrespone', this.clusterData);
-
   }
 
   onStackChange(event) {
@@ -124,6 +136,13 @@ export class ClustersyncComponent implements OnInit {
     this.mainservice.deleteStack(this.clusterData.cluster_name)
       .subscribe((res) => {
         this.getAllCluster();
+        // let stack = {
+        //   'cnox_stack': "unsecured"
+        // };
+        // this.mainservice.changeStack(this.clusterData.cluster_name, stack)
+        //   .subscribe((data) => {
+        //     this.getAllCluster();
+        //   })
         console.log('res', res);
       });
   }
