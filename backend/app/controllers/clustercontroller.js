@@ -825,10 +825,10 @@ exports.createlogevent = (req, res) => {
     let validatingInputs = () => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            if (req.body.log_string) {
+            if (req.body.log_string && req.body.customer_id) {
                 resolve();
             } else {
-                let apiResponse = response.generate(true, "Required Parameter log_string is missing", 400, null);
+                let apiResponse = response.generate(true, "Required Parameter log_string or customer_idis missing", 400, null);
                 reject(apiResponse);
             }
         });
@@ -838,7 +838,11 @@ exports.createlogevent = (req, res) => {
         console.log("addLogtable");
         return new Promise((resolve, reject) => {
             var timestamp = new Date();
-            Logtable.create({timestamp: timestamp, log_string: req.body.log_string}, function (err, logtableDetails) {
+            Logtable.create({
+                timestamp: timestamp,
+                log_string: req.body.log_string,
+                customer_id: req.body.customer_id
+            }, function (err, logtableDetails) {
                 if (err) {
                     logger.error("Internal Server error while create Logtable", "createlogevent => addLogtable()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
