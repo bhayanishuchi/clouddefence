@@ -133,7 +133,7 @@ export class ClustersyncComponent implements OnInit {
   }
 
   deleteStack() {
-    this.mainservice.deleteStack(this.clusterData.cluster_name)
+    this.mainservice.deleteStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name)
       .subscribe((res) => {
         this.getAllCluster();
         // let stack = {

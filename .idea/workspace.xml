@@ -3,18 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/controllers/usercontroller.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/controllers/usercontroller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/routes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/routes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/clustersync/clustersync.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/main.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/main.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -105,7 +97,7 @@
       <workItem from="1571305329533" duration="2779000" />
       <workItem from="1571308879767" duration="7558000" />
       <workItem from="1571373498600" duration="4194000" />
-      <workItem from="1571377712443" duration="5512000" />
+      <workItem from="1571377712443" duration="8031000" />
     </task>
     <task id="LOCAL-00001" summary="User and policy table and api">
       <created>1571218957156</created>
@@ -135,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571317536047</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="implement login api and toastr">
+      <created>1571383501688</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1571383501689</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +173,7 @@
     <MESSAGE value="minor message change" />
     <MESSAGE value="change field name" />
     <MESSAGE value="new changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="new changes" />
+    <MESSAGE value="implement login api and toastr" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement login api and toastr" />
   </component>
 </project>

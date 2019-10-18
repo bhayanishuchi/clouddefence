@@ -20,7 +20,7 @@ export class PolicyComponent implements OnInit {
     this.policiesField.ha = 'true';
     this.policiesField.storageSize = '512Mb';
     this.policiesField.imageRegistry = 'dockerHub';
-    this.policiesField.frequency = '';
+    this.policiesField.frequency = 'hourly';
     this.policiesField.externalDb = 'true';
     this.policiesField.storage = '1Gb';
   }
