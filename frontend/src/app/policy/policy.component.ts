@@ -9,11 +9,12 @@ export class PolicyComponent implements OnInit {
 
   selectedStack = '';
   policiesField: any = {};
+  gpoliciesField: any = {};
   constructor() { }
 
   ngOnInit() {
     this.policiesField.stack = 'bronze_stack';
-    this.policiesField.resource = 'performance-btn';
+    this.gpoliciesField.security_resource = 'performance-btn';
     this.policiesField.upgrade = 'true';
     this.policiesField.dashboard = 'grafana';
     this.policiesField.alerting = 'false';
@@ -21,12 +22,17 @@ export class PolicyComponent implements OnInit {
     this.policiesField.storageSize = '512Mb';
     this.policiesField.imageRegistry = 'dockerHub';
     this.policiesField.frequency = 'hourly';
+    this.gpoliciesField.compliance_frequency = 'hourly';
     this.policiesField.externalDb = 'true';
     this.policiesField.storage = '1Gb';
   }
 
   onSubmit() {
     console.log('policiesField', this.policiesField, this.selectedStack);
+  }
+
+  onGeneralSubmit() {
+    console.log('gpoliciesField', this.gpoliciesField);
   }
 
 }

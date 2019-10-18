@@ -109,28 +109,28 @@
                       <div class="radio-btn">
                         <label for="saver-btn" class="d-block">Saver</label>
                         <input type="radio" id="saver-btn" name="resources-group" value="saver-btn"
-                               [(ngModel)]="policiesField.resource">
+                               [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="efficient-btn" class="d-block">Efficient</label>
                         <input type="radio" id="efficient-btn" name="resources-group" value="efficient-btn"
-                               [(ngModel)]="policiesField.resource">
+                               [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="performance-btn" class="d-block">Performance</label>
                         <input type="radio" id="performance-btn" name="resources-group" value="performance-btn"
-                               [(ngModel)]="policiesField.resource">
+                               [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="steroids-btn" class="d-block">Steroids</label>
                         <input type="radio" id="steroids-btn" name="resources-group" value="steroids-btn"
-                               [(ngModel)]="policiesField.resource">
+                               [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                   </ul>
@@ -139,7 +139,7 @@
               <div class="col-md-4 float-right clearfix">
                 <h3 class="title-text mb-15">Compliance Frequency</h3>
                 <div class="select-option">
-                  <select nice-select [value]="policiesField.frequency">
+                  <select nice-select [value]="gpoliciesField.compliance_frequency">
                     <!--                      <option value="" selected="selected" disabled>Select</option>-->
                     <option value="hourly">Hourly</option>
                     <option value="daily">Daily</option>
@@ -166,7 +166,7 @@
             <div class="btns-group ul-li-right clearfix">
               <ul class="clearfix">
                 <li>
-                  <a href="#!" class="custom-btn bg-default-orange">Save</a>
+                  <a href="#!" class="custom-btn bg-default-orange" (click)="onGeneralSubmit()">Save</a>
                 </li>
                 <li>
                   <a href="#!" class="custom-btn bg-light-gray">Reset</a>
