@@ -11,6 +11,8 @@ module.exports.setRouter = (app) => {
     // defining routes.
     app.post('/user',[usercontroller.createUser]);
 
+    app.post('/user/passwordupdate',[usercontroller.passwordUpdate]);
+
     app.post('/user/login',[usercontroller.loginUser]);
 
     app.delete('/user/:username/:customer_id',[usercontroller.deleteUser]);

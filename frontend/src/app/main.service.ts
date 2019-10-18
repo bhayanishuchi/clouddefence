@@ -12,15 +12,6 @@ export class MainService {
   constructor(private http: HttpClient) {
   }
 
-  setShareData(data) {
-     this.sharedData = data;
-  }
-
-  getShareData() {
-     return this.sharedData;
-  }
-
-
   getCluster() {
     return this.http.get<any>(this.newapi + '/cluster');
   }

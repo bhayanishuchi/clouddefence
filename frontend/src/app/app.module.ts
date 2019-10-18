@@ -18,6 +18,8 @@ import {environment} from "../environments/environment";
 import { PolicyComponent } from './policy/policy.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -39,7 +41,9 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     ChartsModule,
     HttpClientModule,
     SocketIoModule.forRoot(config),
-    NiceSelectModule
+    NiceSelectModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot()
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

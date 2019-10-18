@@ -9,19 +9,16 @@
       </div>
       <div class="register-form mb-30 clearfix">
         <form action="#">
-          <div class="alert alert-danger" *ngIf="pass.errors?.pattern">
-            Password should be 8 character long with alphanumeric.
-          </div>
           <div class="form-item">
-            <input type="text" id="customar-name" name="customarname" [(ngModel)]="user.customarname" placeholder="customarname">
-            <label for="customar-name" class="form-btn"><i class="fal fa-globe"></i></label>
+            <input type="text" id="customer-name" name="customername" [(ngModel)]="user.customername" placeholder="customername">
+            <label for="customer-name" class="form-btn"><i class="fal fa-globe"></i></label>
           </div>
           <div class="form-item">
             <input type="text" id="user-name" name="username" [(ngModel)]="user.username" placeholder="username" >
             <label for="user-name" class="form-btn"><i class="fas fa-user-alt"></i></label>
           </div>
           <div class="form-item">
-            <input type="password" id="password-input" name="password" [(ngModel)]="user.password" required pattern="^(?=.*\d).{8}$" #pass="ngModel" placeholder="password">
+            <input type="password" id="password-input" name="password" [(ngModel)]="user.password" required placeholder="password">
             <label for="password-input" class="form-btn"><i class="fas fa-lock-alt"></i></label>
 
           </div>
