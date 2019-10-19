@@ -71,8 +71,7 @@
                 <div *ngIf="data.showProgress;else other_content" >
                   <label>Preparing Stack</label>
                   <div class="progress">
-                    <div class="progress-bar bg-success" style="width:80%;">
-                        80%
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" [style.width]="data.barWidth + '%'">
                     </div>
                 </div>
                 </div>

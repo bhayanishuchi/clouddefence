@@ -92,6 +92,7 @@ export class ClustersyncComponent implements OnInit {
       this.clusterlist.filter((x) => {
         if (x.cluster_name === this.clusterData.cluster_name) {
           x.showProgress = true;
+          x.barWidth = 20;
         }
       });
     });
