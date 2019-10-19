@@ -13,7 +13,7 @@ export class MainService {
   }
 
   getCluster() {
-    return this.http.get<any>(this.newapi + '/cluster');
+    return this.http.get<any>(this.newapi + '/cluster', {withCredentials: true});
   }
 
   getUnsecCluster() {
@@ -40,9 +40,9 @@ export class MainService {
     return this.http.delete(cnoxEngineUrl + '/cluster/' + clustername + '/cnox_stack');
   }
 
-
-  changeStack(clustername, stack) {
-    return this.http.put(this.newapi + '/cluster/' + clustername + '/stack', stack);
+  addPolicy(cnoxEngineUrl, data) {
+    return this.http.post(cnoxEngineUrl + '/cluster/cluster-1/policy', data);
   }
 
 }
+

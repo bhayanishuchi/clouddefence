@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MainService} from "../main.service";
 
 @Component({
   selector: 'app-policy',
@@ -10,11 +11,12 @@ export class PolicyComponent implements OnInit {
   selectedStack = '';
   policiesField: any = {};
   gpoliciesField: any = {};
-  constructor() { }
+  cnoxUrl = 'http://12345.us-west2.elb.amazonaws.com:8888'
+  constructor(private mainservice: MainService) { }
 
   ngOnInit() {
     this.policiesField.stack = 'bronze_stack';
-    this.gpoliciesField.security_resource = 'performance-btn';
+    this.gpoliciesField.security_resource = 'efficient';
     this.policiesField.upgrade = 'true';
     this.policiesField.dashboard = 'grafana';
     this.policiesField.alerting = 'false';
@@ -33,6 +35,12 @@ export class PolicyComponent implements OnInit {
 
   onGeneralSubmit() {
     console.log('gpoliciesField', this.gpoliciesField);
+    this.mainservice.addPolicy(this.cnoxUrl, this.gpoliciesField)
+      .subscribe((res) => {
+        console.log('res', res);
+      }, error => {
+        console.log('error', error);
+      });
   }
 
 }

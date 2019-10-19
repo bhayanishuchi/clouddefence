@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="new changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/controllers/clustercontroller.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/controllers/clustercontroller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app/models/logtable.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/models/logtable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/.bin/mime" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.bin/mime" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/.bin/mime.cmd" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/.bin/semver" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/.bin/semver" afterDir="false" />
@@ -1491,8 +1488,9 @@
       <change beforePath="$PROJECT_DIR$/backend/node_modules/ws/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/ws/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/xmlhttprequest-ssl/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/xmlhttprequest-ssl/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/node_modules/yeast/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/node_modules/yeast/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/header/header.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/main.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/main.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/policy/policy.component.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -1585,7 +1583,8 @@
       <workItem from="1571373498600" duration="4194000" />
       <workItem from="1571377712443" duration="8605000" />
       <workItem from="1571397042165" duration="5853000" />
-      <workItem from="1571404422729" duration="244000" />
+      <workItem from="1571404422729" duration="433000" />
+      <workItem from="1571461187611" duration="6745000" />
     </task>
     <task id="LOCAL-00001" summary="User and policy table and api">
       <created>1571218957156</created>
@@ -1629,7 +1628,21 @@
       <option name="project" value="LOCAL" />
       <updated>1571389377712</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="minnor fix">
+      <created>1571404726352</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1571404726352</updated>
+    </task>
+    <task id="LOCAL-00008" summary="new progress-bar related changes">
+      <created>1571468129440</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1571468129440</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1669,6 +1682,8 @@
     <MESSAGE value="change field name" />
     <MESSAGE value="implement login api and toastr" />
     <MESSAGE value="new changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="new changes" />
+    <MESSAGE value="minnor fix" />
+    <MESSAGE value="new progress-bar related changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="new progress-bar related changes" />
   </component>
 </project>

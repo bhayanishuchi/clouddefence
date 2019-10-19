@@ -108,28 +108,28 @@
                     <li>
                       <div class="radio-btn">
                         <label for="saver-btn" class="d-block">Saver</label>
-                        <input type="radio" id="saver-btn" name="resources-group" value="saver-btn"
+                        <input type="radio" id="saver-btn" name="resources-group" value="saver"
                                [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="efficient-btn" class="d-block">Efficient</label>
-                        <input type="radio" id="efficient-btn" name="resources-group" value="efficient-btn"
+                        <input type="radio" id="efficient-btn" name="resources-group" value="efficient"
                                [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="performance-btn" class="d-block">Performance</label>
-                        <input type="radio" id="performance-btn" name="resources-group" value="performance-btn"
+                        <input type="radio" id="performance-btn" name="resources-group" value="performance"
                                [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
                     <li>
                       <div class="radio-btn">
                         <label for="steroids-btn" class="d-block">Steroids</label>
-                        <input type="radio" id="steroids-btn" name="resources-group" value="steroids-btn"
+                        <input type="radio" id="steroids-btn" name="resources-group" value="steroids"
                                [(ngModel)]="gpoliciesField.security_resource">
                       </div>
                     </li>
@@ -166,7 +166,7 @@
             <div class="btns-group ul-li-right clearfix">
               <ul class="clearfix">
                 <li>
-                  <a href="#!" class="custom-btn bg-default-orange" (click)="onGeneralSubmit()">Save</a>
+                  <button class="custom-btn bg-default-orange" type="submit" (click)="onGeneralSubmit()">Save</button>
                 </li>
                 <li>
                   <a href="#!" class="custom-btn bg-light-gray">Reset</a>
