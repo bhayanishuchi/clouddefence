@@ -1,9 +1,9 @@
 const shortid = require('shortid');
 const mongoose = require('mongoose');
-const response = require('./../libs/responseLib')
+const response = require('./../libs/responseLib');
 const logger = require('./../libs/loggerLib');
-const check = require('../libs/checkLib')
-const tokenLib = require('../libs/tokenLib')
+const check = require('../libs/checkLib');
+const tokenLib = require('../libs/tokenLib');
 
 const User = mongoose.model('User');
 const Customer = mongoose.model('Customer');

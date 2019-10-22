@@ -20,6 +20,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    const accessToken = localStorage.getItem('token');
+    console.log('accessToken', accessToken);
+    if (!accessToken) {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
 
@@ -29,6 +36,8 @@ export class LoginComponent implements OnInit {
         console.log('loginRes', res);
         if (res.password) {
           localStorage.setItem('token', res.tokens.authToken);
+          localStorage.setItem('user_id', res.user.user_id);
+          localStorage.setItem('customer_id', res.customer.customer_id);
           this.toasterService.showSuccess('Login Successfully.');
           this.router.navigate(['/dashboard']);
         } else {

@@ -48,6 +48,7 @@ export class RegisterComponent implements OnInit {
       this.userService.userPasswordUpdate(data)
         .subscribe((res) => {
           console.log('res', res);
+          this.toasterService.showSuccess('Login Successfully');
           localStorage.setItem('token', res.tokens.authToken);
           this.router.navigate(['/dashboard']);
         }, error => {

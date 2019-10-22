@@ -1,11 +1,12 @@
-const cors = require('cors');
-const express = require('express');
-const path = require('path');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var passport = require('passport');
 
-const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const session = require('express-session')
-const bodyParser = require('body-parser');
-// const MongoStore = require('connect-mongo')(Session);
+const MongoStore = require('connect-mongo')(session);
 
 const fs = require('fs');
 const http = require('http');
@@ -24,39 +25,8 @@ var app = express();
 
 app.use(morgan('dev'));
 
-// app.use(Session({secret: '1fd7d060-f191-11e9-a06e-1fbf126f8e63', saveUninitialized: true, resave: true}));
-
-// app.use(session({
-//     secret: '343ji43j4n3jn4jk3n'
-// }))
-
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
-// app.use(Session({
-//     secret: 'nBPTBbv599HNbXAfH9VF',
-//     resave: true,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 1209600000, secure: true }
-// }))
-
-// app.use(Session({
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: '1fd7d060-f191-11e9-a06e-1fbf126f8e63',
-//     cookie: { maxAge: 1209600000, secure: true }, // two weeks in milliseconds
-//     store: new MongoStore({
-//         url: 'mongodb://localhost:27017/mydb',
-//         autoReconnect: true
-//     })
-// }));
-
-// app.use((req, res, next) => {
-//     // After successful login, redirect back to the intended page
-//     req.session.returnTo = req.originalUrl;
-//     next();
-// });
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -65,14 +35,9 @@ app.use(globalErrorMiddleware.globalErrorHandler);
 
 
 const modelsPath = './app/models';
-const controllersPath = './app/controllers';
-const libsPath = './app/libs';
-const middlewaresPath = './app/middlewares';
 const routesPath = './app/routes';
 
 app.use(cors({origin: true, credentials: true}));
-
-
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -130,7 +95,11 @@ function onListening() {
         : 'port ' + addr.port;
     ('Listening on ' + bind);
     // logger.info('server listening on port' + addr.port, 'serverOnListeningHandler', 10);
-    let db = mongoose.connect(appConfig.db.uri, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+    let db = mongoose.connect(appConfig.db.uri, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        useCreateIndex: true
+    });
     console.log('server listening on port ' + addr.port)
 }
 
@@ -170,7 +139,7 @@ let io = require('socket.io').listen(newserver);
 global.io = io;
 
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     console.log('client connected');
     app.io = io;
 });

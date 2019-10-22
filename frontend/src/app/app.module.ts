@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {JwtInterceptor} from './_helpers/jwt.interceptor';
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -45,7 +46,8 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot()
   ],
-  providers: [UserService],
+  providers: [UserService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

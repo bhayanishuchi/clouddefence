@@ -13,7 +13,7 @@ export class MainService {
   }
 
   getCluster() {
-    return this.http.get<any>(this.newapi + '/cluster', {withCredentials: true});
+    return this.http.get<any>(this.newapi + '/cluster');
   }
 
   getUnsecCluster() {

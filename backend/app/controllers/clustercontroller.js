@@ -8,26 +8,25 @@ const Customer = mongoose.model('Customer');
 const Cluster = mongoose.model('Cluster');
 const Logtable = mongoose.model('Logtable');
 
-const findSocketTotalunseccluster = function (req) {
+const findSocketTotalunseccluster = function (req, customer_id) {
     console.log('==== update Socket start ==== ');
     console.log('findSocketTotalunseccluster ');
     const socket = req.app.io;
     return new Promise((resolve, reject) => {
-        Cluster.find({cnox_stack: {$in: ['', 'unsecured']}}).exec((err, result) => {
+        Cluster.find({cnox_stack: {$in: ['', 'unsecured']}, license_key: customer_id}).exec((err, result) => {
             if (err) throw err;
             if (socket !== undefined) {
-                socket.emit('unseccluster', result);
-
+                socket.to(customer_id).emit('unseccluster', result);
             }
             resolve(result);
         });
     })
 }
-const findSocketTotalStackList = function (req) {
+const findSocketTotalStackList = function (req, customer_id) {
     console.log('findSocketTotalStackList ');
     const socket = req.app.io;
     return new Promise((resolve, reject) => {
-        Cluster.find({$or: [{cnox_stack: {$ne: ''}}, {cnox_stack: {$ne: null}}]}).exec((err, result) => {
+        Cluster.find({cnox_stack: {$nin:['', null, 'unsecured']}, license_key:customer_id}).exec((err, result) => {
             if (err) throw err;
             let gold_stack = 0;
             let silver_stack = 0;
@@ -68,30 +67,30 @@ const findSocketTotalStackList = function (req) {
                 Bronze: bronze
             }
             if (socket !== undefined) {
-                socket.emit('list', result);
+                socket.to(customer_id).emit('list', result);
             }
             resolve(result);
         });
     })
 }
-const findSocketLogEvent = function (req) {
+const findSocketLogEvent = function (req, customer_id) {
     console.log('findSocketLogEvent ');
     return new Promise((resolve, reject) => {
         const socket = req.app.io;
-        Logtable.find({}).sort({timestamp: -1}).exec((err, result) => {
+        Logtable.find({customer_id: customer_id}).sort({timestamp: -1}).exec((err, result) => {
             if (err) throw err;
             if (socket !== undefined) {
-                socket.emit('logs', result);
+                socket.to(customer_id).emit('logs', result);
             }
             resolve(result);
         });
     })
 }
-const findSocketAllTotal = function (req) {
+const findSocketAllTotal = function (req, customer_id) {
     console.log('findSocketAllTotal ');
     return new Promise((resolve, reject) => {
         const socket = req.app.io;
-        Cluster.find({}).exec((err, result) => {
+        Cluster.find({license_key: customer_id}).exec((err, result) => {
             if (err) throw err;
             let totalNodes = 0;
             let totalPods = 0;
@@ -107,20 +106,20 @@ const findSocketAllTotal = function (req) {
                 TotalServices: totalServices
             }
             if (socket !== undefined) {
-                socket.emit('totals', result);
+                socket.to(customer_id).emit('totals', result);
             }
             resolve(result);
         });
     });
 }
-const findSocketAllcluster = function (req) {
+const findSocketAllcluster = function (req, customer_id) {
     console.log('findSocketAllcluster ');
     return new Promise((resolve, reject) => {
         const socket = req.app.io;
-        Cluster.find({}).exec((err, result) => {
+        Cluster.find({license_key: customer_id}).exec((err, result) => {
             if (err) throw err;
             if (socket !== undefined) {
-                socket.emit('cluster', result);
+                socket.to(customer_id).emit('cluster', result);
             }
             resolve(result);
             console.log('==== End Socket ==== ');
@@ -160,7 +159,7 @@ exports.createCluster = (req, res) => {
                     let apiResponse = response.generate(true, "Customer Not Found", 401, null);
                     reject(apiResponse);
                 } else {
-                    if(customerDetail.status && (customerDetail.status).toLowerCase() === 'activate') {
+                    if (customerDetail.status && (customerDetail.status).toLowerCase() === 'activate') {
                         resolve(customerDetail);
                     } else {
                         logger.error("Customer is inActive", "createCluster => checkCustomer()", 5);
@@ -225,7 +224,7 @@ exports.createCluster = (req, res) => {
         .then(addCluster)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, req.body.license_key), findSocketTotalStackList(req, req.body.license_key), findSocketAllTotal(req, req.body.license_key), findSocketLogEvent(req, req.body.license_key), findSocketAllcluster(req, req.body.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -295,7 +294,7 @@ exports.putCnoxEngineUrl = (req, res) => {
         .then(updateCluster)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -365,35 +364,11 @@ exports.updatecnoxstack = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.emit('updatecnoxstack', finalRes);
+                socket.to(finalRes.license_key).emit('updatecnoxstack', finalRes);
             }
             resolve(finalRes);
         });
     }; // end of updateSocket
-
-    /*const socket = req.app.io;
-    var object = {cluster_name: req.params.cluster_name}
-    var query = {cnox_stack: req.body.cnox_stack};
-    if (query.cnox_stack) {
-        Cluster.updateOne(object, query, function (err, result) {
-            if (err) throw err;
-            if (socket !== undefined) {
-                socket.emit('updatecnoxstack', result);
-            }
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send('Stack successfully updated to' + result);
-                })
-
-        });
-    } else {
-        console.log("cnox_stack is empty");
-        return res.send('cnox_stack is empty');
-    }*/
 
     validatingInputs()
         .then(checkCluster)
@@ -401,7 +376,7 @@ exports.updatecnoxstack = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -471,35 +446,11 @@ exports.updatemonitorurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.emit('updatemonitorurl', finalRes);
+                socket.to(finalRes.customer_id).emit('updatemonitorurl', finalRes);
             }
             resolve(finalRes);
         });
     }; // end of updateSocket
-
-    /*const socket = req.app.io;
-    var object = {cluster_name: req.params.cluster_name}
-    var query = {monitor_url: req.body.monitor_url};
-    if (query.monitor_url) {
-        Cluster.updateOne(object, query, function (err, result) {
-            if (err) throw err;
-            if (socket !== undefined) {
-                socket.emit('updatemonitorurl', result);
-            }
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-            // return res.send('monitor url sucessfullly updated');
-        });
-    } else {
-        console.log("monitor_url is empty");
-        return res.send('monitor_url is empty');
-    }*/
 
     validatingInputs()
         .then(checkCluster)
@@ -507,7 +458,7 @@ exports.updatemonitorurl = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -578,35 +529,11 @@ exports.updatescannerurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.emit('updatescannerurl', finalRes);
+                socket.to(finalRes.customer_id).emit('updatescannerurl', finalRes);
             }
             resolve(finalRes);
         });
     }; // end of updateSocket
-
-    /*const socket = req.app.io;
-    var object = {cluster_name: req.params.cluster_name}
-    var query = {scanner_url: req.body.scanner_url};
-    if (query.scanner_url) {
-        Cluster.updateOne(object, query, function (err, result) {
-            if (err) throw err;
-            if (socket !== undefined) {
-                socket.emit('updatescannerurl', result);
-            }
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-            // return res.send('scanner url sucessfullly updated');
-        });
-    } else {
-        console.log("scanner_url is empty");
-        return res.send('scanner_url is empty');
-    }*/
 
     validatingInputs()
         .then(checkCluster)
@@ -614,7 +541,7 @@ exports.updatescannerurl = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -684,34 +611,12 @@ exports.updatecomplianceurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.emit('updatecomplianceurl', finalRes);
+                socket.to(finalRes.customer_id).emit('updatecomplianceurl', finalRes);
             }
             resolve(finalRes);
         });
     }; // end of updateSocket
 
-    /*const socket = req.app.io;
-    var object = {cluster_name: req.params.cluster_name}
-    var query = {compliance_url: req.body.compliance_url};
-    if (query.compliance_url) {
-        Cluster.updateOne(object, query, function (err, result) {
-            if (err) throw err;
-            if (socket !== undefined) {
-                socket.emit('updatecomplianceurl', result);
-            }
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-        });
-    } else {
-        console.log("compliance_url is empty");
-        return res.send('compliance_url is empty');
-    }*/
 
     validatingInputs()
         .then(checkCluster)
@@ -719,7 +624,7 @@ exports.updatecomplianceurl = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -772,7 +677,11 @@ exports.updatecount = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {Nodes: req.body.nodes, Pods: req.body.pods, Services: req.body.services}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {
+                Nodes: req.body.nodes,
+                Pods: req.body.pods,
+                Services: req.body.services
+            }, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "updatecount => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -784,31 +693,13 @@ exports.updatecount = (req, res) => {
         });
     }; // end of updateCluster
 
-    /*var object = {cluster_name: req.params.cluster_name};
-    var query = {Nodes: req.body.nodes, Pods: req.body.pods, Services: req.body.services};
-    if (query.Nodes && query.Pods && query.Services) {
-        Cluster.findOneAndUpdate(object, query, function (err, result) {
-            if (err) throw err;
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-        });
-    } else {
-        console.log("count are empty");
-        return res.send('count are empty');
-    }*/
-
     validatingInputs()
         .then(checkCluster)
         .then(updateCluster)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            console.log('res', resolve.license_key);
+            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -854,37 +745,11 @@ exports.createlogevent = (req, res) => {
         });
     }; // end of updateCluster
 
-    /*var log_string = req.body.log_string;
-    if (log_string) {
-        var timestamp = new Date();
-        var myobj = new Logtable({timestamp: timestamp, log_string: log_string});
-        console.log("myobj", myobj);
-        myobj.save(function (err, response) {
-            if (err) {
-                console.log("errorr")
-                throw err
-            }
-            console.log("logevent inserted");
-            findSocketTotalunseccluster(req)
-                .then(findSocketTotalStackList(req))
-                .then(findSocketAllTotal(req))
-                .then(findSocketLogEvent(req))
-                .then(findSocketAllcluster(req))
-                .then((data) => {
-                    return res.send(data);
-                })
-
-        });
-    } else {
-        console.log("log_string is empty")
-        return res.send('log_string is empty');
-    }*/
-
     validatingInputs()
         .then(addLogtable)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req), findSocketTotalStackList(req), findSocketAllTotal(req), findSocketLogEvent(req), findSocketAllcluster(req)])
+            Promise.all([findSocketTotalunseccluster(req, req.body.customer_id), findSocketTotalStackList(req, req.body.customer_id), findSocketAllTotal(req, req.body.customer_id), findSocketLogEvent(req, req.body.customer_id), findSocketAllcluster(req, req.body.customer_id)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
@@ -899,10 +764,11 @@ exports.createlogevent = (req, res) => {
 
 exports.findAllcluster = (req, res) => {
     const socket = req.app.io;
-    Cluster.find({}).exec((err, result) => {
+    let customer_id = req.user.customer_id;
+    Cluster.find({license_key: customer_id}).exec((err, result) => {
         if (err) throw err;
         if (socket !== undefined) {
-            socket.emit('cluster', result);
+            socket.to(customer_id).emit('cluster', result);
         }
         return res.send(result);
     });
@@ -911,10 +777,11 @@ exports.findAllcluster = (req, res) => {
 
 exports.findunseccluster = (req, res) => {
     const socket = req.app.io;
-    Cluster.find({cnox_stack: {$in: ['', 'unsecured']}}).exec((err, result) => {
+    let customer_id = req.user.customer_id;
+    Cluster.find({cnox_stack: {$in: ['', 'unsecured']}, license_key: customer_id}).exec((err, result) => {
         if (err) throw err;
         if (socket !== undefined) {
-            socket.emit('unseccluster', result);
+            socket.to(customer_id).emit('unseccluster', result);
 
         }
         return res.send(result);
@@ -924,11 +791,12 @@ exports.findunseccluster = (req, res) => {
 
 exports.findAlllogevent = (req, res) => {
     const socket = req.app.io;
-    Logtable.find({}).sort({timestamp: -1})
+    let customer_id = req.user.customer_id;
+    Logtable.find({customer_id: customer_id}).sort({timestamp: -1})
         .exec((err, result) => {
             if (err) throw err;
             if (socket !== undefined) {
-                socket.emit('logs', result);
+                socket.to(customer_id).emit('logs', result);
             }
             return res.send(result);
         });
@@ -936,7 +804,8 @@ exports.findAlllogevent = (req, res) => {
 
 exports.findAlltotals = (req, res) => {
     const socket = req.app.io;
-    Cluster.find({}).exec((err, result) => {
+    let customer_id = req.user.customer_id;
+    Cluster.find({license_key: customer_id}).exec((err, result) => {
         if (err) throw err;
         let totalNodes = 0;
         let totalPods = 0;
@@ -952,7 +821,7 @@ exports.findAlltotals = (req, res) => {
             TotalServices: totalServices
         }
         if (socket !== undefined) {
-            socket.emit('totals', result);
+            socket.to(customer_id).emit('totals', result);
         }
         return res.send(result);
     });
@@ -961,7 +830,8 @@ exports.findAlltotals = (req, res) => {
 
 exports.findAllstacklist = (req, res) => {
     const socket = req.app.io;
-    Cluster.find({$or: [{cnox_stack: {$ne: ''}}, {cnox_stack: {$ne: null}}]}).exec((err, result) => {
+    let customer_id = req.user.customer_id;
+    Cluster.find({cnox_stack: {$nin:['', null, 'unsecured']}, license_key:customer_id}).exec((err, result) => {
         if (err) throw err;
         let gold_stack = 0;
         let silver_stack = 0;
@@ -1002,7 +872,7 @@ exports.findAllstacklist = (req, res) => {
             Bronze: bronze
         }
         if (socket !== undefined) {
-            socket.emit('list', result);
+            socket.to(customer_id).emit('list', result);
         }
         return res.send(result);
     });
@@ -1056,13 +926,6 @@ exports.deleteCluster = (req, res) => {
             })
         });
     }; // end of updateCluster
-
-    /*var myquery = {cluster_name: req.params.cluster_name};
-    Cluster.deleteOne(myquery).exec((err, obj) => {
-        if (err) throw err;
-        console.log("1 document deleted");
-        return res.send('Received a DELETE HTTP method' + req.params.cluster_name);
-    });*/
 
     validatingInputs()
         .then(checkCluster)
