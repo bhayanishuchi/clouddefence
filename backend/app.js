@@ -142,6 +142,7 @@ global.io = io;
 io.on('connection', function (socket) {
     console.log('client connected');
     app.io = io;
+    app.socket = socket;
 });
 
 module.exports = app;
