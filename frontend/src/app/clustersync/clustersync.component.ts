@@ -17,6 +17,7 @@ export class ClustersyncComponent implements OnInit {
   clusterDisplay = 'none';
   selectedStack = '';
   btncolor = false;
+
   fileContent = '';
   showProgress = false;
 
@@ -85,16 +86,22 @@ export class ClustersyncComponent implements OnInit {
     this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
       this.showProgress = true;
-      if (this.clusterData.cnox_stack === "unsecured") {
-        // alert(this.clusterData.cluster_name + " is secured.");
-      }
-    }, error => {
       this.clusterlist.filter((x) => {
         if (x.cluster_name === this.clusterData.cluster_name) {
           x.showProgress = true;
           x.barWidth = 20;
         }
       });
+      if (this.clusterData.cnox_stack === "unsecured") {
+        // alert(this.clusterData.cluster_name + " is secured.");
+      }
+    }, error => {
+      /*this.clusterlist.filter((x) => {
+        if (x.cluster_name === this.clusterData.cluster_name) {
+          x.showProgress = true;
+          x.barWidth = 20;
+        }
+      });*/
     });
   }
 
@@ -107,14 +114,16 @@ export class ClustersyncComponent implements OnInit {
   onClusterChange(data, index) {
     console.log('clusterData', data)
     this.clusterData = data;
+    if (this.clusterData.cnox_stack !== "unsecured" && this.clusterData.cnox_stack !== '') {
+      this.btncolor = true;
+    } else {
+      this.btncolor = false;
+    }
     this.clusterlist.forEach((x, i) => {
       if (index !== i) {
         x.checked = false;
       } else if (index === i && x.checked === false) {
         this.clusterData = {};
-        this.btncolor = false;
-      } else {
-        this.btncolor = true;
       }
     });
   }

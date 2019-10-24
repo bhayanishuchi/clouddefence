@@ -100,12 +100,15 @@
             <li>
               <button type="button"
                       [ngClass]="(this.clusterData.cnox_stack === 'unsecured' || this.clusterData.cnox_stack === '') ? 'bg-default-orange': 'bg-light-gray'"
+                      [disabled]="this.clusterData.cnox_stack !== 'unsecured'"
                       (click)="openModal()">
                 Secure
               </button>
             </li>
             <li>
-              <button type="button" [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'" [disabled]="!btncolor"
+              <button type="button"
+                      [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'"
+                      [disabled]="(this.clusterData.cnox_stack === 'unsecured' || this.clusterData.cnox_stack === '')"
                       (click)="deleteStack()">
                 Delete
               </button>
