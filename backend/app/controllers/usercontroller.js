@@ -104,6 +104,51 @@ let createUser = (req, res) => {
         });
 };
 
+let getUser = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.params.username && req.params.customer_id) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter username or customer_id is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkUser = () => {
+        console.log("checkUser");
+        return new Promise((resolve, reject) => {
+            User.find({username: req.params.username, customer_id: req.params.customer_id}, function (err, userDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(userDetail)) {
+                    logger.error("User doesnt Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "User doesnt Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(userDetail);
+                }
+            })
+        });
+    }; // end of checkUser
+
+    validatingInputs()
+        .then(checkUser)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
 let loginUser = (req, res) => {
 
     let validatingInputs = () => {
@@ -527,6 +572,7 @@ let deleteUser = (req, res) => {
 
 module.exports = {
     createUser: createUser,
+    getUser: getUser,
     passwordUpdate: passwordUpdate,
     loginUser: loginUser,
     deleteUser: deleteUser,

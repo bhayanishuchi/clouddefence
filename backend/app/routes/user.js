@@ -16,6 +16,8 @@ module.exports.setRouter = (app) => {
 
     app.post('/user/login',[usercontroller.loginUser]);
 
+    app.get('/user/:username/:customer_id',[usercontroller.getUser]);
+
     app.delete('/user/:username/:customer_id',[usercontroller.deleteUser]);
 
 

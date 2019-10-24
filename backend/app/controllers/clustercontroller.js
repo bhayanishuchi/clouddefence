@@ -26,7 +26,7 @@ const findSocketTotalStackList = function (req, customer_id) {
     console.log('findSocketTotalStackList ');
     const socket = req.app.io;
     return new Promise((resolve, reject) => {
-        Cluster.find({cnox_stack: {$nin:['', null, 'unsecured']}, license_key:customer_id}).exec((err, result) => {
+        Cluster.find({cnox_stack: {$nin: ['', null, 'unsecured']}, license_key: customer_id}).exec((err, result) => {
             if (err) throw err;
             let gold_stack = 0;
             let silver_stack = 0;
@@ -243,7 +243,12 @@ exports.putCnoxEngineUrl = (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
                 if (req.body.cnox_engine_url) {
-                    resolve();
+                    if (req.body.customer_id) {
+                        resolve();
+                    } else {
+                        let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                        reject(apiResponse);
+                    }
                 } else {
                     let apiResponse = response.generate(true, "Required Parameter cnox_engine_url is missing", 400, null);
                     reject(apiResponse);
@@ -258,7 +263,10 @@ exports.putCnoxEngineUrl = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOne({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.findOne({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "putCnoxEngineUrl => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -277,7 +285,10 @@ exports.putCnoxEngineUrl = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {cnox_engine_url: req.body.cnox_engine_url}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, {cnox_engine_url: req.body.cnox_engine_url}, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while Update Cluster", "putCnoxEngineUrl => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -313,7 +324,12 @@ exports.updatecnoxstack = (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
                 if (req.body.cnox_stack) {
-                    resolve();
+                    if (req.body.customer_id) {
+                        resolve();
+                    } else {
+                        let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                        reject(apiResponse);
+                    }
                 } else {
                     let apiResponse = response.generate(true, "Required Parameter cnox_stack is missing", 400, null);
                     reject(apiResponse);
@@ -328,7 +344,10 @@ exports.updatecnoxstack = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "updatecnoxstack => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -347,7 +366,10 @@ exports.updatecnoxstack = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {cnox_stack: req.body.cnox_stack}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, {cnox_stack: req.body.cnox_stack}, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "updatecnoxstack => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -395,7 +417,12 @@ exports.updatemonitorurl = (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
                 if (req.body.monitor_url) {
-                    resolve();
+                    if (req.body.customer_id) {
+                        resolve();
+                    } else {
+                        let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                        reject(apiResponse);
+                    }
                 } else {
                     let apiResponse = response.generate(true, "Required Parameter monitor_url is missing", 400, null);
                     reject(apiResponse);
@@ -410,7 +437,10 @@ exports.updatemonitorurl = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "updatemonitorurl => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -429,7 +459,10 @@ exports.updatemonitorurl = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {monitor_url: req.body.monitor_url}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, {monitor_url: req.body.monitor_url}, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "updatemonitorurl => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -446,7 +479,7 @@ exports.updatemonitorurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.to(finalRes.customer_id).emit('updatemonitorurl', finalRes);
+                socket.to(finalRes.license_key).emit('updatemonitorurl', finalRes);
             }
             resolve(finalRes);
         });
@@ -478,7 +511,12 @@ exports.updatescannerurl = (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
                 if (req.body.scanner_url) {
-                    resolve();
+                    if (req.body.customer_id) {
+                        resolve();
+                    } else {
+                        let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                        reject(apiResponse);
+                    }
                 } else {
                     let apiResponse = response.generate(true, "Required Parameter scanner_url is missing", 400, null);
                     reject(apiResponse);
@@ -493,7 +531,10 @@ exports.updatescannerurl = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "updatescannerurl => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -512,7 +553,10 @@ exports.updatescannerurl = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {scanner_url: req.body.scanner_url}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, {scanner_url: req.body.scanner_url}, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "updatescannerurl => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -529,7 +573,7 @@ exports.updatescannerurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.to(finalRes.customer_id).emit('updatescannerurl', finalRes);
+                socket.to(finalRes.license_key).emit('updatescannerurl', finalRes);
             }
             resolve(finalRes);
         });
@@ -642,10 +686,10 @@ exports.updatecount = (req, res) => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
-                if (req.body.nodes && req.body.pods && req.body.services) {
+                if (req.body.nodes && req.body.pods && req.body.services && req.body.customer_id) {
                     resolve();
                 } else {
-                    let apiResponse = response.generate(true, "Required Parameter nodes or pods or services is missing", 400, null);
+                    let apiResponse = response.generate(true, "Required Parameter nodes or pods or services or customer_id is missing", 400, null);
                     reject(apiResponse);
                 }
             } else {
@@ -658,7 +702,10 @@ exports.updatecount = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "updatecount => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -677,7 +724,7 @@ exports.updatecount = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {
+            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name, license_key: req.body.customer_id}, {
                 Nodes: req.body.nodes,
                 Pods: req.body.pods,
                 Services: req.body.services
@@ -831,7 +878,7 @@ exports.findAlltotals = (req, res) => {
 exports.findAllstacklist = (req, res) => {
     const socket = req.app.io;
     let customer_id = req.user.customer_id;
-    Cluster.find({cnox_stack: {$nin:['', null, 'unsecured']}, license_key:customer_id}).exec((err, result) => {
+    Cluster.find({cnox_stack: {$nin: ['', null, 'unsecured']}, license_key: customer_id}).exec((err, result) => {
         if (err) throw err;
         let gold_stack = 0;
         let silver_stack = 0;
@@ -885,7 +932,12 @@ exports.deleteCluster = (req, res) => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
-                resolve();
+                if (req.body.customer_id) {
+                    resolve();
+                } else {
+                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    reject(apiResponse);
+                }
             } else {
                 let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
                 reject(apiResponse);
@@ -896,7 +948,10 @@ exports.deleteCluster = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "deleteCluster => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -915,7 +970,10 @@ exports.deleteCluster = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndRemove({cluster_name: req.params.cluster_name}, function (err, clusterdetails) {
+            Cluster.findOneAndRemove({
+                cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id
+            }, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "deleteCluster => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
