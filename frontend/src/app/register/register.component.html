@@ -10,12 +10,12 @@
       <div class="register-form mb-30 clearfix">
         <form action="#">
           <div class="alert alert-danger" *ngIf="pass.errors?.pattern">
-            Password should be 8 character long with alphanumeric.
+            <div [hidden]="!pass.errors?.pattern">Password should be 8 character long with alphanumeric.</div>
           </div>
 
-         <!-- <div class="alert alert-danger" *ngIf="!(pass.errors?.pattern) && (this.user.password !== this.user.confirmPassword)">
-            Confirm Password is not match.
-          </div>-->
+      <!-- <div class="alert alert-danger" *ngIf="!(pass.errors?.pattern) && (this.user.password !== this.user.confirmPassword)">
+         Confirm Password is not match.
+       </div>-->
 
           <div class="form-item">
             <input type="password" id="password-input" name="password" [(ngModel)]="user.password" required pattern="^(?=.*\d).{8}$" #pass="ngModel" placeholder="password">

@@ -51,9 +51,18 @@
               <button type="button"><i class="fal fa-cog"></i></button>
             </li>
             <li>
-              <button type="button"><i class="fas fa-user-circle"></i></button>
+              <div class="dropdown">
+                <button class="fas fa-user-circle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                  <a class="dropdown-item fa fa-user-circle-o">Edit Profile </a>
+                  <a class="dropdown-item fa fa-power-off" (click)="logout()">Log out</a>
+                </div>
+              </div>
+
             </li>
+
           </ul>
+
         </div>
       </div>
 
