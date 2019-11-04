@@ -31,29 +31,27 @@ if [ -z "$2" ]; then
 fi
 export LICENSE_KEY=$2
 
-# TODO: extract only the cred needed for the provided context
-# TODO: add cnox registry secret creation
+
 
 create_kubecreds_secret () {
     echo "preparing kube credential secrets ..."
     KUBE_CREDS_FILE=$(mktemp)
     kubectl config view --raw -o yaml > "${KUBE_CREDS_FILE}"
-    kubectl delete secret cnoxkubecreds --wait --ignore-not-found
-    kubectl create secret generic cnoxkubecreds --from-file=cnoxkubecreds="${KUBE_CREDS_FILE}"
+    kubectl delete secret cnoxkubecreds --wait --ignore-not-found --namespace cnox
+    kubectl create secret generic cnoxkubecreds --from-file=cnoxkubecreds="${KUBE_CREDS_FILE}" --namespace cnox
     rm -f "${KUBE_CREDS_FILE}"
 }
 
 create_cnox_deployment () {
     echo "cleaning up old cnox deployment (if any) ..."
-    kubectl delete service cnoxengine --wait --ignore-not-found
-    kubectl delete deployment cnoxengine --wait --ignore-not-found
+    kubectl delete service cnoxengine --wait --ignore-not-found --namespace cnox
+    kubectl delete deployment cnoxengine --wait --ignore-not-found --namespace cnox
     echo "deploying cnox ..."
-    generate_cnox_deployment | kubectl apply -f -
-    generate_cnox_service | kubectl apply -f -
+    generate_cnoxengine_deployment | kubectl apply -f -
+    generate_cnoxengine_service | kubectl apply -f -
 }
 
-# TODO: check if kubectl is pointing to valid supported kubernetes
-#       cluster with ver >= CNOX_MIN_VER && <= CNOX_MAX_VER
+
 check_prerequisite () {
     requiredCmds=( curl jq kubectl )
     for cmd in "${requiredCmds[@]}"
@@ -69,9 +67,10 @@ stack_post_data() {
   cat << EOF
   {
      "cluster_name" : "$CLUSTER_NAME",
-     "cnox_stack" : "unsecured",
+     "cnox_stack" : "call_home",
      "cnox_engine_url" : "",
      "customer_id": "$LICENSE_KEY",
+     "license_key": "$LICENSE_KEY",
      "Nodes" : "",
      "Pods" : "0",
      "Services" : "0",
@@ -108,25 +107,30 @@ create_dashboard_stack() {
         '"Cluster Already Exists"')
             echo "Cluster already exist. Cleanup (if needed) and re-install cnox"
             ;;
+        *)
+            echo_with_exit "Failed to validate license key. Message $respMesg"
+            ;;
         esac
         ;;
+    *)
+        echo_with_exit "Failed to validate license key. Code $respStatus"
     esac
 
-    # TODO: handle the case if CLUSTER_NAME already exist
     rm -f "$TEMPOUTFILE" "$TEMPERRFILE"
 }
 
 create_cnox_config () {
-    kubectl delete configmap cnoxengine --ignore-not-found
-    kubectl create configmap cnoxengine --from-literal=clusterName="${CLUSTER_NAME}" --from-literal=licenseKey="${LICENSE_KEY}"
+    kubectl delete configmap cnoxengine --ignore-not-found --namespace cnox
+    kubectl create configmap cnoxengine --from-literal=clusterName="${CLUSTER_NAME}" --from-literal=licenseKey="${LICENSE_KEY}" --namespace cnox
 }
 
-generate_cnox_deployment() {
-  cat << CNOX_DEPLOYMENT_EOF
+generate_cnoxengine_deployment() {
+  cat << CNOXENGINE_DEPLOYMENT_EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cnoxengine
+  namespace: cnox
   labels:
     app: cnoxengine
 spec:
@@ -141,7 +145,8 @@ spec:
     spec:
       containers:
       - name: cnoxengine
-        image: quay.io/srics/cnoxengine:latest
+        image: clouddefense/cnoxengine:11-03-19-23-32-45
+        imagePullPolicy: Always
         command: ["/cnox/bin/engine"]
         ports:
         - containerPort: 8888
@@ -167,28 +172,78 @@ spec:
         secret:
           secretName: cnoxkubecreds
       restartPolicy: Always
-      imagePullSecrets:
-        - name: cnox-registry-secret
-CNOX_DEPLOYMENT_EOF
+      serviceAccountName: cnox
+CNOXENGINE_DEPLOYMENT_EOF
 }
 
-generate_cnox_service() {
-    cat << CNOX_SERVICE_EOF
+generate_cnoxengine_service() {
+    cat << CNOXENGINE_SERVICE_EOF
 apiVersion: v1
 kind: Service
 metadata:
   name: cnoxengine
+  namespace: cnox
 spec:
   type: LoadBalancer
   ports:
   - port: 8888
   selector:
     app: cnoxengine
-CNOX_SERVICE_EOF
+CNOXENGINE_SERVICE_EOF
+}
+
+generate_cnox_serviceaccount() {
+  cat << CNOX_SERVICE_ACCOUNT_EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cnox
+  namespace: cnox
+CNOX_SERVICE_ACCOUNT_EOF
+}
+
+generate_cnox_clusterrolebinding() {
+  cat << CNOX_CLUSTER_ROLEBINDING_EOF
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cnox
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: cnox
+  namespace: cnox
+CNOX_CLUSTER_ROLEBINDING_EOF
+}
+
+create_cnox_account() {
+    echo "preparing cnox account ..."
+    CURRENT_CONTEXT=$(kubectl config current-context)
+    CURRENT_CLUSTER=$(kubectl config view -o jsonpath="{.contexts[?(@.name == '$CURRENT_CONTEXT')].context.cluster}")
+    echo "install cnox on cluster ${CURRENT_CLUSTER} ..."
+    kubectl create ns cnox
+    generate_cnox_serviceaccount | kubectl apply -f -
+    SECRET=$(kubectl get serviceaccount/cnox --namespace=cnox --output=jsonpath="{.secrets[0].name}")
+    TOKEN=$(kubectl get secret/${SECRET} --namespace=cnox --output=jsonpath="{.data.token}" | base64 --decode)
+    kubectl config set-credentials cnox --token=${TOKEN}
+    kubectl config set-context cnox --user=cnox --cluster=${CURRENT_CLUSTER}
+    generate_cnox_clusterrolebinding | kubectl apply -f -
+    kubectl config use-context cnox
+    create_kubecreds_secret
+    kubectl config use-context ${CURRENT_CONTEXT}
+}
+
+delete_cnox() {
+    kubectl delete namespace cnox
+    kubectl delete clusterrolebindings.rbac.authorization.k8s.io cnox
 }
 
 check_prerequisite
+create_cnox_account
 create_dashboard_stack
 create_cnox_config
-create_kubecreds_secret
 create_cnox_deployment
+
