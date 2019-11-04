@@ -106,12 +106,16 @@
               </button>
             </li>
             <li>
-              <button type="button"
+              <button type="button" class="bg-default-orange"
+                      (click)="deleteStack()">
+                Delete
+              </button>
+              <!--<button type="button"
                       [ngClass]="btncolor ? 'bg-default-orange': 'bg-light-gray'"
                       [disabled]="(this.clusterData.cnox_stack === 'unsecured' || this.clusterData.cnox_stack === '')"
                       (click)="deleteStack()">
                 Delete
-              </button>
+              </button>-->
             </li>
           </ul>
         </div>

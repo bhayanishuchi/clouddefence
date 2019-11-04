@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.tokens.authToken);
           localStorage.setItem('user_id', res.user.user_id);
           localStorage.setItem('customer_id', res.customer.customer_id);
+          localStorage.setItem('customer_name', res.customer.name);
           this.toasterService.showSuccess('Login Successfully.');
           this.router.navigate(['/dashboard']);
         } else {

@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   clusterlist: any;
   logeventlist: any;
   totalCounts: any = {};
+  customer_name;
   pieChartLabels: any[] = [['Gold', 'Nodes:0'], ['Silver', 'Nodes:0'], ['Bronze', 'Nodes:0']];
   pieChartData: SingleDataSet = [0, 0, 0];
   pieChartType: ChartType = 'pie';
@@ -35,9 +36,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+
     const socket = this.userService.newconnection();
     const that = this;
     const accessToken = localStorage.getItem('token');
+    this.customer_name = localStorage.getItem('customer_name');
     console.log('accessToken', accessToken);
     if (!accessToken) {
       this.router.navigate(['/login']);
