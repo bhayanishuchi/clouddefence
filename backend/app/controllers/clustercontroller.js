@@ -491,11 +491,12 @@ exports.updatemonitorurl = (req, res) => {
         .then(updateCluster)
         .then(updateSocket)
         .then((resolve) => {
+            res.status(200).send(resolve);
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
-                .then((data) => {
-                    res.status(200).send(resolve);
-                })
+            // Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
+            //     .then((data) => {
+            //         res.status(200).send(resolve);
+            //     })
 
         })
         .catch((err) => {
@@ -587,10 +588,11 @@ exports.updatescannerurl = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
-                .then((data) => {
-                    res.status(200).send(resolve);
-                })
+            res.status(200).send(resolve);
+            // Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
+            //     .then((data) => {
+            //         res.status(200).send(resolve);
+            //     })
 
         })
         .catch((err) => {
@@ -671,10 +673,11 @@ exports.updatecomplianceurl = (req, res) => {
         .then(updateSocket)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
-            Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
-                .then((data) => {
-                    res.status(200).send(resolve);
-                })
+            res.status(200).send(resolve);
+            // Promise.all([findSocketTotalunseccluster(req, resolve.license_key), findSocketTotalStackList(req, resolve.license_key), findSocketAllTotal(req, resolve.license_key), findSocketLogEvent(req, resolve.license_key), findSocketAllcluster(req, resolve.license_key)])
+            //     .then((data) => {
+            //         res.status(200).send(resolve);
+            //     })
 
         })
         .catch((err) => {

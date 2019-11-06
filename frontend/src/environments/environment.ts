@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   api : "http://34.208.221.82:3001",
   socketUri : "http://34.208.221.82:3000",
-  // api : "http://192.168.0.11:3001",
-  // socketUri : "http://192.168.0.11:3000"
+  // api : "http://localhost:3001",
+  // socketUri : "http://localhost:3000"
 };
 
 /*

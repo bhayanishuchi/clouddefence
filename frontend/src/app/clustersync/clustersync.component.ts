@@ -48,10 +48,19 @@ export class ClustersyncComponent implements OnInit {
 
     this.userService.updateCLuster(socket, function (data) {
       console.log('update-cluster', data);
+      // that.clusterlist[0].cluster_name= "pooja"
+      console.log("sdas",that.clusterlist);
       that.clusterlist.filter((x) => {
         if (x.cluster_name === data.cluster_name) {
           x.showProgress = true;
-          x.barWidth = data.percentage;
+          console.log("numbere", x.barWidth);
+          if(x.barWidth) {
+            if((x.barWidth + data.percentage) <101) {
+              x.barWidth += data.percentage;
+            }
+          }else{
+            x.barWidth = data.percentage;
+          }
         }
       });
     });
