@@ -74,6 +74,12 @@ export class UserService {
     });
   }
 
+  updateCLuster(UserSocket, cb) {
+    UserSocket.on('update-cluster', function (data) {
+      cb(data);
+    });
+  }
+
 
 
 

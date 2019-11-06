@@ -480,6 +480,7 @@ exports.updatemonitorurl = (req, res) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
                 socket.to(finalRes.license_key).emit('updatemonitorurl', finalRes);
+                socket.to(finalRes.license_key).emit('update-cluster', {message:'update monitor url', customer_id: finalRes.license_key, percentage:33.33, cluster_name: finalRes.cluster_name});
             }
             resolve(finalRes);
         });
@@ -574,6 +575,7 @@ exports.updatescannerurl = (req, res) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
                 socket.to(finalRes.license_key).emit('updatescannerurl', finalRes);
+                socket.to(finalRes.license_key).emit('update-cluster', {message:'update scanner url', customer_id: finalRes.license_key, percentage:33.33, cluster_name: finalRes.cluster_name});
             }
             resolve(finalRes);
         });
@@ -656,6 +658,7 @@ exports.updatecomplianceurl = (req, res) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
                 socket.to(finalRes.customer_id).emit('updatecomplianceurl', finalRes);
+                socket.to(finalRes.customer_id).emit('update-cluster', {message:'update compliance url', customer_id: finalRes.customer_id, percentage:33.33, cluster_name: finalRes.cluster_name});
             }
             resolve(finalRes);
         });

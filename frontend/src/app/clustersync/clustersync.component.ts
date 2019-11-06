@@ -29,6 +29,7 @@ export class ClustersyncComponent implements OnInit {
   }
 
   ngOnInit() {
+    const socket = this.userService.newconnection();
     this.http.get('assets/file/deploy-cnox', {responseType: 'text'})
       .subscribe(data => {
         this.fileContent = data;
@@ -43,6 +44,17 @@ export class ClustersyncComponent implements OnInit {
       that.clusterlist = data;
     });
     this.getAllCluster();
+    console.log("All cluster",this.getAllCluster());
+
+    this.userService.updateCLuster(socket, function (data) {
+      console.log('update-cluster', data);
+      that.clusterlist.filter((x) => {
+        if (x.cluster_name === data.cluster_name) {
+          x.showProgress = true;
+          x.barWidth = data.percentage;
+        }
+      });
+    });
   }
 
   getAllCluster() {
@@ -86,12 +98,12 @@ export class ClustersyncComponent implements OnInit {
     this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
       this.showProgress = true;
-      this.clusterlist.filter((x) => {
-        if (x.cluster_name === this.clusterData.cluster_name) {
-          x.showProgress = true;
-          x.barWidth = 20;
-        }
-      });
+      // this.clusterlist.filter((x) => {
+      //   if (x.cluster_name === this.clusterData.cluster_name) {
+      //     x.showProgress = true;
+      //     x.barWidth = 20;
+      //   }
+      // });
       if (this.clusterData.cnox_stack === "unsecured") {
         // alert(this.clusterData.cluster_name + " is secured.");
       }
