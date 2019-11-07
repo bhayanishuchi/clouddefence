@@ -4,7 +4,6 @@ const policySchema = mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     policy_id :String,
     customer_id :String,
-
     policy_body : Object,
 });
 

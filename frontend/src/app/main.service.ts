@@ -40,8 +40,8 @@ export class MainService {
     return this.http.delete(cnoxEngineUrl + '/cluster/' + clustername + '/cnox_stack');
   }
 
-  addPolicy(cnoxEngineUrl, data) {
-    return this.http.post(cnoxEngineUrl + '/cluster/cluster-1/policy', data);
+  addPolicy(data) {
+    return this.http.post(this.newapi + '/policy', data);
   }
 
 }

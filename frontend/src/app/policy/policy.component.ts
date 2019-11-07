@@ -34,8 +34,12 @@ export class PolicyComponent implements OnInit {
   }
 
   onGeneralSubmit() {
-    console.log('gpoliciesField', this.gpoliciesField);
-    this.mainservice.addPolicy(this.cnoxUrl, this.gpoliciesField)
+    let data = {
+      customer_id : localStorage.getItem('customer_id'),
+      policy_body : this.gpoliciesField
+    }
+    console.log('data', data);
+    this.mainservice.addPolicy(data)
       .subscribe((res) => {
         console.log('res', res);
       }, error => {

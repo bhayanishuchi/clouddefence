@@ -17,7 +17,6 @@ export class ClustersyncComponent implements OnInit {
   clusterDisplay = 'none';
   selectedStack = '';
   btncolor = false;
-
   fileContent = '';
   showProgress = false;
 
@@ -104,15 +103,21 @@ export class ClustersyncComponent implements OnInit {
     this.display = 'none';
     let stack_name = {"stack_name": this.selectedStack};
     console.log('stack', stack_name);
+    this.clusterlist.filter((x) => {
+      if (x.cluster_name === this.clusterData.cluster_name) {
+        x.showProgress = true;
+        x.barWidth = 0;
+      }
+    });
     this.mainservice.updateStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name, stack_name).subscribe((res) => {
       console.log('stackrespone', res);
-      this.showProgress = true;
-      // this.clusterlist.filter((x) => {
-      //   if (x.cluster_name === this.clusterData.cluster_name) {
-      //     x.showProgress = true;
-      //     x.barWidth = 20;
-      //   }
-      // });
+      // this.showProgress = true;
+      this.clusterlist.filter((x) => {
+        if (x.cluster_name === this.clusterData.cluster_name) {
+          x.showProgress = true;
+          x.barWidth = 0;
+        }
+      });
       if (this.clusterData.cnox_stack === "unsecured") {
         // alert(this.clusterData.cluster_name + " is secured.");
       }

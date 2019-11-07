@@ -139,7 +139,7 @@
               <div class="col-md-4 float-right clearfix">
                 <h3 class="title-text mb-15">Compliance Frequency</h3>
                 <div class="select-option">
-                  <select nice-select [value]="gpoliciesField.compliance_frequency">
+                  <select nice-select [(ngModel)]="gpoliciesField.compliance_frequency">
                     <!--                      <option value="" selected="selected" disabled>Select</option>-->
                     <option value="hourly">Hourly</option>
                     <option value="daily">Daily</option>

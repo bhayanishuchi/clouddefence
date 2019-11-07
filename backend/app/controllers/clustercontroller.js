@@ -192,7 +192,7 @@ exports.createCluster = (req, res) => {
     }; // end of checkCluster
 
     let addCluster = (customerDetail) => {
-        console.log("addCustomer");
+        console.log("addCluster");
         return new Promise((resolve, reject) => {
             let body = {
                 cluster_name: req.body.cluster_name,
@@ -608,7 +608,12 @@ exports.updatecomplianceurl = (req, res) => {
         return new Promise((resolve, reject) => {
             if (req.params.cluster_name) {
                 if (req.body.compliance_url) {
+                if (req.body.customer_id) {
                     resolve();
+                } else {
+                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    reject(apiResponse);
+                }
                 } else {
                     let apiResponse = response.generate(true, "Required Parameter compliance_url is missing", 400, null);
                     reject(apiResponse);
@@ -623,7 +628,8 @@ exports.updatecomplianceurl = (req, res) => {
     let checkCluster = () => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
-            Cluster.find({cluster_name: req.params.cluster_name}, function (err, clusterData) {
+            Cluster.find({cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id}, function (err, clusterData) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "updatecomplianceurl => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -642,7 +648,8 @@ exports.updatecomplianceurl = (req, res) => {
     let updateCluster = () => {
         console.log("updateCluster");
         return new Promise((resolve, reject) => {
-            Cluster.findOneAndUpdate({cluster_name: req.params.cluster_name}, {compliance_url: req.body.compliance_url}, {new: true}, function (err, clusterdetails) {
+            Cluster.findOneAndUpdate({ cluster_name: req.params.cluster_name,
+                license_key: req.body.customer_id}, {compliance_url: req.body.compliance_url}, {new: true}, function (err, clusterdetails) {
                 if (err) {
                     logger.error("Internal Server error while update Cluster", "updatecomplianceurl => updateCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
@@ -659,8 +666,8 @@ exports.updatecomplianceurl = (req, res) => {
         return new Promise((resolve, reject) => {
             let socket = req.app.io;
             if (socket && socket !== undefined) {
-                socket.to(finalRes.customer_id).emit('updatecomplianceurl', finalRes);
-                socket.to(finalRes.customer_id).emit('update-cluster', {message:'update compliance url', customer_id: finalRes.customer_id, percentage:33.33, cluster_name: finalRes.cluster_name});
+                socket.to(finalRes.license_key).emit('updatecomplianceurl', finalRes);
+                socket.to(finalRes.license_key).emit('update-cluster', {message:'update compliance url', customer_id: finalRes.license_key, percentage:33.33, cluster_name: finalRes.cluster_name});
             }
             resolve(finalRes);
         });
