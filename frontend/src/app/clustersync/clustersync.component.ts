@@ -169,8 +169,16 @@ export class ClustersyncComponent implements OnInit {
   }
 
   deleteStack() {
+    this.clusterlist.filter((x) => {
+      if (x.cluster_name === this.clusterData.cluster_name) {
+        x.cnox_stack = "Stack delete in progress";
+      }
+    });
+
+
     this.mainservice.deleteStack(this.clusterData.cnox_engine_url, this.clusterData.cluster_name)
       .subscribe((res) => {
+        console.log('res', res);
         this.getAllCluster();
         // let stack = {
         //   'cnox_stack': "unsecured"
@@ -179,7 +187,6 @@ export class ClustersyncComponent implements OnInit {
         //   .subscribe((data) => {
         //     this.getAllCluster();
         //   })
-        console.log('res', res);
       });
   }
 
