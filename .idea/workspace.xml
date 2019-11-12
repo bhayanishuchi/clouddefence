@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="" />
+    <list default="true" id="ec5dcaf4-e9ec-4b78-a852-8173c64e5001" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/start.sh" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +18,7 @@
           <entry key="gitignore" value="1" />
           <entry key="html" value="1" />
           <entry key="json" value="2" />
+          <entry key="sh" value="1" />
           <entry key="ts" value="5" />
         </counts>
       </usages-collector>
@@ -22,7 +26,7 @@
         <counts>
           <entry key="HTML" value="1" />
           <entry key="JSON" value="2" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="TypeScript" value="5" />
         </counts>
       </usages-collector>
@@ -32,6 +36,7 @@
           <entry key="html" value="28" />
           <entry key="js" value="3" />
           <entry key="json" value="1" />
+          <entry key="sh" value="1" />
           <entry key="ts" value="202" />
         </counts>
       </usages-collector>
@@ -40,7 +45,7 @@
           <entry key="HTML" value="28" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="3" />
-          <entry key="PLAIN_TEXT" value="15" />
+          <entry key="PLAIN_TEXT" value="16" />
           <entry key="TypeScript" value="202" />
         </counts>
       </usages-collector>
@@ -376,7 +381,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frontend/angular.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="224">
@@ -385,11 +390,20 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/frontend/start.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="36" selection-start-column="36" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/start.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state>
+              <caret column="80" selection-start-column="75" selection-end-column="80" />
             </state>
           </provider>
         </entry>
@@ -425,6 +439,7 @@
         <option value="$PROJECT_DIR$/frontend/src/environments/environment.ts" />
         <option value="$PROJECT_DIR$/backend/.gitignore" />
         <option value="$PROJECT_DIR$/frontend/angular.json" />
+        <option value="$PROJECT_DIR$/frontend/start.sh" />
       </list>
     </option>
   </component>
@@ -628,7 +643,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12230000" />
+    <option name="totallyTimeSpent" value="13398000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1170,13 +1185,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/https_server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="299">
@@ -1195,6 +1203,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
           <caret line="78" column="22" lean-forward="true" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="80" selection-start-column="75" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frontend/start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="36" selection-start-column="36" selection-end-column="36" />
         </state>
       </provider>
     </entry>
