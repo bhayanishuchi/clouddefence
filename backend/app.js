@@ -59,7 +59,9 @@ fs.readdirSync(routesPath).forEach(function (file) {
 
 app.use(globalErrorMiddleware.globalNotFoundHandler);
 
+
 const server = http.createServer(app);
+
 server.listen(appConfig.port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -130,12 +132,21 @@ mongoose.connection.on('open', function (err) {
     //process.exit(1)
 }); // enr mongoose connection o
 
+let newserver = require('https').createServer(app);
 var httpsOptions = {
     key: fs.readFileSync('./config/cnox.io.key'),
-    cert: fs.readFileSync('./config/combineAll.crt')
+    cert: fs.readFileSync('./config/www_cnox_io.crt'),
+    ca: [
+
+        fs.readFileSync('./config/AddTrustExternalCARoot.crt'),
+
+        fs.readFileSync('./config/SectigoRSADomainValidationSecureServerCA.crt')
+
+    ]
 };
-let newserver = require('http').createServer(httpsOptions, app);
-newserver.listen(3000, () => {
+// require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
+var https = require('https').createServer(httpsOptions, app);
+createServer.listen(3000, () => {
     console.log(`socket listening on port 3000`);
 });
 let io = require('socket.io').listen(newserver);
