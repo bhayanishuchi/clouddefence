@@ -130,8 +130,11 @@ mongoose.connection.on('open', function (err) {
     //process.exit(1)
 }); // enr mongoose connection o
 
-
-let newserver = require('http').createServer(app);
+var httpsOptions = {
+    key: fs.readFileSync('./config/cnox.io.key'),
+    cert: fs.readFileSync('./config/combineAll.crt')
+};
+let newserver = require('http').createServer(httpsOptions, app);
 newserver.listen(3000, () => {
     console.log(`socket listening on port 3000`);
 });
