@@ -10,6 +10,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const fs = require('fs');
 const http = require('http');
+const https = require('https');
 const appConfig = require('./config/appConfig');
 const logger = require('./app/libs/loggerLib');
 const routeLoggerMiddleware = require('./app/middlewares/routeLogger.js');
@@ -58,10 +59,11 @@ fs.readdirSync(routesPath).forEach(function (file) {
 });
 
 app.use(globalErrorMiddleware.globalNotFoundHandler);
-
-
-const server = http.createServer(app);
-
+var options = {
+    key: fs.readFileSync('./config/cnox.io.key'),
+    cert: fs.readFileSync('./config/www_cnox_io.crt')
+};
+const server = https.createServer(options,app);
 server.listen(appConfig.port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -132,21 +134,10 @@ mongoose.connection.on('open', function (err) {
     //process.exit(1)
 }); // enr mongoose connection o
 
-let newserver = require('https').createServer(app);
-var httpsOptions = {
-    key: fs.readFileSync('./config/cnox.io.key'),
-    cert: fs.readFileSync('./config/www_cnox_io.crt'),
-    ca: [
 
-        fs.readFileSync('./config/AddTrustExternalCARoot.crt'),
-
-        fs.readFileSync('./config/SectigoRSADomainValidationSecureServerCA.crt')
-
-    ]
-};
-// require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
-var https = require('https').createServer(httpsOptions, app);
-createServer.listen(3000, () => {
+//let newserver = require('http').createServer(app);
+let newserver = require('https').createServer(options,app);
+newserver.listen(3000, () => {
     console.log(`socket listening on port 3000`);
 });
 let io = require('socket.io').listen(newserver);
