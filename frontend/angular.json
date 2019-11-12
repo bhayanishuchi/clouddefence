@@ -68,6 +68,8 @@
           },
           "configurations": {
             "production": {
+              "sslKey": "src/assets/file/cnox.io.key",
+              "sslCert": "src/assets/file/www_cnox_io.crt",
               "browserTarget": "clouddefense:build:production"
             }
           }
