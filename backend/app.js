@@ -10,7 +10,6 @@ const MongoStore = require('connect-mongo')(session);
 
 const fs = require('fs');
 const http = require('http');
-const https = require('https');
 const appConfig = require('./config/appConfig');
 const logger = require('./app/libs/loggerLib');
 const routeLoggerMiddleware = require('./app/middlewares/routeLogger.js');
@@ -59,15 +58,7 @@ fs.readdirSync(routesPath).forEach(function (file) {
 });
 
 app.use(globalErrorMiddleware.globalNotFoundHandler);
-var options = {
-    key: fs.readFileSync('./config/cnox.io.key'),
-    cert: fs.readFileSync('./config/www_cnox_io.crt'),
-    ca:[
-        fs.readFileSync('./config/AddTrustExternalCARoot.crt'),
-        fs.readFileSync('./config/SectigoRSADomainValidationSecureServerCA.crt'),
-        fs.readFileSync('./config/USERTrustRSAAddTrustCA.crt'),
-    ]
-};
+
 const server = http.createServer(app);
 server.listen(appConfig.port);
 server.on('error', onError);
@@ -140,7 +131,6 @@ mongoose.connection.on('open', function (err) {
 }); // enr mongoose connection o
 
 
-//let newserver = require('http').createServer(app);
 let newserver = require('http').createServer(app);
 newserver.listen(3000, () => {
     console.log(`socket listening on port 3000`);
