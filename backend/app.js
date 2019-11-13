@@ -68,7 +68,7 @@ var options = {
         fs.readFileSync('./config/USERTrustRSAAddTrustCA.crt'),
     ]
 };
-const server = https.createServer(options,app);
+const server = http.createServer(app);
 server.listen(appConfig.port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -141,7 +141,7 @@ mongoose.connection.on('open', function (err) {
 
 
 //let newserver = require('http').createServer(app);
-let newserver = require('https').createServer(options,app);
+let newserver = require('http').createServer(app);
 newserver.listen(3000, () => {
     console.log(`socket listening on port 3000`);
 });
