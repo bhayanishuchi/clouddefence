@@ -64,7 +64,6 @@ var options = {
     cert: fs.readFileSync('./config/www_cnox_io.crt'),
     ca:[
         fs.readFileSync('./config/AddTrustExternalCARoot.crt'),
-        fs.readFileSync('./config/cnox.io.csr'),
         fs.readFileSync('./config/SectigoRSADomainValidationSecureServerCA.crt'),
         fs.readFileSync('./config/USERTrustRSAAddTrustCA.crt'),
     ]
