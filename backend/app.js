@@ -61,7 +61,13 @@ fs.readdirSync(routesPath).forEach(function (file) {
 app.use(globalErrorMiddleware.globalNotFoundHandler);
 var options = {
     key: fs.readFileSync('./config/cnox.io.key'),
-    cert: fs.readFileSync('./config/www_cnox_io.crt')
+    cert: fs.readFileSync('./config/www_cnox_io.crt'),
+    ca:[
+        fs.readFileSync('./config/AddTrustExternalCARoot.crt'),
+        fs.readFileSync('./config/cnox.io.csr'),
+        fs.readFileSync('./config/SectigoRSADomainValidationSecureServerCA.crt'),
+        fs.readFileSync('./config/USERTrustRSAAddTrustCA.crt'),
+    ]
 };
 const server = https.createServer(options,app);
 server.listen(appConfig.port);
