@@ -261,20 +261,38 @@
 
           <div id="menu2" class="tab-pane fade">
             <div class="input-items-list ul-li mb-60 clearfix">
-              <ul class="clearfix">
-                <li>
-                  <span class="title-text">Image Registry</span>:
-                </li>
-                <li>
-                  <div class="select-option">
-                    <select nice-select [value]="policiesField.imageRegistry">
-                      <!--                      <option value="" selected="selected" disabled>Select</option>-->
-                      <option value="dockerHub">Docker Hub</option>
-                      <option value="quay">Quay</option>
-                    </select>
-                  </div>
-                </li>
-              </ul>
+              <div class="row">
+                <div class="col-md-8 input-items-list ul-li">
+                  <ul class="clearfix">
+                    <li>
+                      <span class="title-text">Image Registry</span>:
+                    </li>
+                    <li>
+                    <div class="select-option">
+                      <select nice-select [value]="policiesField.imageRegistry">
+                        <!--                      <option value="" selected="selected" disabled>Select</option>-->
+                        <option value="dockerHub">Docker Hub</option>
+                        <option value="quay">Quay</option>
+                      </select>
+                    </div>
+                  </li>
+                  </ul>
+                </div>
+                <div class="col-md-4 input-items-list ul-li">
+                  <ul class="clearfix">
+                    <li>
+                      <span class="title-text">Scanner Namespaces</span>:
+                    </li>
+                    <li>
+                      <div class="form-item mb-0">
+                        <input type="text" placeholder="Comma-Separated list of Namespaces" [(ngModel)]="policiesField.scanner_namespaces"
+                               name="scanner_namespaces">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
               <ul class="clearfix">
                 <li>
                   <span class="title-text">Scan Frequency</span>:

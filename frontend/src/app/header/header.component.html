@@ -54,7 +54,8 @@
               <div class="dropdown">
                 <button class="fas fa-user-circle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                  <a class="dropdown-item fa fa-user-circle-o">Edit Profile </a>
+                  <a class="dropdown-item fa ">Welcome {{user.username}} </a>
+                  <a class="dropdown-item fa fa-user-circle">Edit Profile </a>
                   <a class="dropdown-item fa fa-power-off" (click)="logout()">Log out</a>
                 </div>
               </div>

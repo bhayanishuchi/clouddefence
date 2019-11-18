@@ -14,10 +14,11 @@ import {ToasterService} from "../service/toaster.service";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
   clusterlist: any;
   logeventlist: any;
   totalCounts: any = {};
-  customer_name;
+  customerName;
   pieChartLabels: any[] = [['Gold', 'Nodes:0'], ['Silver', 'Nodes:0'], ['Bronze', 'Nodes:0']];
   pieChartData: SingleDataSet = [0, 0, 0];
   pieChartType: ChartType = 'pie';
@@ -40,7 +41,7 @@ export class DashboardComponent implements OnInit {
     const socket = this.userService.newconnection();
     const that = this;
     const accessToken = localStorage.getItem('token');
-    this.customer_name = localStorage.getItem('customer_name');
+    this.customerName = localStorage.getItem('customer_name');
     console.log('accessToken', accessToken);
     if (!accessToken) {
       this.router.navigate(['/login']);
@@ -112,6 +113,23 @@ export class DashboardComponent implements OnInit {
         console.log('socket unseccluster', data);
         that.clusterlist = data;
       });
+    }
+  }
+
+  onChartClick(e) {
+    if (e.active.length > 0) {
+      const chart = e.active[0]._chart;
+      const activePoints = chart.getElementAtEvent(e.event);
+      if ( activePoints.length > 0) {
+        // get the internal index of slice in pie chart
+        const clickedElementIndex = activePoints[0]._index;
+        const label = chart.data.labels[clickedElementIndex];
+        // get value by index
+        const value = chart.data.datasets[0].data[clickedElementIndex];
+        console.log(clickedElementIndex, label, value);
+        this.mainservice.changeMessage(label);
+        this.router.navigate(['/cluster']);
+      }
     }
   }
 

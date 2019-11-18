@@ -8,9 +8,12 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
+  user;
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log('userrrrrrrrrrrrrrr', this.user, this.user.username);
   }
 
   logout() {
