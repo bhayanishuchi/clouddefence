@@ -127,8 +127,6 @@ export class DashboardComponent implements OnInit {
         // get value by index
         const value = chart.data.datasets[0].data[clickedElementIndex];
         console.log(clickedElementIndex, label, value);
-        this.mainservice.changeMessage(label);
-        this.router.navigate(['/cluster']);
       }
     }
   }

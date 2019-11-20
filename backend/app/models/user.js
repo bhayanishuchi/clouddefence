@@ -6,12 +6,14 @@ const userSchema = mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     user_id :String,
     customer_id :String,
-
     username : String,
     password :String,
     first_name : String,
     last_name : String,
-    email : String,
+    email : {
+        type: String,
+        unique: true,
+    },
     phone : String,
     role : String,
     status :String,
