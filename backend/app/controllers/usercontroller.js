@@ -569,6 +569,94 @@ let deleteUser = (req, res) => {
         });
 }
 
+let updateUser = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.body.username && req.body.customer_id) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter username or customer_id is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer Not Exists", "createUser => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer Not Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(customerDetail);
+                }
+            })
+        });
+    }; // end of checkUser
+
+    let checkUser = () => {
+        console.log("checkUser");
+        return new Promise((resolve, reject) => {
+            User.findOne({username: req.body.username, customer_id: req.body.customer_id}, function (err, userDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(userDetail)) {
+                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(userDetail);
+                }
+            })
+        });
+    }; // end of checkUser
+
+    let updateUser = (userDetail) => {
+        console.log("updateUser");
+        return new Promise((resolve, reject) => {
+            let body = {
+                // customer_id: req.body.customer_id,
+                // username: req.body.username,
+                first_name: (req.body.first_name) ? (req.body.first_name) : userDetail.first_name,
+                last_name: (req.body.last_name) ? (req.body.last_name) : userDetail.last_name,
+                email: (req.body.email) ? (req.body.email) : userDetail.email,
+                phone: (req.body.phone) ? (req.body.phone) : userDetail.phone
+            };
+            User.findOneAndUpdate({username: req.body.username, customer_id: req.body.customer_id},body ,{new:true},function (err, user) {
+                if (err) {
+                    logger.error("Internal Server error while update User", "updateUser => updateUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(user);
+                }
+            })
+        });
+    }; // end of addUser
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(checkUser)
+        .then(updateUser)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
 
 module.exports = {
     createUser: createUser,
@@ -576,4 +664,5 @@ module.exports = {
     passwordUpdate: passwordUpdate,
     loginUser: loginUser,
     deleteUser: deleteUser,
+    updateUser: updateUser,
 }

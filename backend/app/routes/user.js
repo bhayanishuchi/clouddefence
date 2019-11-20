@@ -20,5 +20,6 @@ module.exports.setRouter = (app) => {
 
     app.delete('/user/:username/:customer_id',[usercontroller.deleteUser]);
 
+    app.put('/user/:username/:customer_id',[usercontroller.updateUser]);
 
 }
