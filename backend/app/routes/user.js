@@ -22,4 +22,8 @@ module.exports.setRouter = (app) => {
 
     app.put('/user/:username/:customer_id',[usercontroller.updateUser]);
 
+    app.post('/user/forget',[usercontroller.forgetPassword]);
+
+    app.post('/user/reset',[usercontroller.resetPassword]);
+
 }
