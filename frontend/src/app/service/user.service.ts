@@ -30,4 +30,13 @@ export class UserService {
   userPasswordUpdate(data) {
     return this.http.post<any>(this.api + '/user/passwordupdate', data);
   }
+
+  forgetPassword(data) {
+    console.log('forget', data);
+    return this.http.post<any>(this.api + '/user/forget', data);
+  }
+
+  resetPassword(data) {
+    return this.http.post<any>(this.api + '/user/reset', data);
+  }
 }
