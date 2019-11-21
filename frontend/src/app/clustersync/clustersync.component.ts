@@ -3,6 +3,7 @@ import {MainService} from '../main.service';
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../service/socket.service";
 import {Socket} from "ngx-socket-io";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-clustersync',
@@ -19,15 +20,22 @@ export class ClustersyncComponent implements OnInit {
   btncolor = false;
   fileContent = '';
   showProgress = false;
+  selectedCluster;
 
   constructor(private mainservice: MainService,
               private http: HttpClient,
               private socket: Socket,
-              private userService: UserService) {
+              private userService: UserService,
+              private activatRoute: ActivatedRoute) {
 
   }
 
   ngOnInit() {
+    this.activatRoute.queryParams.subscribe((data) => {
+      console.log('data.stack', data.stack);
+      this.selectedCluster = data.stack;
+      this.getAllCluster();
+    });
     const socket = this.userService.newconnection();
     this.http.get('assets/file/deploy-cnox', {responseType: 'text'})
       .subscribe(data => {
@@ -39,25 +47,28 @@ export class ClustersyncComponent implements OnInit {
       console.log('socket cluster', data);
       data.forEach((x) => {
         x.checked = false;
-      })
-      that.clusterlist = data;
+      });
+      if (that.selectedCluster === undefined && that.selectedCluster === '')
+        that.clusterlist = data;
+
+      console.log('that.cluster', that.clusterlist);
+
     });
-    this.getAllCluster();
-    console.log("All cluster",this.getAllCluster());
+
 
     this.userService.updateCLuster(socket, function (data) {
       console.log('update-cluster', data);
       // that.clusterlist[0].cluster_name= "pooja"
-      console.log("sdas",that.clusterlist);
+      console.log("sdas", that.clusterlist);
       that.clusterlist.filter((x) => {
         if (x.cluster_name === data.cluster_name) {
           x.showProgress = true;
           console.log("numbere", x.barWidth);
-          if(x.barWidth) {
-            if((x.barWidth + data.percentage) <101) {
+          if (x.barWidth) {
+            if ((x.barWidth + data.percentage) < 101) {
               x.barWidth += data.percentage;
             }
-          }else{
+          } else {
             x.barWidth = data.percentage;
           }
         }
@@ -66,12 +77,39 @@ export class ClustersyncComponent implements OnInit {
   }
 
   getAllCluster() {
+
+    console.log('this.selectedCluster', this.selectedCluster);
     this.mainservice.getCluster()
       .subscribe(response => {
-        response.forEach((x) => {
-          x.checked = false;
-        });
-        this.clusterlist = response;
+        this.clusterlist = [];
+        if (this.selectedCluster === 'Silver') {
+          response.filter((x) => {
+            if (x.cnox_stack === 'silver_stack') {
+              this.clusterlist.push(x);
+            }
+            console.log('silver', this.clusterlist);
+          });
+        } else if (this.selectedCluster === "Bronze") {
+          response.filter((x) => {
+            if (x.cnox_stack === 'bronze_stack') {
+              this.clusterlist.push(x);
+            }
+            console.log('oooooooooooooooo', this.clusterlist);
+          });
+        } else if (this.selectedCluster === 'Gold') {
+          response.filter((x) => {
+            if (x.cnox_stack === 'gold_stack') {
+              this.clusterlist.push(x);
+            }
+            console.log('gold_stack', this.clusterlist);
+          });
+        } else {
+          response.forEach((x) => {
+            x.checked = false;
+          });
+          this.clusterlist = response;
+          console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', this.clusterlist);
+        }
       });
   }
 
