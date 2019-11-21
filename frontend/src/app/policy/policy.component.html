@@ -166,7 +166,7 @@
             <div class="btns-group ul-li-right clearfix">
               <ul class="clearfix">
                 <li>
-                  <button class="custom-btn bg-default-orange" type="submit" (click)="onGeneralSubmit()">Save</button>
+                  <button class="custom-btn bg-default-orange" type="submit">Save</button>
                 </li>
                 <li>
                   <a href="#!" class="custom-btn bg-light-gray">Reset</a>
@@ -285,8 +285,11 @@
                     </li>
                     <li>
                       <div class="form-item mb-0">
-                        <input type="text" placeholder="Comma-Separated list of Namespaces" [(ngModel)]="policiesField.scanner_namespaces"
-                               name="scanner_namespaces">
+                        <textarea maxlength="1024" rows="3" class="form-control" placeholder="Comma-Separated list of Namespaces" [(ngModel)]="gpoliciesField.scanner_namespaces"
+                                  name="scanner_namespaces"></textarea>
+                        <!--<div class="alert alert-danger" *ngIf="namespaces.errors?.maxlength">
+                          <div [hidden]="!namespaces.errors?.maxlength">Maximum length is 1024 character.</div>
+                        </div>-->
                       </div>
                     </li>
                   </ul>
@@ -383,7 +386,7 @@
             <div class="btns-group ul-li-right clearfix">
               <ul class="clearfix">
                 <li>
-                  <button type="submit" (click)="onSubmit()" class="custom-btn bg-default-orange">Save</button>
+                  <button type="submit" (click)="onGeneralSubmit()" class="custom-btn bg-default-orange">Save</button>
                 </li>
                 <li>
                   <a href="#!" class="custom-btn bg-light-gray">Reset</a>
