@@ -11,7 +11,8 @@ import {ToasterService} from "../service/toaster.service";
 })
 export class LoginComponent implements OnInit {
 
-  user: any = {}
+  user: any = {};
+  display = 'none';
 
   constructor(private router: Router,
               private mainService: MainService,
@@ -51,6 +52,25 @@ export class LoginComponent implements OnInit {
         console.log('loginRes', err);
         this.toasterService.showError(err.error.message);
       });
+  }
+
+
+  openModal() {
+
+    this.display = 'block';
+
+  }
+
+  onCloseHandled() {
+    let data = {
+      email: this.user.email
+    };
+    this.userService.forgetPassword(data)
+      .subscribe((res) => {
+        this.display = 'none';
+      });
+    this.display = 'none';
+
   }
 
 }
