@@ -4,7 +4,24 @@ const response = require('./../libs/responseLib');
 const logger = require('./../libs/loggerLib');
 const check = require('../libs/checkLib');
 const tokenLib = require('../libs/tokenLib');
-
+const pug = require('pug')
+const path = require('path')
+const jwt = require('jsonwebtoken')
+const Promise = require('bluebird')
+const jwtSign = Promise.promisify(jwt.sign)
+const jwtVerify = Promise.promisify(jwt.verify)
+const JWT_SECRET_KEY = "aieufasdjcajsdhcwefwtrdyhjcgfh"
+var nodeMailer = require('nodemailer');
+var transporter = nodeMailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    tls: { rejectUnauthorized: false },
+    auth: {
+        user: 'info.clouddefence@gmail.com',
+        pass: 'info!123'
+    }
+});
 const User = mongoose.model('User');
 const Customer = mongoose.model('Customer');
 const tokenCol = mongoose.model('tokenCollection');
@@ -14,7 +31,7 @@ let createUser = (req, res) => {
     let validatingInputs = () => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            if (req.body.username && req.body.customer_id) {
+            if (req.body.username && req.body.customer_id && req.body.email) {
                 resolve();
             } else {
                 let apiResponse = response.generate(true, "Required Parameter username or customer_id is missing", 400, null);
@@ -70,7 +87,7 @@ let createUser = (req, res) => {
                 username: req.body.username,
                 first_name: (req.body.first_name) ? (req.body.first_name) : '',
                 last_name: (req.body.last_name) ? (req.body.last_name) : '',
-                email: (req.body.email) ? (req.body.email) : '',
+                email: req.body.email,
                 phone: (req.body.phone) ? (req.body.phone) : '',
                 role: (req.body.role) ? (req.body.role) : 'admin',
                 status: (req.body.status) ? (req.body.status) : 'Activate',
@@ -658,6 +675,324 @@ let updateUser = (req, res) => {
         });
 };
 
+let forgetPassword = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.body.email) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter email is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    // let checkCustomer = () => {
+    //     console.log("checkCustomer");
+    //     return new Promise((resolve, reject) => {
+    //         Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
+    //             if (err) {
+    //                 logger.error("Internal Server error while fetching user", "createUser => checkCustomer()", 5);
+    //                 let apiResponse = response.generate(true, err, 500, null);
+    //                 reject(apiResponse);
+    //             } else if (check.isEmpty(customerDetail)) {
+    //                 logger.error("Customer Not Exists", "createUser => checkCustomer()", 5);
+    //                 let apiResponse = response.generate(true, "Customer Not Exists", 401, null);
+    //                 reject(apiResponse);
+    //             } else {
+    //                 resolve(customerDetail);
+    //             }
+    //         })
+    //     });
+    // }; // end of checkUser
+
+    let checkUser = () => {
+        console.log("checkUser");
+        return new Promise((resolve, reject) => {
+            User.findOne({email: req.body.email}, function (err, userDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(userDetail)) {
+                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "User doesn't Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(userDetail);
+                }
+            })
+        });
+    }; // end of checkUser
+
+    let forgetPass = (userDetail) => {
+        console.log("forgetPass");
+        return new Promise((resolve, reject) => {
+            signin(userDetail.email, function (err, token) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(token)) {
+                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    userDetail['token'] = token;
+                    userDetail.save();
+                    verifytoken(token)
+                        .then((data)=>{
+                            console.log('dataasdas',data);
+                            resolve(userDetail);
+                        })
+                        .catch((e)=>{
+                            console.log('errasdas', err);
+                            resolve(userDetail);
+                        })
+                }
+            })
+        });
+    }; // end of checkUser
+
+    let sendEmail = (userDetail) => {
+        console.log("sendEmail");
+        return new Promise((resolve, reject) => {
+            let link = 'http://localhost:4200/register?token='+userDetail.token;
+            let html = pug.renderFile(path.normalize(__dirname + './../template/emailtemplate.pug'), {
+                //link: link,
+                username: userDetail.username,
+                link:link
+            });
+            let mailOptions = {
+                from: 'info.clouddefence@gmail.com',
+                to: req.body.email,
+                subject: 'Forget Password',
+                text: '',
+                html: html
+            }
+            try {
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        console.log('eeeeeeeeeeerrrrrrrrrr');
+                        reject(error);
+                        // finalResponse(res, 400, error);
+                    } else {
+                        userDetail.token = userDetail.token;
+                        userDetail.save();
+                        let data = {
+                            Status: "Success",
+                            Message: "Check your email, password reset link has been sent to your email."
+                        };
+                        resolve(data)
+                        // finalResponse(res, 200, data);
+                    }
+                })
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }; // end of checkUser
+
+    validatingInputs()
+        // .then(checkCustomer)
+        .then(checkUser)
+        .then(forgetPass)
+        .then(sendEmail)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
+let resetPassword = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.headers.authToken && req.body.password) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter authToken and password is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let verifyToken = () => {
+        console.log("checkUser");
+        return new Promise((resolve, reject) => {
+            verifytoken(req.headers.authToken, function (err, token) {
+                if (err) {
+                    logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(token)) {
+                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    console.log('tokentokentokentoken',token)
+                    resolve(token)
+                }
+            })
+        });
+    }; // end of checkUser
+
+    // let forgetPass = (userDetail) => {
+    //     console.log("forgetPass");
+    //     return new Promise((resolve, reject) => {
+    //         signin(userDetail.email, function (err, token) {
+    //             if (err) {
+    //                 logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
+    //                 let apiResponse = response.generate(true, err, 500, null);
+    //                 reject(apiResponse);
+    //             } else if (check.isEmpty(token)) {
+    //                 logger.error("User doesn't Exists", "createUser => checkUser()", 5);
+    //                 let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
+    //                 reject(apiResponse);
+    //             } else {
+    //                 userDetail['token'] = token;
+    //                 userDetail.save();
+    //                 verifytoken(token)
+    //                     .then((data)=>{
+    //                         console.log('dataasdas',data);
+    //                         resolve(userDetail);
+    //                     })
+    //                     .catch((e)=>{
+    //                         console.log('errasdas', err);
+    //                         resolve(userDetail);
+    //                     })
+    //             }
+    //         })
+    //     });
+    // }; // end of checkUser
+    //
+    // let sendEmail = (userDetail) => {
+    //     console.log("sendEmail");
+    //     return new Promise((resolve, reject) => {
+    //         let link = 'http://localhost:4200/register?token='+userDetail.token;
+    //         let html = pug.renderFile(path.normalize(__dirname + './../template/emailtemplate.pug'), {
+    //             //link: link,
+    //             username: userDetail.username,
+    //             link:link
+    //         });
+    //         let mailOptions = {
+    //             from: 'info.clouddefence@gmail.com',
+    //             to: req.body.email,
+    //             subject: 'Forget Password',
+    //             text: '',
+    //             html: html
+    //         }
+    //         try {
+    //             transporter.sendMail(mailOptions, (error, info) => {
+    //                 if (error) {
+    //                     console.log('eeeeeeeeeeerrrrrrrrrr');
+    //                     reject(error);
+    //                     // finalResponse(res, 400, error);
+    //                 } else {
+    //                     userDetail.token = userDetail.token;
+    //                     userDetail.save();
+    //                     let data = {
+    //                         Status: "Success",
+    //                         Message: "Check your email, password reset link has been sent to your email."
+    //                     };
+    //                     resolve(data)
+    //                     // finalResponse(res, 200, data);
+    //                 }
+    //             })
+    //         } catch (e) {
+    //             reject(e);
+    //         }
+    //     });
+    // }; // end of checkUser
+
+    validatingInputs()
+        // .then(checkCustomer)
+        .then(verifyToken)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
+const verifytoken = function (token) {
+    return new Promise((resolve, reject) => {
+        verify(token)
+            .then((data)=>{
+                resolve(data)
+            })
+            .catch((e)=>{
+                reject(e)
+            })
+        //     , function (err, response) {
+        //     if (err) {
+        //         console.log('err in verifyToken', err)
+        //         cb(err, null)
+        //     } else {
+        //         cb(null, response)
+        //     }
+        // });
+    })
+}
+
+const signin = function (userId, cb) {
+    sign(userId, function (err, response) {
+        if (err) {
+            cb(err, null)
+        } else {
+            cb(null, response)
+        }
+    });
+}
+
+const verify = (token) => {
+    return new Promise((resolve, reject) => {
+        // console.log('token', token)
+            jwtVerify(token, JWT_SECRET_KEY)
+                .then((data)=>{
+                    resolve(data)
+                })
+                .catch((e)=>{
+                    reject(e)
+                })
+
+    })
+}
+
+const sign = (id, options, method = jwtSign) => {
+    //method({id}, JWT_SECRET_KEY,options)
+    method({id}, JWT_SECRET_KEY, {expiresIn: '3600s'}, options)
+}
+
+
+const renderFile = function(path, options, fn){
+    // support callback API
+    if ('function' == typeof options) {
+        fn = options, options = undefined;
+    }
+    if (typeof fn === 'function') {
+        var res;
+        try {
+            res = exports.renderFile(path, options);
+        } catch (ex) {
+            return fn(ex);
+        }
+        return fn(null, res);
+    }
+    options = options || {};
+    options.filename = path;
+    return handleTemplateCache(options)(options);
+};
 module.exports = {
     createUser: createUser,
     getUser: getUser,
@@ -665,4 +1000,6 @@ module.exports = {
     loginUser: loginUser,
     deleteUser: deleteUser,
     updateUser: updateUser,
+    forgetPassword: forgetPassword,
+    resetPassword: resetPassword,
 }
