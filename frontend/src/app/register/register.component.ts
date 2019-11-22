@@ -46,7 +46,6 @@ export class RegisterComponent implements OnInit {
     if (this.showButton) {
       this.toasterService.showError('Confirm Password is not match');
     } else {
-
       if (this.authToken === undefined) {
         let data = {
           username: this.username,
@@ -70,10 +69,10 @@ export class RegisterComponent implements OnInit {
         this.userService.resetPassword(data)
           .subscribe((res) => {
             console.log('res', res);
-            this.toasterService.showSuccess('Login Successfully');
-            localStorage.setItem('token', this.authToken);
-            this.router.navigate(['/dashboard']);
+            this.toasterService.showSuccess('Password set successfully..!');
+            this.router.navigate(['/login']);
           }, error => {
+            this.toasterService.showError(error.error.message);
             console.log('error', error);
           });
       }

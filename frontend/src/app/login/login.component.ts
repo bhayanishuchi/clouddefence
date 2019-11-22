@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit {
     this.userService.forgetPassword(data)
       .subscribe((res) => {
         this.display = 'none';
+      }, error => {
+        this.toasterService.showError(error.error.message);
+        console.log('error', error)
       });
     this.display = 'none';
 

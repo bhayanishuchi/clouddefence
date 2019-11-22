@@ -35,7 +35,7 @@ let createUser = (req, res) => {
             if (req.body.username && req.body.customer_id && req.body.email) {
                 resolve();
             } else {
-                let apiResponse = response.generate(true, "Required Parameter username or customer_id is missing", 400, null);
+                let apiResponse = response.generate(true, "Required Parameter username, email or customer_id is missing", 400, null);
                 reject(apiResponse);
             }
         });
@@ -699,8 +699,8 @@ let forgetPassword = (req, res) => {
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
                 } else if (check.isEmpty(userDetail)) {
-                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
-                    let apiResponse = response.generate(true, "User doesn't Exists", 401, null);
+                    logger.error("Email doesn't belong to this User", "createUser => checkUser()", 5);
+                    let apiResponse = response.generate(true, "Email doesn't belong to this User", 401, null);
                     reject(apiResponse);
                 } else {
                     resolve(userDetail);
@@ -830,12 +830,14 @@ let resetPassword = (req, res) => {
                 // username: req.body.username,
                 password: req.body.password
             };
-            User.findOneAndUpdate({email: userDetail.id},body ,{new:true},function (err, user) {
+            User.findOne({email: userDetail.id} ,function (err, user) {
                 if (err) {
                     logger.error("Internal Server error while update User", "updateUser => updateUser()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
                 } else {
+                    user.password = req.body.password;
+                    user.save();
                     resolve(user);
                 }
             })
