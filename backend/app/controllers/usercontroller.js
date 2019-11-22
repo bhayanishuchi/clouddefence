@@ -8,6 +8,7 @@ const pug = require('pug')
 const path = require('path')
 const jwt = require('jsonwebtoken')
 const Promise = require('bluebird')
+
 const jwtSign = Promise.promisify(jwt.sign)
 const jwtVerify = Promise.promisify(jwt.verify)
 const JWT_SECRET_KEY = "aieufasdjcajsdhcwefwtrdyhjcgfh"
@@ -689,25 +690,6 @@ let forgetPassword = (req, res) => {
         });
     }; // end of validatingInputs
 
-    // let checkCustomer = () => {
-    //     console.log("checkCustomer");
-    //     return new Promise((resolve, reject) => {
-    //         Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
-    //             if (err) {
-    //                 logger.error("Internal Server error while fetching user", "createUser => checkCustomer()", 5);
-    //                 let apiResponse = response.generate(true, err, 500, null);
-    //                 reject(apiResponse);
-    //             } else if (check.isEmpty(customerDetail)) {
-    //                 logger.error("Customer Not Exists", "createUser => checkCustomer()", 5);
-    //                 let apiResponse = response.generate(true, "Customer Not Exists", 401, null);
-    //                 reject(apiResponse);
-    //             } else {
-    //                 resolve(customerDetail);
-    //             }
-    //         })
-    //     });
-    // }; // end of checkUser
-
     let checkUser = () => {
         console.log("checkUser");
         return new Promise((resolve, reject) => {
@@ -742,22 +724,22 @@ let forgetPassword = (req, res) => {
                 } else {
                     userDetail['token'] = token;
                     userDetail.save();
-                    verifytoken(token)
-                        .then((data)=>{
-                            console.log('dataasdas',data);
+                    // verifytoken(token)
+                    //     .then((data)=>{
+                    //         console.log('dataasdas',data);
+                    //         resolve(userDetail);
+                    //     })
+                    //     .catch((e)=>{
+                    //         console.log('errasdas', err);
                             resolve(userDetail);
-                        })
-                        .catch((e)=>{
-                            console.log('errasdas', err);
-                            resolve(userDetail);
-                        })
+                    //     })
                 }
             })
         });
     }; // end of checkUser
 
     let sendEmail = (userDetail) => {
-        console.log("sendEmail");
+        console.log("sendEmail", userDetail.token);
         return new Promise((resolve, reject) => {
             let link = 'http://localhost:4200/register?token='+userDetail.token;
             let html = pug.renderFile(path.normalize(__dirname + './../template/emailtemplate.pug'), {
@@ -815,7 +797,7 @@ let resetPassword = (req, res) => {
     let validatingInputs = () => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            if (req.headers.authToken && req.body.password) {
+            if (req.body.authToken && req.body.password) {
                 resolve();
             } else {
                 let apiResponse = response.generate(true, "Required Parameter authToken and password is missing", 400, null);
@@ -825,96 +807,45 @@ let resetPassword = (req, res) => {
     }; // end of validatingInputs
 
     let verifyToken = () => {
-        console.log("checkUser");
+        console.log("verifyToken");
         return new Promise((resolve, reject) => {
-            verifytoken(req.headers.authToken, function (err, token) {
+            verifytoken(req.body.authToken, function (err, token) {
                 if (err) {
                     logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
-                } else if (check.isEmpty(token)) {
-                    logger.error("User doesn't Exists", "createUser => checkUser()", 5);
-                    let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
-                    reject(apiResponse);
                 } else {
-                    console.log('tokentokentokentoken',token)
+                    console.log('token',token)
                     resolve(token)
                 }
             })
         });
     }; // end of checkUser
 
-    // let forgetPass = (userDetail) => {
-    //     console.log("forgetPass");
-    //     return new Promise((resolve, reject) => {
-    //         signin(userDetail.email, function (err, token) {
-    //             if (err) {
-    //                 logger.error("Internal Server error while fetching user", "createUser => checkUser()", 5);
-    //                 let apiResponse = response.generate(true, err, 500, null);
-    //                 reject(apiResponse);
-    //             } else if (check.isEmpty(token)) {
-    //                 logger.error("User doesn't Exists", "createUser => checkUser()", 5);
-    //                 let apiResponse = response.generate(true, "UUser doesn't Exists", 401, null);
-    //                 reject(apiResponse);
-    //             } else {
-    //                 userDetail['token'] = token;
-    //                 userDetail.save();
-    //                 verifytoken(token)
-    //                     .then((data)=>{
-    //                         console.log('dataasdas',data);
-    //                         resolve(userDetail);
-    //                     })
-    //                     .catch((e)=>{
-    //                         console.log('errasdas', err);
-    //                         resolve(userDetail);
-    //                     })
-    //             }
-    //         })
-    //     });
-    // }; // end of checkUser
-    //
-    // let sendEmail = (userDetail) => {
-    //     console.log("sendEmail");
-    //     return new Promise((resolve, reject) => {
-    //         let link = 'http://localhost:4200/register?token='+userDetail.token;
-    //         let html = pug.renderFile(path.normalize(__dirname + './../template/emailtemplate.pug'), {
-    //             //link: link,
-    //             username: userDetail.username,
-    //             link:link
-    //         });
-    //         let mailOptions = {
-    //             from: 'info.clouddefence@gmail.com',
-    //             to: req.body.email,
-    //             subject: 'Forget Password',
-    //             text: '',
-    //             html: html
-    //         }
-    //         try {
-    //             transporter.sendMail(mailOptions, (error, info) => {
-    //                 if (error) {
-    //                     console.log('eeeeeeeeeeerrrrrrrrrr');
-    //                     reject(error);
-    //                     // finalResponse(res, 400, error);
-    //                 } else {
-    //                     userDetail.token = userDetail.token;
-    //                     userDetail.save();
-    //                     let data = {
-    //                         Status: "Success",
-    //                         Message: "Check your email, password reset link has been sent to your email."
-    //                     };
-    //                     resolve(data)
-    //                     // finalResponse(res, 200, data);
-    //                 }
-    //             })
-    //         } catch (e) {
-    //             reject(e);
-    //         }
-    //     });
-    // }; // end of checkUser
+    let updatePass = (userDetail) => {
+        console.log("updatePass",userDetail);
+        return new Promise((resolve, reject) => {
+            let body = {
+                // customer_id: req.body.customer_id,
+                // username: req.body.username,
+                password: req.body.password
+            };
+            User.findOneAndUpdate({email: userDetail.id},body ,{new:true},function (err, user) {
+                if (err) {
+                    logger.error("Internal Server error while update User", "updateUser => updateUser()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(user);
+                }
+            })
+        });
+    }; // end of addUser
 
     validatingInputs()
         // .then(checkCustomer)
         .then(verifyToken)
+        .then(updatePass)
         .then((resolve) => {
             // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
             res.status(200).send(resolve);
@@ -925,14 +856,13 @@ let resetPassword = (req, res) => {
         });
 };
 
-const verifytoken = function (token) {
-    return new Promise((resolve, reject) => {
+const verifytoken = function (token, callback) {
         verify(token)
             .then((data)=>{
-                resolve(data)
+                callback(null, data)
             })
             .catch((e)=>{
-                reject(e)
+                callback(e, null)
             })
         //     , function (err, response) {
         //     if (err) {
@@ -942,7 +872,6 @@ const verifytoken = function (token) {
         //         cb(null, response)
         //     }
         // });
-    })
 }
 
 const signin = function (userId, cb) {

@@ -26,8 +26,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.activatRoute.queryParams.subscribe((data) => {
-      console.log('data.stack', data);
-      this.authToken = data;
+      console.log('data.stack', data.token);
+      this.authToken = data.token;
     });
     this.username = localStorage.getItem('username');
     this.customerId = localStorage.getItem('customer_id');
@@ -64,13 +64,14 @@ export class RegisterComponent implements OnInit {
           });
       } else {
         let data = {
+          authToken: this.authToken,
           password: this.user.password
         };
         this.userService.resetPassword(data)
           .subscribe((res) => {
             console.log('res', res);
             this.toasterService.showSuccess('Login Successfully');
-            localStorage.setItem('token', res.tokens.authToken);
+            localStorage.setItem('token', this.authToken);
             this.router.navigate(['/dashboard']);
           }, error => {
             console.log('error', error);
