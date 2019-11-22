@@ -741,7 +741,10 @@ let forgetPassword = (req, res) => {
     let sendEmail = (userDetail) => {
         console.log("sendEmail", userDetail.token);
         return new Promise((resolve, reject) => {
-            let link = 'http://localhost:4200/register?token='+userDetail.token;
+            let host = req.headers.host;
+            host = host.slice(0,-5)
+            let link = req.protocol + "://" + host + ':8080/register?token='+userDetail.token;
+            console.log('link', link);
             let html = pug.renderFile(path.normalize(__dirname + './../template/emailtemplate.pug'), {
                 //link: link,
                 username: userDetail.username,
