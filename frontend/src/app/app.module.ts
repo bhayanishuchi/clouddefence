@@ -21,6 +21,10 @@ import { RegisterComponent } from './register/register.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
+import { Cluster1Component } from './cluster1/cluster1.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { Cluster2Component } from './cluster2/cluster2.component';
+import { SoftwareComponent } from './software/software.component';
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -33,7 +37,11 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     FooterComponent,
     PolicyComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    Cluster1Component,
+    SidebarComponent,
+    Cluster2Component,
+    SoftwareComponent
   ],
   imports: [
     BrowserModule,

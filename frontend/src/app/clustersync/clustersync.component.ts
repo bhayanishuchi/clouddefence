@@ -3,7 +3,7 @@ import {MainService} from '../main.service';
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "../service/socket.service";
 import {Socket} from "ngx-socket-io";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-clustersync',
@@ -26,7 +26,8 @@ export class ClustersyncComponent implements OnInit {
               private http: HttpClient,
               private socket: Socket,
               private userService: UserService,
-              private activatRoute: ActivatedRoute) {
+              private activatRoute: ActivatedRoute,
+              private router: Router) {
 
   }
 
@@ -129,7 +130,8 @@ export class ClustersyncComponent implements OnInit {
   openView() {
     let length = Object.keys(this.clusterData).length;
     if (length > 0) {
-      this.viewDisplay = 'block';
+      // this.viewDisplay = 'block';
+      this.router.navigate(['/cluster-1']);
     } else {
       alert('Please select any one cluster');
       this.viewDisplay = 'none';
