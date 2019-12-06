@@ -72,6 +72,71 @@ let createCustomer = (req, res) => {
         });
 };
 
+let updateCustomer = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            if (req.body.customer_id) {
+                resolve();
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching customer", "updateCustomer => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer is not Exists", "updateCustomer => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer is not Exists", 401, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(customerDetail);
+                }
+            })
+        });
+    }; // end of checkCustomer
+
+    let addCustomer = (customerDetail) => {
+        console.log("addCustomer");
+        return new Promise((resolve, reject) => {
+            let updateBody = {
+                name: req.body.name ? req.body.name : customerDetail.name,
+                status: req.body.status ? req.body.status : customerDetail.status,
+            };
+            Customer.findOneAndUpdate({customer_id: req.body.customer_id}, updateBody, {new: true}, function (err, customer) {
+                if (err) {
+                    logger.error("Internal Server error while create customer", "updateCustomer => addCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(customer);
+                }
+            })
+        });
+    }; // end of addCustomer
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(addCustomer)
+        .then((resolve) => {
+            // let apiResponse = response.generate(false, "Customer Created Successfully!!", 200, resolve);
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
 let getCustomerDetail = (req, res) => {
 
     let validatingInputs = () => {
@@ -209,6 +274,7 @@ let deleteCustomer = (req, res) => {
 
 module.exports = {
     createCustomer: createCustomer,
+    updateCustomer: updateCustomer,
     getCustomerAll: getCustomerAll,
     getCustomerDetail: getCustomerDetail,
     deleteCustomer: deleteCustomer,

@@ -10,6 +10,7 @@ module.exports.setRouter = (app) => {
 
     // defining routes.
     app.post('/customer',[customerController.createCustomer]);
+    app.post('/update/customer',[customerController.updateCustomer]);
     app.get('/customer',[customerController.getCustomerAll]);
     app.get('/customer/:customer_name',[customerController.getCustomerDetail]);
     app.delete('/customer',[customerController.deleteCustomer]);
