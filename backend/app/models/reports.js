@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const reportsSchema = mongoose.Schema({
     customername :String,
-    clustername :String,
+    customer_id :String,
+    cluster_name :String,
     report_id  :String,
     report_type :String,
     timestamp :Date,

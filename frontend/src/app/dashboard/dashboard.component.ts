@@ -108,6 +108,7 @@ export class DashboardComponent implements OnInit {
         that.pieChartLabels = [['Gold', 'Nodes:' + res.Gold.TotalNodes], ['Silver', 'Nodes:' + res.Silver.TotalNodes],
           ['Bronze', 'Nodes:' + res.Bronze.TotalNodes]];
         that.pieChartData = [res.Gold.Totalstack, res.Silver.Totalstack, res.Bronze.Totalstack];
+        console.log('=======================that.pieChartData', that.pieChartData);
       });
       this.userService.unseccluster(socket, function (data) {
         console.log('socket unseccluster', data);
