@@ -49,8 +49,10 @@ export class ClustersyncComponent implements OnInit {
       data.forEach((x) => {
         x.checked = false;
       });
-      if (that.selectedCluster === undefined && that.selectedCluster === '')
+      console.log('========== that.selectedCluster ============',that.selectedCluster);
+      if (that.selectedCluster === undefined || that.selectedCluster === '') {
         that.clusterlist = data;
+      }
 
       console.log('that.cluster', that.clusterlist);
 
@@ -131,7 +133,7 @@ export class ClustersyncComponent implements OnInit {
     let length = Object.keys(this.clusterData).length;
     if (length > 0) {
       // this.viewDisplay = 'block';
-      this.router.navigate(['/cluster-1']);
+      this.router.navigate(['/cluster-1'], {queryParams: {cluster_name: this.clusterData.cluster_name, customer_id: this.clusterData.license_key}});
     } else {
       alert('Please select any one cluster');
       this.viewDisplay = 'none';
