@@ -7,25 +7,25 @@
     <span class="close-btn"><i class="fal fa-times"></i></span>
     <div class="menu-list ul-li-block clearfix">
       <ul class="clearfix">
-        <li>
-          <a routerLink="/software" routerLinkActive="active">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a [routerLink]="['/software']">
             <span class="thumb-image"><i class="fas fa-browser"></i></span>
             App
           </a>
         </li>
-        <li class="active">
-          <a routerLink="/cluster-1" routerLinkActive="active">
+        <li routerLinkActive="active">
+          <a [routerLink]="['/cluster-1']">
             <span class="thumb-image"><i class="fas fa-cubes"></i></span>
             Workload
           </a>
         </li>
-        <li>
-          <a routerLink="/cluster-2" routerLinkActive="active">
+        <li routerLinkActive="active">
+          <a [routerLink]="['/cluster-2']">
             <span class="thumb-image"><i class="fas fa-chart-network"></i></span>
             Cluster
           </a>
         </li>
-        <li>
+        <li routerLinkActive="active">
           <a href="#!">
             <span class="thumb-image"><i class="fas fa-monitor-heart-rate"></i></span>
             Monitoring

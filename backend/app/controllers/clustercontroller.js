@@ -1525,8 +1525,8 @@ exports.getWorkLoad = (req, res) => {
         });
     }; // end of checkCluster
 
-    let checkWorkLoad = (clusterDetails) => {
-        console.log("clusterDetails");
+    let findWorkLoad = (clusterDetails) => {
+        console.log("findWorkLoad");
         return new Promise((resolve, reject) => {
             Reports.find({
                 cluster_name: req.params.cluster_name,
@@ -1534,18 +1534,16 @@ exports.getWorkLoad = (req, res) => {
                 report_type: 'workload_compliance',
             }, function (err, ReportData) {
                 if (err) {
-                    logger.error("Internal Server error while fetching Report", "getWorkLoad => clusterDetails()", 5);
+                    logger.error("Internal Server error while fetching Report", "getWorkLoad => findWorkLoad()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
                 } else if (check.isEmpty(ReportData)) {
-                    logger.error("Report Not Exists", "getWorkLoad => clusterDetails()", 5);
+                    logger.error("Report Not Exists", "getWorkLoad => findWorkLoad()", 5);
                     let apiResponse = response.generate(true, "Report Not Exists", 400, null);
                     reject(apiResponse);
                 } else {
-
                     (ReportData).filter((x)=>{
                         x = x.toObject();
-                        x.summary_json = JSON.parse(x.summary_json);
                     })
                     let final = {
                         clusterDetails: clusterDetails,
@@ -1555,12 +1553,122 @@ exports.getWorkLoad = (req, res) => {
                 }
             })
         });
-    }; // end of checkCluster
+    }; // end of findWorkLoad
 
     validatingInputs()
         .then(checkCustomer)
         .then(checkCluster)
-        .then(checkWorkLoad)
+        .then(findWorkLoad)
+        .then((resolve) => {
+            res.status(200).send(resolve);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
+exports.getClusterReport = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            console.log('raw_report', req.params)
+            if (req.params.cluster_name) {
+                if (req.params.customer_id) {
+                            resolve();
+                } else {
+                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    reject(apiResponse);
+                }
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({customer_id: req.params.customer_id}, function (err, customerDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching customer", "getWorkLoad => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer Not Found", "getWorkLoad => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer Not Found", 401, null);
+                    reject(apiResponse);
+                } else {
+                    if (customerDetail.status && (customerDetail.status).toLowerCase() === 'activate') {
+                        resolve(customerDetail);
+                    } else {
+                        logger.error("Customer is inActive", "getWorkLoad => checkCustomer()", 5);
+                        let apiResponse = response.generate(true, "Customer is inActive", 401, null);
+                        reject(apiResponse);
+                    }
+                }
+            })
+        });
+    }; // end of checkCustomer
+
+    let checkCluster = () => {
+        console.log("checkCluster");
+        return new Promise((resolve, reject) => {
+            Cluster.findOne({
+                cluster_name: req.params.cluster_name,
+                license_key: req.params.customer_id,
+            }, function (err, clusterData) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(clusterData)) {
+                    logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(clusterData);
+                }
+            })
+        });
+    }; // end of checkCluster
+
+    let findclustercompliance = (clusterDetails) => {
+        console.log("findclustercompliance");
+        return new Promise((resolve, reject) => {
+            Reports.find({
+                cluster_name: req.params.cluster_name,
+                customer_id: req.params.customer_id,
+                report_type: 'cluster_compliance',
+            }, function (err, ReportData) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Report", "getWorkLoad => findclustercompliance()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(ReportData)) {
+                    logger.error("Report Not Exists", "getWorkLoad => findclustercompliance()", 5);
+                    let apiResponse = response.generate(true, "Report Not Exists", 400, null);
+                    reject(apiResponse);
+                } else {
+                    (ReportData).filter((x)=>{
+                        x = x.toObject();
+                    })
+                    let final = {
+                        clusterDetails: clusterDetails,
+                        ReportData:ReportData
+                    }
+                    resolve(final);
+                }
+            })
+        });
+    }; // end of findclustercompliance
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(checkCluster)
+        .then(findclustercompliance)
         .then((resolve) => {
             res.status(200).send(resolve);
         })

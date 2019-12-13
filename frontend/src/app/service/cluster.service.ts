@@ -13,7 +13,11 @@ export class ClusterService {
   constructor(private http: HttpClient) {
   }
 
-  getworkloadcomplianceReport(cluster_name, customer_id) {
-    return this.http.get<any>(this.api + '/getworkloadcompliancereport/' + cluster_name + '/' + customer_id);
+  getworkloadcomplianceReport(clusterName, customerId) {
+    return this.http.get<any>(this.api + '/getworkloadcompliancereport/' + clusterName + '/' + customerId);
+  }
+
+  getClusterComplianceReport(clusterName, customerId) {
+    return this.http.get<any>(this.api + '/getclustercompliancereport/' + clusterName + '/' + customerId);
   }
 }

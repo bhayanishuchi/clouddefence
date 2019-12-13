@@ -10,7 +10,7 @@
         <ul class="clearfix">
           <li><a href="#!">Customer : </a>{{customerData.license_key}}</li>
           <li><a href="#!">Cluster : </a>{{customerData.cluster_name}}</li>
-          <li>Stack : </li>{{customerData.cnox_stack}}
+          <li>Stack : {{customerData.cnox_stack}}</li>
         </ul>
       </nav>
     </div>
@@ -31,7 +31,7 @@
 
       <div class="item-wrapper min-h-auto">
         <div class="row justify-content-center align-items-center">
-          <div class="col-lg-4 col-md-6 col-sm-12">
+          <div class="col-lg-8 col-md-6 col-sm-12">
             <div class="chart-image">
               <canvas baseChart
                       [data]="pieChartData"
@@ -39,7 +39,6 @@
                       [labels]="pieChartLabels"
                       [options]="pieChartOptions"
                       [colors]="pieChartColors"
-                      (chartClick)="onChartClick($event)"
               ></canvas>
             </div>
           </div>
@@ -69,27 +68,30 @@
         <div class="wrapper-head text-center">
           <h3 class="title-text mb-0">Top Non- Compliant Workloads</h3>
         </div>
+        <div class="cnox-protection-section">
+          <div class="cnox-protection-table">
+            <div class="table-container tbody-container">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="row">Workload</th>
+                  <th>Error</th>
+                  <th>Warn</th>
+                  <th>Info</th>
+                </tr>
+                </thead>
 
-        <div class="table-container">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="row">Workload</th>
-              <th>Error</th>
-              <th>Warn</th>
-              <th>Info</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr *ngFor="let key of keys" r>
-              <th scope="row">{{key}}</th>
-              <td>{{workLoadData[key].E}}</td>
-              <td>{{workLoadData[key].W}}</td>
-              <td>{{workLoadData[key].I}}</td>
-            </tr>
-            </tbody>
-          </table>
+                <tbody>
+                <tr *ngFor="let key of keys" r>
+                  <th scope="row">{{key}}</th>
+                  <td>{{workLoadData[key].E}}</td>
+                  <td>{{workLoadData[key].W}}</td>
+                  <td>{{workLoadData[key].I}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 

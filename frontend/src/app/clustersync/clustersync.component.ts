@@ -133,7 +133,8 @@ export class ClustersyncComponent implements OnInit {
     let length = Object.keys(this.clusterData).length;
     if (length > 0) {
       // this.viewDisplay = 'block';
-      this.router.navigate(['/cluster-1'], {queryParams: {cluster_name: this.clusterData.cluster_name, customer_id: this.clusterData.license_key}});
+      localStorage.setItem('clusterName', this.clusterData.cluster_name);
+      this.router.navigate(['/cluster-1']);
     } else {
       alert('Please select any one cluster');
       this.viewDisplay = 'none';

@@ -50,5 +50,5 @@ module.exports.setRouter = (app) => {
     app.get('/getworkloadcompliancereport/:cluster_name/:customer_id',  [clustercontroller.getWorkLoad]);
 
     app.post('/clustercompliancereport', [clustercontroller.clustercompliancereport]);
-
+    app.get('/getclustercompliancereport/:cluster_name/:customer_id',  [clustercontroller.getClusterReport]);
 }

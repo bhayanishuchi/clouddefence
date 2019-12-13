@@ -1299,7 +1299,7 @@ button {
 .cluster-section .score-content .score-text {
   width: 150px;
   height: 150px;
-  font-size: 73px;
+  font-size: 58px;
   color: #ffffff;
   line-height: 150px;
   border-radius: 15px;
@@ -2061,3 +2061,32 @@ button {
 /* ====================================================================================================
 9 - media screen and (max-width: 320px) - end
 ==================================================================================================== */
+.bg-text {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+  top: 190%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+}
+.bg-image {
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
