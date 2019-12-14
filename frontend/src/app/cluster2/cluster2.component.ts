@@ -17,7 +17,7 @@ export class Cluster2Component implements OnInit {
   dropdown: any = [];
   keys: any = [];
   pieChartLabels: any[] = [['Pass'], ['Info'], ['Warn'], ['Fail']];
-  pieChartData: SingleDataSet = [0, 0, 0, 1];
+  pieChartData: SingleDataSet = [1, 1, 1, 1];
   pieChartType: ChartType = 'pie';
   pieChartOptions: ChartOptions = {
     responsive: true,

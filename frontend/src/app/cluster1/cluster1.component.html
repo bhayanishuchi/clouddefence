@@ -19,7 +19,6 @@
         ================================================== -->
 
 
-
   <!-- cluster-section - start
         ================================================== -->
   <section id="cluster-section" class="cluster-section sec-ptb-60 clearfix">
@@ -82,12 +81,20 @@
                 </thead>
 
                 <tbody>
-                <tr *ngFor="let key of keys" r>
-                  <th scope="row">{{key}}</th>
-                  <td>{{workLoadData[key].E}}</td>
-                  <td>{{workLoadData[key].W}}</td>
-                  <td>{{workLoadData[key].I}}</td>
-                </tr>
+                <div *ngIf="keys.length > 0;else other_content">
+                  <tr *ngFor="let key of keys" r>
+                    <th scope="row">{{key}}</th>
+                    <td>{{workLoadData[key].E}}</td>
+                    <td>{{workLoadData[key].W}}</td>
+                    <td>{{workLoadData[key].I}}</td>
+                  </tr>
+                </div>
+                <ng-template #other_content>
+                  <tr>
+                    No Data
+                  </tr>
+                </ng-template>
+
                 </tbody>
               </table>
             </div>

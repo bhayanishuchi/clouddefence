@@ -15,7 +15,7 @@ export class Cluster1Component implements OnInit {
   workLoadData: any = [];
   keys: any = [];
   pieChartLabels: any[] = [['Info'], ['Warn'], ['Error']];
-  pieChartData: SingleDataSet = [0, 0, 0, 0, 0];
+  pieChartData: SingleDataSet = [1, 1, 1];
   pieChartType: ChartType = 'pie';
   pieChartOptions: ChartOptions = {
     responsive: true,
