@@ -38,56 +38,28 @@ export class Cluster1Component implements OnInit {
         this.customerData = res.clusterDetails;
         this.workLoadData = JSON.parse(res.ReportData[0].summary_json);
         console.log('workLoadData', this.workLoadData);
-        console.log(_.sortBy(Object.values(this.workLoadData), ['E']).reverse());
-        // var result = _([this.workLoadData])
-        //   .map(function(v, k) { // insert the key into the object
-        //     return _.merge({}, v, { key: k });
-        //   })
-        //   .sortBy('E') // sort by name
-        //   .value();
-        // console.log('result', result);
-        // console.log([this.workLoadData].sort(this.compareValues('E', 'asc')));
-        // this.workLoadData = _.sortBy(Object.values(this.workLoadData), ['E']).reverse();
-        // console.log(_.sortBy(this.workLoadData, (['E'])));
+        let json = [];
         Object.keys(JSON.parse(res.ReportData[0].summary_json)).filter((x) => {
-          if (x !== 'all') {
-            this.keys.push(x);
+          // console.log('this.workLoadData[]', x, this.workLoadData[x]);
+          this.workLoadData[x]['name'] = '';
+          this.workLoadData[x]['name'] = x;
+          json.push(this.workLoadData[x]);
+        });
+        console.log('jssssssssson', json);
+        const newJson = _.sortBy(Object.values(json), ['E']).reverse();
+        console.log('sorted jssssssssson=========================', newJson);
+        newJson.filter((x) => {
+          console.log('x', x);
+          if (x.name !== 'all') {
+            this.keys.push(x.name);
           } else {
-            console.log('**************', this.workLoadData[x]);
-            this.pieChartData = [this.workLoadData[x].I, this.workLoadData[x].W, this.workLoadData[x].E];
-            console.log('**************', this.pieChartData);
+            console.log('this.workLoadData[x.name]', this.workLoadData[x.name]);
+            this.pieChartData = [this.workLoadData[x.name].I, this.workLoadData[x.name].W, this.workLoadData[x.name].E];
+            console.log('this.pieChartData', this.pieChartData);
           }
         });
       }, (err) => {
         console.log('err', err);
       });
-  }
-
-  compareValues(key, order = 'asc') {
-    return function innerSort(a, b) {
-      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-        // property doesn't exist on either object
-        return 0;
-      }
-
-      const varA = (typeof a[key] === 'string')
-        ? a[key].toUpperCase() : a[key];
-      const varB = (typeof b[key] === 'string')
-        ? b[key].toUpperCase() : b[key];
-
-      let comparison = 0;
-      if (varA > varB) {
-        comparison = 1;
-      } else if (varA < varB) {
-        comparison = -1;
-      }
-      return (
-        (order === 'desc') ? (comparison * -1) : comparison
-      );
-    };
-  }
-
-  getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
   }
 }
