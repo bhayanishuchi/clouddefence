@@ -41,7 +41,10 @@
               ></canvas>
             </div>
           </div>
-
+          <div class="time-content">
+            <p class="mb-1">Last scanned on :</p>
+            <span>{{lastScanValue}}</span>
+          </div>
           <!--<div class="col-lg-4 col-md-6 col-sm-12">
             <div class="info-list ul-li-block clearfix">
               <ul class="clearfix">
@@ -81,20 +84,12 @@
                 </thead>
 
                 <tbody>
-                <div *ngIf="keys.length > 0;else other_content">
-                  <tr *ngFor="let key of keys" r>
-                    <th scope="row">{{key}}</th>
-                    <td>{{workLoadData[key].E}}</td>
-                    <td>{{workLoadData[key].W}}</td>
-                    <td>{{workLoadData[key].I}}</td>
-                  </tr>
-                </div>
-                <ng-template #other_content>
-                  <tr>
-                    No Data
-                  </tr>
-                </ng-template>
-
+                <tr *ngFor="let key of keys" r>
+                  <th scope="row">{{key}}</th>
+                  <td>{{workLoadData[key].E}}</td>
+                  <td>{{workLoadData[key].W}}</td>
+                  <td>{{workLoadData[key].I}}</td>
+                </tr>
                 </tbody>
               </table>
             </div>

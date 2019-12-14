@@ -12,7 +12,7 @@ export class Cluster2Component implements OnInit {
 
   customerData: any = {};
   complianceScore: any = 0;
-  lastScanValue: any = 0;
+  lastScanValue: any = +new Date();
   workLoadData: any = [];
   dropdown: any = [];
   keys: any = [];
