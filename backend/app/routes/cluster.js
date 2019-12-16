@@ -46,9 +46,11 @@ module.exports.setRouter = (app) => {
     app.delete('/deletecluster/:cluster_name', [clustercontroller.deleteCluster]);
     app.delete('/cluster/:cluster_name/cnox_stack', [clustercontroller.deleteCnoxStack]);
 
-    app.post('/workloadcompliancereport', upload.single('file'), [clustercontroller.workloadcompliancereport]);
+    app.post('/workloadcompliancereport', upload.single('raw_report'), [clustercontroller.workloadcompliancereport]);
     app.get('/getworkloadcompliancereport/:cluster_name/:customer_id',  [clustercontroller.getWorkLoad]);
+    app.delete('/deleteworkloadcompliancereport/:cluster_name/:customer_id',  [clustercontroller.deleteWorkLoad]);
 
     app.post('/clustercompliancereport', [clustercontroller.clustercompliancereport]);
     app.get('/getclustercompliancereport/:cluster_name/:customer_id',  [clustercontroller.getClusterReport]);
+    app.delete('/deleteclustercompliancereport/:cluster_name/:customer_id',  [clustercontroller.deleteClusterCompliance]);
 }
