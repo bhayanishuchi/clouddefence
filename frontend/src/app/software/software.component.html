@@ -55,14 +55,14 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-12">
+          <div class="col-lg-4 col-md-4 col-sm-12" style="padding-right: 80px;">
             <a href="{{scannerUrl}}" target="_blank"
                class="custom-btn bg-default-orange rounded float-right text-uppercase">Scanner</a>
           </div>
 
           <div class="col-lg-8 col-md-8 col-sm-12"></div>
           <div class="col-lg-4 col-md-4 col-sm-12">
-            <div style="margin-top: -55px;float: right;" *ngIf="isData">Syncing Vulnerability Feeds</div>
+            <div style="margin-top: -55px;float: right; font-size: 24px" *ngIf="isData">Syncing Vulnerability Feeds</div>
           </div>
 
         </div>
@@ -73,10 +73,10 @@
           <div class="tabs-nav ul-li-center clearfix">
             <ul class="nav" role="tablist">
               <li>
-                <a data-toggle="tab" href="#byimage-tab">By Image</a>
+                <a class="active" data-toggle="tab" href="#byimage-tab">By Image</a>
               </li>
               <li>
-                <a class="active" data-toggle="tab" href="#bysev-tab">By Sev</a>
+                <a data-toggle="tab" href="#bysev-tab">By Sev</a>
               </li>
             </ul>
           </div>
@@ -84,7 +84,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-          <div id="byimage-tab" class="tab-pane fade">
+          <div id="byimage-tab" class="tab-pane active ">
             <div class="cnox-protection-table">
               <div class="table-container tbody-container scroll-bar">
                 <table class="table">
@@ -225,7 +225,7 @@
             </div>-->
           </div>
 
-          <div id="bysev-tab" class="tab-pane active text-center">
+          <div id="bysev-tab" class="tab-pane  text-center fade">
             <div class="header-content ul-li clearfix">
               <ul class="clearfix">
                 <li>Sev</li>
