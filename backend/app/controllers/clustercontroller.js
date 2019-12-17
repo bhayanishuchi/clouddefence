@@ -1093,28 +1093,34 @@ exports.workloadcompliancereport = (req, res) => {
     let validatingInputs = () => {
         console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            if (req.body.cluster_name) {
-                if (req.body.customer_id) {
-                    if (req.body.report_type) {
-                        if (req.file) {
-                            resolve();
+                if (req.body.cluster_name) {
+                    if (req.body.customer_id) {
+                        if (req.body.report_type) {
+                            if (req.body.report_type === 'workload_compliance') {
+                                if (req.file) {
+                                    resolve();
+                                } else {
+                                    let apiResponse = response.generate(true, "Required Parameter 'raw_report' file is missing", 400, null);
+                                    reject(apiResponse);
+                                }
+                            } else {
+                                let apiResponse = response.generate(true, "Wrong value for report_type", 400, null);
+                                reject(apiResponse);
+                            }
                         } else {
-                            let apiResponse = response.generate(true, "Required Parameter 'raw_report' file is missing", 400, null);
+                            let apiResponse = response.generate(true, "Required Parameter report_type is missing", 400, null);
                             reject(apiResponse);
                         }
                     } else {
-                        let apiResponse = response.generate(true, "Required Parameter report_type is missing", 400, null);
+                        let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
                         reject(apiResponse);
                     }
                 } else {
-                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
                     reject(apiResponse);
                 }
-            } else {
-                let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
-                reject(apiResponse);
             }
-        });
+        );
     }; // end of validatingInputs
 
     let checkCustomer = () => {
@@ -1319,6 +1325,7 @@ exports.workloadcompliancereport = (req, res) => {
             res.status(200).send(resolve);
         })
         .catch((err) => {
+            fs.unlinkSync(req.file.path,)
             console.log(err);
             res.status(err.status).send(err);
         });
@@ -1479,10 +1486,15 @@ exports.clustercompliancereport = (req, res) => {
             if (req.body.cluster_name) {
                 if (req.body.customer_id) {
                     if (req.body.report_type) {
-                        if (req.body.raw_report) {
-                            resolve();
+                        if (req.body.report_type === 'cluster_compliance') {
+                            if (req.body.raw_report) {
+                                resolve();
+                            } else {
+                                let apiResponse = response.generate(true, "Required Parameter raw_report is missing", 400, null);
+                                reject(apiResponse);
+                            }
                         } else {
-                            let apiResponse = response.generate(true, "Required Parameter raw_report is missing", 400, null);
+                            let apiResponse = response.generate(true, "Wrong value for report_type", 400, null);
                             reject(apiResponse);
                         }
                     } else {
@@ -1843,10 +1855,15 @@ exports.imagecompliancereport = (req, res) => {
             if (req.body.cluster_name) {
                 if (req.body.customer_id) {
                     if (req.body.report_type) {
-                        if (req.body.raw_report) {
-                            resolve();
+                        if (req.body.report_type === 'scan_img') {
+                            if (req.body.raw_report) {
+                                resolve();
+                            } else {
+                                let apiResponse = response.generate(true, "Required Parameter raw_report is missing", 400, null);
+                                reject(apiResponse);
+                            }
                         } else {
-                            let apiResponse = response.generate(true, "Required Parameter raw_report is missing", 400, null);
+                            let apiResponse = response.generate(true, "Wrong value for report_type", 400, null);
                             reject(apiResponse);
                         }
                     } else {
