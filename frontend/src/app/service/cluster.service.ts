@@ -22,6 +22,6 @@ export class ClusterService {
   }
 
   getScanImageComplianceReport(clusterName, customerId) {
-    return this.http.get<any>(this.api + '/getscanimagecompliancereport/' + clusterName + '/' + customerId);
+    return this.http.get<any>(this.api + '/getimgscancompliancereport/' + clusterName + '/' + customerId);
   }
 }
