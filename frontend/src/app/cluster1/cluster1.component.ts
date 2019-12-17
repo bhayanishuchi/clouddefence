@@ -51,7 +51,6 @@ export class Cluster1Component implements OnInit {
         const newJson = _.sortBy(Object.values(json), ['E']).reverse();
         console.log('sorted jssssssssson=========================', newJson);
         newJson.filter((x) => {
-          console.log('x', x);
           if (x.name !== 'all') {
             this.keys.push(x.name);
           } else {

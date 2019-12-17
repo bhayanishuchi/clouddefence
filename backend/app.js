@@ -26,8 +26,8 @@ var app = express();
 app.use(morgan('dev'));
 
 app.use('./upload', express.static('upload'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(bodyParser.urlencoded({extended: false, limit: '100mb'}));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

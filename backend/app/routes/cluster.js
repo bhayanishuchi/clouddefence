@@ -51,6 +51,9 @@ module.exports.setRouter = (app) => {
     app.delete('/deleteworkloadcompliancereport/:cluster_name/:customer_id',  [clustercontroller.deleteWorkLoad]);
 
     app.post('/clustercompliancereport', [clustercontroller.clustercompliancereport]);
-    app.get('/getclustercompliancereport/:cluster_name/:customer_id',  [clustercontroller.getClusterReport]);
-    app.delete('/deleteclustercompliancereport/:cluster_name/:customer_id',  [clustercontroller.deleteClusterCompliance]);
+    app.get('/getclustercompliancereport/:cluster_name/:customer_id', [clustercontroller.getClusterReport]);
+    app.delete('/deleteclustercompliancereport/:cluster_name/:customer_id', [clustercontroller.deleteClusterCompliance]);
+
+    app.post('/imgscancompliancereport', [clustercontroller.imagecompliancereport]);
+    app.get('/getimgscancompliancereport/:cluster_name/:customer_id',  [clustercontroller.getImageReport]);
 }
