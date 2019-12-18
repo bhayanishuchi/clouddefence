@@ -10,6 +10,7 @@ import {ChartOptions, ChartType} from "chart.js";
 })
 export class Cluster2Component implements OnInit {
 
+  clusterData: any = {};
   customerData: any = {};
   complianceScore: any = 0;
   lastScanValue: any = +new Date();
@@ -43,29 +44,14 @@ export class Cluster2Component implements OnInit {
     this.clusterService.getClusterComplianceReport(Cluster, customer)
       .subscribe((res) => {
         console.log('res', res);
-        this.customerData = res.clusterDetails;
+        this.clusterData = res.clusterData;
+        this.customerData = res.customerData;
         this.workLoadData = JSON.parse(res.ReportData[0].summary_json);
         this.reportData = res.ReportData[0].raw_report;
         this.complianceScore = ((Number((this.workLoadData.All.P ? this.workLoadData.All.P : 0)) * 100) / (Number((this.workLoadData.All.F ? this.workLoadData.All.F : 0)) + Number(this.workLoadData.All.P ? this.workLoadData.All.P : 0) + Number((this.workLoadData.All.W ? this.workLoadData.All.W : 0)))).toFixed(2);;
         this.lastScanValue = res.ReportData[0].timestamp;
-        console.log('this.complianceScore ', this.complianceScore);
-        console.log('this.complianceScore ', (Number(this.workLoadData.All.F) + Number(this.workLoadData.All.P) + Number(this.workLoadData.All.W)));
-        console.log('workLoadData', this.workLoadData);
-        // console.log('this.reportData', this.reportData);
-        // console.log(_.sortBy(Object.values(this.workLoadData), ['E']).reverse());
-        // console.log(_.orderBy(this.workLoadData, (['E'])).reverse());
         this.pieChartData = [this.workLoadData['All'].P, this.workLoadData['All'].I, this.workLoadData['All'].W, this.workLoadData['All'].F];
         this.dropdown = Object.keys(JSON.parse(res.ReportData[0].summary_json));
-        /*Object.keys(JSON.parse(res.ReportData[0].summary_json)).filter((x) => {
-          this.dropdown.push(x);
-          if (x !== 'all') {
-            this.keys.push(x);
-          } else {
-            console.log('**************', this.workLoadData[x]);
-            this.pieChartData = [this.workLoadData[x].W, this.workLoadData[x].E, this.workLoadData[x].I];
-            console.log('**************', this.pieChartData);
-          }
-        });*/
       }, (err) => {
         console.log('err', err);
       });

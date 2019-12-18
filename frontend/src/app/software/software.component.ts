@@ -9,6 +9,7 @@ import {ClusterService} from "../service/cluster.service";
 })
 export class SoftwareComponent implements OnInit {
 
+  clusterData: any = {};
   customerData: any = {};
   isData: any = false;
   src: any = [];
@@ -25,10 +26,11 @@ export class SoftwareComponent implements OnInit {
     this.clusterService.getScanImageComplianceReport(Cluster, customer)
       .subscribe((res) => {
         console.log('res', res);
-        console.log('this.customerData', res.clusterDetails);
-        console.log('this.scannerUrl', res.clusterDetails.scanner_url);
-        this.customerData = res.clusterDetails;
-        this.scannerUrl = res.clusterDetails.scanner_url;
+        console.log('this.customerData', res.clusterData);
+        console.log('this.scannerUrl', res.clusterData.scanner_url);
+        this.clusterData = res.clusterData;
+        this.customerData = res.customerData;
+        this.scannerUrl = res.clusterData.scanner_url;
         if (res.ReportData[0].img.length > 0) {
           this.src = res.ReportData[0].img;
           this.isData = true;

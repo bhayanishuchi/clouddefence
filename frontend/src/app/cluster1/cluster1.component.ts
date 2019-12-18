@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 })
 export class Cluster1Component implements OnInit {
 
+  clusterData: any = {};
   customerData: any = {};
   workLoadData: any = [];
   lastScanValue: any = new Date().toISOString();
@@ -36,10 +37,10 @@ export class Cluster1Component implements OnInit {
     this.clusterService.getworkloadcomplianceReport(Cluster, customer)
       .subscribe((res) => {
         console.log('res', res);
-        this.customerData = res.clusterDetails;
+        this.clusterData = res.clusterData;
+        this.customerData = res.customerData;
         this.workLoadData = JSON.parse(res.ReportData[0].summary_json);
         this.lastScanValue = (res.ReportData[0].timestamp);
-        console.log('workLoadData', this.workLoadData);
         let json = [];
         Object.keys(JSON.parse(res.ReportData[0].summary_json)).filter((x) => {
           // console.log('this.workLoadData[]', x, this.workLoadData[x]);
@@ -47,16 +48,12 @@ export class Cluster1Component implements OnInit {
           this.workLoadData[x]['name'] = x;
           json.push(this.workLoadData[x]);
         });
-        console.log('jssssssssson', json);
         const newJson = _.sortBy(Object.values(json), ['E']).reverse();
-        console.log('sorted jssssssssson=========================', newJson);
-        newJson.filter((x) => {
+       newJson.filter((x) => {
           if (x.name !== 'all') {
             this.keys.push(x.name);
           } else {
-            console.log('this.workLoadData[x.name]', this.workLoadData[x.name]);
             this.pieChartData = [this.workLoadData[x.name].I, this.workLoadData[x.name].W, this.workLoadData[x.name].E];
-            console.log('this.pieChartData', this.pieChartData);
           }
         });
       }, (err) => {

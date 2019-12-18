@@ -775,7 +775,7 @@ button {
   position: relative;
   color: #8c8c8c; }
 .breadcrumb-section .breadcrumb-nav > ul > li:after {
-  content: ':';
+  content: '|';
   line-height: 1;
   margin: 0px 50px;
   display: inline-block; }

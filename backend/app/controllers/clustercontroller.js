@@ -1376,29 +1376,29 @@ exports.getWorkLoad = (req, res) => {
         });
     }; // end of checkCustomer
 
-    let checkCluster = () => {
+    let checkCluster = (customerDetail) => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
             Cluster.findOne({
                 cluster_name: req.params.cluster_name,
                 license_key: req.params.customer_id,
-            }, function (err, clusterData) {
+            }, function (err, clusterDetail) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
-                } else if (check.isEmpty(clusterData)) {
+                } else if (check.isEmpty(clusterDetail)) {
                     logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
                     reject(apiResponse);
                 } else {
-                    resolve(clusterData);
+                    resolve({clusterData: clusterDetail, customerData: customerDetail});
                 }
             })
         });
     }; // end of checkCluster
 
-    let findWorkLoad = (clusterDetails) => {
+    let findWorkLoad = (data) => {
         console.log("findWorkLoad");
         return new Promise((resolve, reject) => {
             Reports.find({
@@ -1418,11 +1418,8 @@ exports.getWorkLoad = (req, res) => {
                     (ReportData).filter((x) => {
                         x = x.toObject();
                     })
-                    let final = {
-                        clusterDetails: clusterDetails,
-                        ReportData: ReportData
-                    }
-                    resolve(final);
+                    data['ReportData'] = ReportData;
+                    resolve(data);
                 }
             })
         });
@@ -1746,29 +1743,29 @@ exports.getClusterReport = (req, res) => {
         });
     }; // end of checkCustomer
 
-    let checkCluster = () => {
+    let checkCluster = (customerDetail) => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
             Cluster.findOne({
                 cluster_name: req.params.cluster_name,
                 license_key: req.params.customer_id,
-            }, function (err, clusterData) {
+            }, function (err, clusterDetail) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
-                } else if (check.isEmpty(clusterData)) {
+                } else if (check.isEmpty(clusterDetail)) {
                     logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
                     reject(apiResponse);
                 } else {
-                    resolve(clusterData);
+                    resolve({clusterData: clusterDetail, customerData: customerDetail});
                 }
             })
         });
     }; // end of checkCluster
 
-    let findclustercompliance = (clusterDetails) => {
+    let findclustercompliance = (data) => {
         console.log("findclustercompliance");
         return new Promise((resolve, reject) => {
             Reports.find({
@@ -1788,11 +1785,8 @@ exports.getClusterReport = (req, res) => {
                     (ReportData).filter((x) => {
                         x = x.toObject();
                     })
-                    let final = {
-                        clusterDetails: clusterDetails,
-                        ReportData: ReportData
-                    }
-                    resolve(final);
+                    data['ReportData'] = ReportData;
+                    resolve(data);
                 }
             })
         });
@@ -2050,29 +2044,29 @@ exports.getImageReport = (req, res) => {
         });
     }; // end of checkCustomer
 
-    let checkCluster = () => {
+    let checkCluster = (customerDetail) => {
         console.log("checkCluster");
         return new Promise((resolve, reject) => {
             Cluster.findOne({
                 cluster_name: req.params.cluster_name,
                 license_key: req.params.customer_id,
-            }, function (err, clusterData) {
+            }, function (err, clusterDetail) {
                 if (err) {
                     logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
-                } else if (check.isEmpty(clusterData)) {
+                } else if (check.isEmpty(clusterDetail)) {
                     logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
                     let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
                     reject(apiResponse);
                 } else {
-                    resolve(clusterData);
+                    resolve({clusterData: clusterDetail, customerData: customerDetail});
                 }
             })
         });
     }; // end of checkCluster
 
-    let findImagecompliance = (clusterDetails) => {
+    let findImagecompliance = (data) => {
         console.log("findImagecompliance");
         return new Promise((resolve, reject) => {
             Reports.find({
@@ -2092,11 +2086,8 @@ exports.getImageReport = (req, res) => {
                     (ReportData).filter((x) => {
                         x = x.toObject();
                     })
-                    let final = {
-                        clusterDetails: clusterDetails,
-                        ReportData: ReportData
-                    }
-                    resolve(final);
+                    data['ReportData'] = ReportData;
+                    resolve(data);
                 }
             })
         });
