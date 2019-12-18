@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserService} from "../service/socket.service";
 import {Socket} from "ngx-socket-io";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-clustersync',
@@ -24,6 +25,7 @@ export class ClustersyncComponent implements OnInit {
 
   constructor(private mainservice: MainService,
               private http: HttpClient,
+              private location: Location,
               private socket: Socket,
               private userService: UserService,
               private activatRoute: ActivatedRoute,
@@ -49,7 +51,7 @@ export class ClustersyncComponent implements OnInit {
       data.forEach((x) => {
         x.checked = false;
       });
-      console.log('========== that.selectedCluster ============',that.selectedCluster);
+      console.log('========== that.selectedCluster ============', that.selectedCluster);
       if (that.selectedCluster === undefined || that.selectedCluster === '') {
         that.clusterlist = data;
       }
@@ -79,6 +81,13 @@ export class ClustersyncComponent implements OnInit {
     });
   }
 
+  getClearAllCluster() {
+    console.log('in clear');
+    this.selectedCluster = '';
+    this.getAllCluster();
+    this.location.replaceState('cluster');
+  }
+
   getAllCluster() {
 
     console.log('this.selectedCluster', this.selectedCluster);
@@ -92,7 +101,7 @@ export class ClustersyncComponent implements OnInit {
             }
             console.log('silver', this.clusterlist);
           });
-        } else if (this.selectedCluster === "Bronze") {
+        } else if (this.selectedCluster === 'Bronze') {
           response.filter((x) => {
             if (x.cnox_stack === 'bronze_stack') {
               this.clusterlist.push(x);

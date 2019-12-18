@@ -6,7 +6,7 @@
     <div class="item-wrapper ul-li clearfix">
       <ul class="clearfix">
         <li>
-          <div class="funfact-item text-center" style="cursor: pointer" [routerLink]="['/cluster']">
+          <div class="funfact-item text-center" style="cursor: pointer" (click)="getClearAllCluster()">
 								<span class="item-icon">
 									<img src="assets/images/icons/icon_6.png" alt="icon_not_found">
 								</span>
@@ -14,7 +14,7 @@
           </div>
         </li>
         <li>
-          <div class="funfact-item text-center" (click)="getUnsecuredCluster()">
+          <div class="funfact-item text-center" style="cursor: pointer" (click)="getUnsecuredCluster()">
 								<span class="item-icon">
 									<img src="assets/images/icons/icon_7.png" alt="icon_not_found">
 								</span>
@@ -22,7 +22,7 @@
           </div>
         </li>
         <li>
-          <div class="funfact-item text-center" (click)="openClusterModal()">
+          <div class="funfact-item text-center" style="cursor: pointer" (click)="openClusterModal()">
 								<span class="item-icon">
 									<img src="assets/images/icons/icon_8.png" alt="icon_not_found">
 								</span>
