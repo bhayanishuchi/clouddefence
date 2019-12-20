@@ -56,4 +56,7 @@ module.exports.setRouter = (app) => {
 
     app.post('/imgscancompliancereport', [clustercontroller.imagecompliancereport]);
     app.get('/getimgscancompliancereport/:cluster_name/:customer_id',  [clustercontroller.getImageReport]);
+
+    app.post('/appcompliancereport', [clustercontroller.appcompliancereport]);
+    app.get('/getappcompliancereport/:cluster_name/:customer_id', [clustercontroller.getAppReport]);
 }

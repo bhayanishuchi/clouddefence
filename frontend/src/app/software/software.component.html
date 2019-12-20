@@ -36,19 +36,19 @@
               <ul class="clearfix">
                 <li>
                   <button type="button">
-                    <span class="bg-default-red">55</span>
+                    <span class="bg-default-red">{{ReportTotal.Critical}}</span>
                     <small>critical</small>
                   </button>
                 </li>
                 <li>
                   <button type="button">
-                    <span class="bg-default-orange">30</span>
+                    <span class="bg-default-orange">{{ReportTotal.High}}</span>
                     <small>high</small>
                   </button>
                 </li>
                 <li>
                   <button type="button">
-                    <span class="bg-default-yellow">22</span>
+                    <span class="bg-default-yellow">{{ReportTotal.Low}}</span>
                     <small>low</small>
                   </button>
                 </li>
@@ -62,7 +62,15 @@
 
           <div class="col-lg-8 col-md-8 col-sm-12"></div>
           <div class="col-lg-4 col-md-4 col-sm-12">
-            <div style="margin-top: -55px;float: right; font-size: 24px" *ngIf="isData">Syncing Vulnerability Feeds</div>
+            <div style="margin-top: -55px;float: right; font-size: 24px" *ngIf="!newUpdate;else other_content2">Syncing
+              Vulnerability Feeds
+            </div>
+            <ng-template #other_content2 >
+              <div class="time-content" style="margin-top: -55px; margin-left: 70px;">
+                <p class="mb-1">Last scanned on :</p>
+                <span>{{lastScanValue}}</span>
+              </div>
+            </ng-template>
           </div>
 
         </div>
@@ -97,9 +105,9 @@
                   </thead>
                   <tbody *ngIf="isData;else other_content">
                   <tr *ngFor="let data of src">
-                    <td>{{data}}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{data.Image}}</td>
+                    <td>{{data.Vulnerability}}</td>
+                    <td>{{data.Severity}}</td>
                   </tr>
                   </tbody>
                   <ng-template #other_content>
@@ -226,7 +234,72 @@
           </div>
 
           <div id="bysev-tab" class="tab-pane  text-center fade">
-            <div class="header-content ul-li clearfix">
+            <div class="cnox-protection-table">
+              <div class="table-container tbody-container scroll-bar">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Sev</th>
+                    <th>CVE</th>
+                    <th>Image</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="isSevData;else other_content1">
+                  <tr *ngFor="let data of sevData">
+                    <td>{{data.Severity}}</td>
+                    <td>{{data.Vulnerability}}</td>
+                    <td>{{data.Image}}</td>
+                  </tr>
+                  </tbody>
+                  <ng-template #other_content1>
+                    <tbody>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    <tr>
+                      <td>CRIT</td>
+                      <td>Lorem Ipsum</td>
+                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
+                    </tr>
+                    </tbody>
+                  </ng-template>
+
+                </table>
+              </div>
+            </div>
+            <!--<div class="header-content ul-li clearfix">
               <ul class="clearfix">
                 <li>Sev</li>
                 <li>CVE</li>
@@ -281,7 +354,7 @@
                   <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
                 </ul>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>

@@ -129,6 +129,22 @@ const findSocketAllcluster = function (req, customer_id) {
     });
 }
 
+const emitAppComplianceReport = function (req, customer_id, final) {
+    console.log('emitAppComplianceReport ');
+    console.log('==== Start Socket Process ==== ');
+    return new Promise((resolve, reject) => {
+        const socket = req.app.io;
+        Cluster.find({license_key: customer_id}).exec((err, result) => {
+            if (err) throw err;
+            if (socket !== undefined) {
+                socket.to(customer_id).emit('AppComplianceReport', final);
+            }
+            resolve(result);
+            console.log('==== End Socket Process ==== ');
+        });
+    });
+}
+
 exports.createCluster = (req, res) => {
 
     let validatingInputs = () => {
@@ -2106,28 +2122,369 @@ exports.getImageReport = (req, res) => {
         });
 };
 
-/*exports.deleteClusterCompliance = (req, res) => {
+// end image compliance report
 
-    let findWorkLoad = () => {
-        console.log("findWorkLoad");
+
+//app compliance Report
+
+exports.appcompliancereport = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
         return new Promise((resolve, reject) => {
-            Reports.findOneAndDelete({
-                cluster_name: req.params.cluster_name,
-                customer_id: req.params.customer_id,
-                report_type: 'cluster_compliance',
-            }, {}, function (err, ReportData) {
+            if (req.body.cluster_name) {
+                if (req.body.customer_id) {
+                    if (req.body.report_type) {
+                        if (req.body.report_type === 'app_compliance') {
+                            if (req.body.raw_report) {
+                                resolve();
+                            } else {
+                                let apiResponse = response.generate(true, "Required Parameter raw_report is missing", 400, null);
+                                reject(apiResponse);
+                            }
+                        } else {
+                            let apiResponse = response.generate(true, "Wrong value for report_type", 400, null);
+                            reject(apiResponse);
+                        }
+                    } else {
+                        let apiResponse = response.generate(true, "Required Parameter report_type is missing", 400, null);
+                        reject(apiResponse);
+                    }
+                } else {
+                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    reject(apiResponse);
+                }
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({customer_id: req.body.customer_id}, function (err, customerDetail) {
                 if (err) {
-                    logger.error("Internal Server error while delete Report", "getWorkLoad => findWorkLoad()", 5);
+                    logger.error("Internal Server error while fetching customer", "clustercompliancereport => checkCustomer()", 5);
                     let apiResponse = response.generate(true, err, 500, null);
                     reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer Not Found", "clustercompliancereport => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer Not Found", 401, null);
+                    reject(apiResponse);
                 } else {
-                    resolve(ReportData);
+                    if (customerDetail.status && (customerDetail.status).toLowerCase() === 'activate') {
+                        resolve(customerDetail);
+                    } else {
+                        logger.error("Customer is inActive", "clustercompliancereport => checkCustomer()", 5);
+                        let apiResponse = response.generate(true, "Customer is inActive", 401, null);
+                        reject(apiResponse);
+                    }
                 }
             })
         });
-    }; // end of findWorkLoad
+    }; // end of checkCustomer
 
-    findWorkLoad()
+    let checkCluster = () => {
+        console.log("checkCluster");
+        return new Promise((resolve, reject) => {
+            Cluster.findOne({
+                cluster_name: req.body.cluster_name,
+                license_key: req.body.customer_id,
+            }, function (err, clusterData) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(clusterData)) {
+                    logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(clusterData);
+                }
+            })
+        });
+    }; // end of checkCluster
+
+    let findAndUpdateReport = (updateAry) => {
+        console.log("ProcessImageData");
+        return new Promise((resolve, reject) => {
+            Reports.findOneAndUpdate({
+                customer_id: req.body.customer_id,
+                cluster_name: req.body.cluster_name,
+                report_type: 'scan_img',
+            }, {img: updateAry}, {new: true}, function (err, reportEntry) {
+                if (err) {
+                    console.log('err', err);
+                    logger.error("Internal Server error while updating record", "reportprocessing => CreateRecord()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else {
+                    resolve(reportEntry)
+                }
+            })
+        })
+    }
+
+    let ProcessImageData = () => {
+        console.log("ProcessImageData");
+        return new Promise((resolve, reject) => {
+            const result = {};
+
+            if (!req.body.raw_report || !req.body.raw_report.report_by_image || Object.keys(req.body.raw_report.report_by_image).length < 1) {
+                reject({status: 404, msg: 'raw_report is not in a proper form of json'})
+            } else {
+                let ary = [];
+                let ImageName = [];
+                (Object.keys(req.body.raw_report.report_by_image)).filter((x) => {
+                    if ((req.body.raw_report.report_by_image)[x].length > 0) {
+                        ((req.body.raw_report.report_by_image)[x]).filter((y) => {
+                            ary.push(y);
+                            ImageName.push(y.Image);
+                        });
+                    }
+                });
+                // console.log('ary', ary);
+                // console.log('ImageName', ImageName);
+                findAndUpdateReport(ImageName)
+                    .then((data) => {
+                        resolve({report_by_image: ary})
+                    })
+                    .catch((err) => {
+                        console.log('error from update scanimage report ', err);
+                        reject(err);
+                    })
+            }
+        });
+    }; // ProcessImageData
+
+    let ProcessSeverityData = (finalJson) => {
+        console.log("ProcessSeverityData");
+        return new Promise((resolve, reject) => {
+            const result = {
+                Critical: 0, High: 0, Medium: 0, Low: 0, Negligible: 0, Unknown: 0
+            }
+            let ary = [];
+
+            if (!req.body.raw_report || !req.body.raw_report.report_by_severity || Object.keys(req.body.raw_report.report_by_severity).length < 1) {
+                reject({status: 404, msg: 'raw_report is not in a proper form of json'})
+            }
+            else {
+                (Object.keys(req.body.raw_report.report_by_severity)).forEach(node => {
+                    const nodeName = node;
+
+                    if (result[nodeName] !== undefined) {
+                        result[nodeName] += (req.body.raw_report.report_by_severity)[node].length;
+                        ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
+                            ary.push(x);
+                        })
+                    }else {
+                        result['Unknown'] += (req.body.raw_report.report_by_severity)[node].length;
+                        ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
+                            ary.push(x);
+                        })
+                    }
+
+                });
+                finalJson['severity_count'] = result;
+                finalJson['report_by_severity'] = ary;
+                resolve(finalJson);
+            }
+
+
+        });
+    }; // ProcessData
+
+    let findOldRecord = (finalJson) => {
+        console.log("findoldRecord");
+        return new Promise((resolve, reject) => {
+            let body = {};
+            body['customer_id'] = req.body.customer_id;
+            body['cluster_name'] = req.body.cluster_name;
+            body['report_type'] = req.body.report_type;
+            body['timestamp'] = +new Date();
+            body['summary_json'] = JSON.stringify(finalJson);
+            body['raw_report'] = JSON.stringify(req.body.raw_report);
+
+            Reports.findOne({
+                customer_id: req.body.customer_id,
+                cluster_name: req.body.cluster_name,
+                report_type: 'app_compliance',
+            }, function (err, reportData) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Report", "reportprocessing => findoldRecord()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(reportData)) {
+                    body['report_id'] = shortid.generate();
+                    resolve([body, 'new']);
+                } else {
+                    resolve([body, 'update']);
+                }
+            })
+        });
+    };
+
+    let CreateRecord = (inputs) => {
+        console.log("CreateRecord");
+        return new Promise((resolve, reject) => {
+            if (inputs[1] === 'new') {
+                console.log("create new");
+                Reports.create(inputs[0], function (err, reportEntry) {
+                    if (err) {
+                        console.log('err', err);
+                        logger.error("Internal Server error while creating record", "reportprocessing => CreateRecord()", 5);
+                        let apiResponse = response.generate(true, err, 500, null);
+                        reject(apiResponse);
+                    } else {
+                        resolve(reportEntry)
+                    }
+                })
+            } else {
+                console.log("update");
+                Reports.findOneAndUpdate({
+                    customer_id: req.body.customer_id,
+                    cluster_name: req.body.cluster_name,
+                    report_type: 'app_compliance',
+                }, inputs[0], {new: true}, function (err, reportEntry) {
+                    if (err) {
+                        console.log('err', err);
+                        logger.error("Internal Server error while updating record", "reportprocessing => CreateRecord()", 5);
+                        let apiResponse = response.generate(true, err, 500, null);
+                        reject(apiResponse);
+                    } else {
+                        resolve(reportEntry)
+                    }
+                })
+            }
+        });
+    }; // end of checkCustomer
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(checkCluster)
+        .then(ProcessImageData)
+        .then(ProcessSeverityData)
+        .then(findOldRecord)
+        .then(CreateRecord)
+        .then((resolve) => {
+            resolve = resolve.toObject();
+           /* const socket = req.app.io;
+            if (socket !== undefined) {
+                socket.to(req.body.customer_id).emit('AppComplianceReport', resolve);
+            }
+            res.status(200).send(resolve);*/
+            Promise.all([emitAppComplianceReport(req, req.body.customer_id,resolve)])
+                .then((data) => {
+                    res.status(200).send(resolve);
+                })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(err.status).send(err);
+        });
+};
+
+exports.getAppReport = (req, res) => {
+
+    let validatingInputs = () => {
+        console.log("validatingInputs");
+        return new Promise((resolve, reject) => {
+            console.log('raw_report', req.params)
+            if (req.params.cluster_name) {
+                if (req.params.customer_id) {
+                    resolve();
+                } else {
+                    let apiResponse = response.generate(true, "Required Parameter customer_id is missing", 400, null);
+                    reject(apiResponse);
+                }
+            } else {
+                let apiResponse = response.generate(true, "Required Parameter cluster_name is missing", 400, null);
+                reject(apiResponse);
+            }
+        });
+    }; // end of validatingInputs
+
+    let checkCustomer = () => {
+        console.log("checkCustomer");
+        return new Promise((resolve, reject) => {
+            Customer.findOne({customer_id: req.params.customer_id}, function (err, customerDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching customer", "getWorkLoad => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(customerDetail)) {
+                    logger.error("Customer Not Found", "getWorkLoad => checkCustomer()", 5);
+                    let apiResponse = response.generate(true, "Customer Not Found", 401, null);
+                    reject(apiResponse);
+                } else {
+                    if (customerDetail.status && (customerDetail.status).toLowerCase() === 'activate') {
+                        resolve(customerDetail);
+                    } else {
+                        logger.error("Customer is inActive", "getWorkLoad => checkCustomer()", 5);
+                        let apiResponse = response.generate(true, "Customer is inActive", 401, null);
+                        reject(apiResponse);
+                    }
+                }
+            })
+        });
+    }; // end of checkCustomer
+
+    let checkCluster = (customerDetail) => {
+        console.log("checkCluster");
+        return new Promise((resolve, reject) => {
+            Cluster.findOne({
+                cluster_name: req.params.cluster_name,
+                license_key: req.params.customer_id,
+            }, function (err, clusterDetail) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Cluster", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(clusterDetail)) {
+                    logger.error("Cluster Not Exists", "clustercompliancereport => checkCluster()", 5);
+                    let apiResponse = response.generate(true, "Cluster Not Exists", 400, null);
+                    reject(apiResponse);
+                } else {
+                    resolve({clusterData: clusterDetail, customerData: customerDetail});
+                }
+            })
+        });
+    }; // end of checkCluster
+
+    let findclustercompliance = (data) => {
+        console.log("findclustercompliance");
+        return new Promise((resolve, reject) => {
+            Reports.find({
+                cluster_name: req.params.cluster_name,
+                customer_id: req.params.customer_id,
+                report_type: 'app_compliance',
+            }, function (err, ReportData) {
+                if (err) {
+                    logger.error("Internal Server error while fetching Report", "getWorkLoad => findclustercompliance()", 5);
+                    let apiResponse = response.generate(true, err, 500, null);
+                    reject(apiResponse);
+                } else if (check.isEmpty(ReportData)) {
+                    logger.error("Report Not Exists", "getWorkLoad => findclustercompliance()", 5);
+                    let apiResponse = response.generate(true, "Report Not Exists", 400, null);
+                    reject(apiResponse);
+                } else {
+                    (ReportData).filter((x) => {
+                        x = x.toObject();
+                    })
+                    data['ReportData'] = ReportData;
+                    resolve(data);
+                }
+            })
+        });
+    }; // end of findclustercompliance
+
+    validatingInputs()
+        .then(checkCustomer)
+        .then(checkCluster)
+        .then(findclustercompliance)
         .then((resolve) => {
             res.status(200).send(resolve);
         })
@@ -2135,6 +2492,6 @@ exports.getImageReport = (req, res) => {
             console.log(err);
             res.status(err.status).send(err);
         });
-};*/
+};
 
-// end cluster compliance Report
+//end of app compliance Report

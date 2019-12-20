@@ -2090,3 +2090,9 @@ button {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.software-section .time-content span {
+  line-height: 1;
+  font-size: 33px;
+  color: #48454e;
+}

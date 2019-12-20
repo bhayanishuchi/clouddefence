@@ -80,8 +80,11 @@ export class UserService {
     });
   }
 
-
-
+  getAppComplianceReport(UserSocket, cb) {
+    UserSocket.on('AppComplianceReport', function (data) {
+      cb(data);
+    });
+  }
 
   login(name, password, cb) {
     const that = this;
