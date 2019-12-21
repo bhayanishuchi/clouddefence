@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onCloseHandled() {
+  onForgetSubmit() {
     let data = {
       email: this.user.email
     };
@@ -70,10 +70,13 @@ export class LoginComponent implements OnInit {
         this.display = 'none';
       }, error => {
         this.toasterService.showError(error.error.message);
-        console.log('error', error)
+        console.log('error', error);
       });
     this.display = 'none';
+  }
 
+  onCloseHandled() {
+    this.display = 'none';
   }
 
 }

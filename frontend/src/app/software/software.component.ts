@@ -73,6 +73,8 @@ export class SoftwareComponent implements OnInit {
         console.log('app compliance res', res);
         console.log('app compliance this.customerData', res.clusterData);
         console.log('app compliance  this.scannerUrl', res.clusterData.scanner_url);
+        this.clusterData = res.clusterData;
+        this.customerData = res.customerData;
         if (res.ReportData[0].summary_json) {
           const jsonData = JSON.parse(res.ReportData[0].summary_json);
           this.ReportTotal = jsonData.severity_count;
