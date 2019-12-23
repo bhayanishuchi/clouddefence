@@ -2226,13 +2226,12 @@ exports.appcompliancereport = (req, res) => {
                 }
             })
         })
-    }
+    };
 
     let ProcessImageData = () => {
         console.log("ProcessImageData");
         return new Promise((resolve, reject) => {
             const result = {};
-
             if (!req.body.raw_report || !req.body.raw_report.report_by_image || Object.keys(req.body.raw_report.report_by_image).length < 1) {
                 reject({status: 404, msg: 'raw_report is not in a proper form of json'})
             } else {
@@ -2241,6 +2240,7 @@ exports.appcompliancereport = (req, res) => {
                 (Object.keys(req.body.raw_report.report_by_image)).filter((x) => {
                     if ((req.body.raw_report.report_by_image)[x].length > 0) {
                         ((req.body.raw_report.report_by_image)[x]).filter((y) => {
+                            y['Image'] = x;
                             ary.push(y);
                             ImageName.push(y.Image);
                         });
@@ -2278,11 +2278,13 @@ exports.appcompliancereport = (req, res) => {
                     if (result[nodeName] !== undefined) {
                         result[nodeName] += (req.body.raw_report.report_by_severity)[node].length;
                         ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
+                            x['Severity']=node;
                             ary.push(x);
                         })
                     }else {
                         result['Unknown'] += (req.body.raw_report.report_by_severity)[node].length;
                         ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
+                            x['Severity']=node;
                             ary.push(x);
                         })
                     }

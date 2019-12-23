@@ -190,7 +190,9 @@ export class ClustersyncComponent implements OnInit {
   }
 
   onClusterChange(data, index) {
-    console.log('clusterData', data)
+    console.log('clusterData', data);
+    localStorage.setItem('monitor_url', data.monitor_url);
+    localStorage.setItem('scanner_url', data.scanner_url);
     this.clusterData = data;
     if (this.clusterData.cnox_stack !== "unsecured" && this.clusterData.cnox_stack !== '') {
       this.btncolor = true;

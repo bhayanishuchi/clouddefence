@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
+  monitorUrl;
   constructor() { }
 
   ngOnInit() {
+    this.monitorUrl = localStorage.getItem('monitor_url');
+    console.log('monitor_url', this.monitorUrl);
   }
 
 }

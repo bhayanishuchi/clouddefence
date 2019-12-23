@@ -31,6 +31,7 @@ export class SoftwareComponent implements OnInit {
 
   ngOnInit() {
     const socket = this.userService.newconnection();
+    this.scannerUrl = localStorage.getItem('scanner_url');
     this.getScanImageData(localStorage.getItem('clusterName'), localStorage.getItem('customer_id'));
     this.getappComplianceData(localStorage.getItem('clusterName'), localStorage.getItem('customer_id'));
     const that = this;
@@ -55,7 +56,7 @@ export class SoftwareComponent implements OnInit {
         console.log('this.scannerUrl', res.clusterData.scanner_url);
         this.clusterData = res.clusterData;
         this.customerData = res.customerData;
-        this.scannerUrl = res.clusterData.scanner_url;
+        // this.scannerUrl = res.clusterData.scanner_url;
         if (res.ReportData[0].img.length > 0) {
           (res.ReportData[0].img).filter((x) => {
             this.src.push({Image: x, Vulnerability: '', Severity: ''});
@@ -77,6 +78,8 @@ export class SoftwareComponent implements OnInit {
         this.customerData = res.customerData;
         if (res.ReportData[0].summary_json) {
           const jsonData = JSON.parse(res.ReportData[0].summary_json);
+          console.log('jsonData.report_by_severity', jsonData.report_by_severity);
+          console.log('jsonData.report_by_image', jsonData.report_by_image);
           this.ReportTotal = jsonData.severity_count;
           this.src = jsonData.report_by_image;
           this.sevData = jsonData.report_by_severity;

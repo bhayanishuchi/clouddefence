@@ -48,8 +48,8 @@
                 </li>
                 <li>
                   <button type="button">
-                    <span class="bg-default-yellow">{{ReportTotal.Low}}</span>
-                    <small>low</small>
+                    <span class="bg-default-yellow">{{ReportTotal.Medium}}</span>
+                    <small>medium</small>
                   </button>
                 </li>
               </ul>
@@ -62,13 +62,13 @@
 
           <div class="col-lg-8 col-md-8 col-sm-12"></div>
           <div class="col-lg-4 col-md-4 col-sm-12">
-            <div style="margin-top: -55px;float: right; font-size: 24px" *ngIf="!newUpdate;else other_content2">Syncing
-              Vulnerability Feeds
+            <div style="margin-top: -55px;float: right; font-size: 24px" *ngIf="!newUpdate;else other_content2">
+<!--              Syncing Vulnerability Feeds-->
             </div>
             <ng-template #other_content2 >
               <div class="time-content" style="margin-top: -55px; margin-left: 70px;">
                 <p class="mb-1">Last scanned on :</p>
-                <span>{{lastScanValue}}</span>
+                <span>{{lastScanValue | date: 'yyyy-MM-dd hh:mm a'}}</span>
               </div>
             </ng-template>
           </div>
@@ -103,134 +103,16 @@
                     <th>Severity</th>
                   </tr>
                   </thead>
-                  <tbody *ngIf="isData;else other_content">
+                  <tbody>
                   <tr *ngFor="let data of src">
                     <td>{{data.Image}}</td>
                     <td>{{data.Vulnerability}}</td>
                     <td>{{data.Severity}}</td>
                   </tr>
                   </tbody>
-                  <ng-template #other_content>
-                    <tbody>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2017-15873</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2017-16544</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2017-15650</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2017-15650</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2018-0495</td>
-                      <td>Low</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2018-0732</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2018-0495</td>
-                      <td>Low</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2018-0732</td>
-                      <td>Medium</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2019-14697</td>
-                      <td>High</td>
-                    </tr>
-                    <tr>
-                      <td>quay.io/srics/cnoxengine:latest</td>
-                      <td>CVE-2019-14697</td>
-                      <td>High</td>
-                    </tr>
-                    </tbody>
-                  </ng-template>
-
                 </table>
               </div>
             </div>
-            <!--<div class="header-content ul-li clearfix">
-              <ul class="clearfix">
-                <li>Image</li>
-                <li>CVE</li>
-                <li>Sev</li>
-              </ul>
-            </div>
-            <div class="body-content clearfix">
-              <div *ngIf="isData;else other_content">
-              <div class="items-list ul-li scroll-bar clearfix" *ngFor="let data of src">
-
-                  <ul class="clearfix" >
-                    <li>{{data}}</li>
-                    <li>f</li>
-                    <li>f</li>
-                  </ul>
-                </div>
-              </div>
-                <ng-template #other_content>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                  <ul class="clearfix">
-                    <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                    <li>Lorem Ipsum</li>
-                    <li>CRIT</li>
-                  </ul>
-                </ng-template>
-
-
-            </div>-->
           </div>
 
           <div id="bysev-tab" class="tab-pane  text-center fade">
@@ -244,117 +126,16 @@
                     <th>Image</th>
                   </tr>
                   </thead>
-                  <tbody *ngIf="isSevData;else other_content1">
+                  <tbody>
                   <tr *ngFor="let data of sevData">
                     <td>{{data.Severity}}</td>
                     <td>{{data.Vulnerability}}</td>
                     <td>{{data.Image}}</td>
                   </tr>
                   </tbody>
-                  <ng-template #other_content1>
-                    <tbody>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    <tr>
-                      <td>CRIT</td>
-                      <td>Lorem Ipsum</td>
-                      <td><img src="assets/images/table/img_4.jpg" alt="image_not_found"></td>
-                    </tr>
-                    </tbody>
-                  </ng-template>
-
                 </table>
               </div>
             </div>
-            <!--<div class="header-content ul-li clearfix">
-              <ul class="clearfix">
-                <li>Sev</li>
-                <li>CVE</li>
-                <li>Image</li>
-              </ul>
-            </div>
-            <div class="body-content clearfix">
-              <div class="items-list ul-li scroll-bar clearfix">
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-                <ul class="clearfix">
-                  <li>CRIT</li>
-                  <li>Lorem Ipsum</li>
-                  <li><img src="assets/images/table/img_4.jpg" alt="image_not_found"></li>
-                </ul>
-              </div>
-            </div>-->
           </div>
         </div>
       </div>

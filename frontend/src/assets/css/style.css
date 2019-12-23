@@ -2096,3 +2096,6 @@ button {
   font-size: 33px;
   color: #48454e;
 }
+.cluster-section .time-content span {
+  font-size: 27px;
+}
