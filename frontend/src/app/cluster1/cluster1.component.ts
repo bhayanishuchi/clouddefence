@@ -14,7 +14,7 @@ export class Cluster1Component implements OnInit {
   clusterData: any = {};
   customerData: any = {};
   workLoadData: any = [];
-  lastScanValue: any = new Date().toISOString();
+  lastScanValue;
   keys: any = [];
   pieChartLabels: any[] = [['Info'], ['Warn'], ['Error']];
   pieChartData: SingleDataSet = [1, 1, 1];
