@@ -2099,3 +2099,10 @@ button {
 .cluster-section .time-content span {
   font-size: 27px;
 }
+.ngx-datatable.material .datatable-body .datatable-group-header {
+  height: 50px;
+  padding-top: 12px;
+}
+.ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {
+  font-size: 16px;
+}

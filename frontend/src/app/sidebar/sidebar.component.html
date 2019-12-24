@@ -26,10 +26,17 @@
           </a>
         </li>
         <li routerLinkActive="active">
-          <a [href]="monitorUrl" target="_blank">
+          <a title="No url exists" *ngIf="monitorUrl=== 'undefined';else other_content" class="disabled" style="color: gray">
             <span class="thumb-image"><i class="fas fa-monitor-heart-rate"></i></span>
             Monitoring
           </a>
+          <ng-template #other_content>
+            <a [href]="monitorUrl" target="_blank">
+              <span class="thumb-image"><i class="fas fa-monitor-heart-rate"></i></span>
+              Monitoring
+            </a>
+          </ng-template>
+
         </li>
       </ul>
     </div>

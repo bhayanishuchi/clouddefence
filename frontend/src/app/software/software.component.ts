@@ -1,16 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import * as _ from "lodash";
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ClusterService} from "../service/cluster.service";
 import {UserService} from "../service/socket.service";
 import {Socket} from "ngx-socket-io";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-software',
   templateUrl: './software.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./software.component.css']
 })
-export class SoftwareComponent implements OnInit {
 
+export class SoftwareComponent implements OnInit {
+  @ViewChild('myTable', {static: false}) table: any;
   clusterData: any = {};
   ReportTotal: any = {
     Critical: 0, High: 0, Medium: 0, Low: 0, Negligible: 0, Unknown: 0
@@ -21,17 +23,22 @@ export class SoftwareComponent implements OnInit {
   isSevData: any = false;
   newUpdate: any = false;
   src: any = [];
+  newSrc: any = [];
   scannerUrl: any = '';
   lastScanValue: any = +new Date();
+  totalSize;
+  pageSize = 5;
 
   constructor(private clusterService: ClusterService,
               private userService: UserService,
+              private router: Router,
               private socket: Socket) {
   }
 
   ngOnInit() {
     const socket = this.userService.newconnection();
     this.scannerUrl = localStorage.getItem('scanner_url');
+    console.log('scannerUrl', this.scannerUrl);
     this.getScanImageData(localStorage.getItem('clusterName'), localStorage.getItem('customer_id'));
     this.getappComplianceData(localStorage.getItem('clusterName'), localStorage.getItem('customer_id'));
     const that = this;
@@ -60,7 +67,7 @@ export class SoftwareComponent implements OnInit {
         if (res.ReportData[0].img.length > 0) {
           (res.ReportData[0].img).filter((x) => {
             this.src.push({Image: x, Vulnerability: '', Severity: ''});
-          })
+          });
           this.isData = true;
         }
       }, (err) => {
@@ -86,10 +93,31 @@ export class SoftwareComponent implements OnInit {
           this.lastScanValue = res.ReportData[0].timestamp;
           this.isSevData = true;
           this.newUpdate = true;
+          this.totalSize = this.src.length;
         }
       }, (err) => {
         console.log('err', err);
       });
+  }
+
+  onScannerURL() {
+    this.router.navigate([]).then(result => {
+      window.open(this.scannerUrl, '_blank');
+    });
+  }
+
+  toggleExpandRow(row) {
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(eve) {
+    console.log('toggle', eve);
+
+  }
+
+  toggleExpandGroup(group) {
+    console.log('Toggled Expand Group!', group);
+    this.table.groupHeader.toggleExpandGroup(group);
   }
 
 }
