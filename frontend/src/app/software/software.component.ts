@@ -68,7 +68,19 @@ export class SoftwareComponent implements OnInit {
       (jsonData.report_by_severity).filter((x) => {
         if ((that.checkKeys).includes(x.Severity) === false) {
           that.checkKeys.push(x.Severity);
-          that.Keys.push({Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image});
+          if (x.Severity === 'Critical') {
+            that.Keys[0] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          } else if (x.Severity === 'High') {
+            that.Keys[1] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          } else if (x.Severity === 'Medium') {
+            that.Keys[2] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          } else if (x.Severity === 'Low') {
+            that.Keys[3] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          } else if (x.Severity === 'Negligible') {
+            that.Keys[4] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          } else if (x.Severity === 'Unknown') {
+            that.Keys[5] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+          }
         }
       });
       that.lastScanValue = data.timestamp;
@@ -147,6 +159,7 @@ export class SoftwareComponent implements OnInit {
           console.log('jsonData.report_by_severity', jsonData.report_by_severity);
           console.log('jsonData.report_by_image', jsonData.report_by_image);
           this.ReportTotal = jsonData.severity_count;
+
           this.src = jsonData.report_by_image;
           (jsonData.report_by_image).filter((y) => {
             if ((this.imageCheckKeys).includes(y.Image) === false) {
@@ -154,14 +167,28 @@ export class SoftwareComponent implements OnInit {
               this.imageKeys.push({Severity: y.Severity, Vulnerability: y.Vulnerability, Image: y.Image});
             }
           });
+
           this.sevData = jsonData.report_by_severity;
           (jsonData.report_by_severity).filter((x) => {
             if ((this.checkKeys).includes(x.Severity) === false) {
               this.checkKeys.push(x.Severity);
-              this.Keys.push({Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image});
+              if (x.Severity === 'Critical') {
+                this.Keys[0] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              } else if (x.Severity === 'High') {
+                this.Keys[1] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              } else if (x.Severity === 'Medium') {
+                this.Keys[2] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              } else if (x.Severity === 'Low') {
+                this.Keys[3] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              } else if (x.Severity === 'Negligible') {
+                this.Keys[4] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              } else if (x.Severity === 'Unknown') {
+                this.Keys[5] = {Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image};
+              }
             }
           });
           console.log('keys', this.Keys);
+
           this.lastScanValue = res.ReportData[0].timestamp;
           this.isSevData = true;
           this.newUpdate = true;
@@ -176,20 +203,6 @@ export class SoftwareComponent implements OnInit {
     this.router.navigate([]).then(result => {
       window.open(this.scannerUrl, '_blank');
     });
-  }
-
-  toggleExpandRow(row) {
-    this.table.rowDetail.toggleExpandRow(row);
-  }
-
-  onDetailToggle(eve) {
-    console.log('toggle', eve);
-
-  }
-
-  toggleExpandGroup(group) {
-    console.log('Toggled Expand Group!', group);
-    this.table.groupHeader.toggleExpandGroup(group);
   }
 
 }

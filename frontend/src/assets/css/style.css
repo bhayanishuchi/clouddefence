@@ -2106,3 +2106,8 @@ button {
 .ngx-datatable .datatable-header .datatable-header-cell.sortable .datatable-header-cell-wrapper {
   font-size: 16px;
 }
+.dx-datagrid-nowrap .dx-header-row > td > .dx-datagrid-text-content {
+  white-space: nowrap;
+  color: black;
+  font-weight: 600;
+}

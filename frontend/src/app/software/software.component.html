@@ -102,9 +102,12 @@
                           keyExpr="Image"
                           [showBorders]="true">
 
-              <dxi-column dataField="Image" [width]="370" caption="Image"></dxi-column>
-              <dxi-column dataField="Vulnerability" caption="Vulnerability"></dxi-column>
-              <dxi-column dataField="Severity" caption="Severity"></dxi-column>
+              <dxi-column style="color: black; font-weight: bold" dataField="Image" [allowFiltering]="false"
+                          [allowSorting]="false" [width]="370" caption="Image"></dxi-column>
+              <dxi-column dataField="Vulnerability" [allowFiltering]="false"
+                          [allowSorting]="false" caption="Vulnerability"></dxi-column>
+              <dxi-column dataField="Severity" [allowFiltering]="false"
+                          [allowSorting]="false" caption="Severity"></dxi-column>
 
               <div *dxTemplate="let data of 'detail'">
                 <dx-data-grid
@@ -128,9 +131,12 @@
                           keyExpr="Severity"
                           [showBorders]="true">
 
-              <dxi-column dataField="Severity" caption="Severity"></dxi-column>
-              <dxi-column dataField="Vulnerability" caption="Vulnerability"></dxi-column>
-              <dxi-column dataField="Image" [width]="370" caption="Image"></dxi-column>
+              <dxi-column dataField="Severity" [allowFiltering]="false"
+                          [allowSorting]="false" caption="Severity"></dxi-column>
+              <dxi-column dataField="Vulnerability" [allowFiltering]="false"
+                          [allowSorting]="false" caption="Vulnerability"></dxi-column>
+              <dxi-column dataField="Image" [allowFiltering]="false"
+                          [allowSorting]="false" [width]="370" caption="Image"></dxi-column>
 
               <div *dxTemplate="let data of 'severityDetails'">
                 <dx-data-grid
