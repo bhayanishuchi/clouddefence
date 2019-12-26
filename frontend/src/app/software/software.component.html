@@ -96,158 +96,54 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div id="byimage-tab" class="tab-pane active ">
-            <div class="cnox-protection-table">
-              <div class="table-container tbody-container scroll-bar">
-                <ngx-datatable
-                  #myTable
-                  class='material expandable bootstarp'
-                  [rows]="src"
-                  [groupRowsBy]="'Image'"
-                  [columnMode]="'force'"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  [rowHeight]="'auto'"
-                  [externalPaging]="true"
-                  [count]=5
-                  [limit]=5
-                  [groupExpansionDefault]="false">
-                  <!-- Group Header Template -->
-                  <ngx-datatable-group-header [rowHeight]="'auto'" #myGroupHeader (toggle)="onDetailToggle($event)">
-                    <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
-                      <div style="padding-left:5px;">
-                        <a
-                          [class.datatable-icon-right]="!expanded"
-                          [class.datatable-icon-down]="expanded"
-                          title="Expand/Collapse Group"
-                          (click)="toggleExpandGroup(group)">
-                          <span>{{group.value[0].Image}}</span>
-                        </a>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-group-header>
-                  <ngx-datatable-column
-                    [width]="50"
-                    [resizeable]="false"
-                    [sortable]="false"
-                    [draggable]="false"
-                    [canAutoResize]="false">
-                  </ngx-datatable-column>
-                  <ngx-datatable-column name="Image"></ngx-datatable-column>
-                  <ngx-datatable-column name="Vulnerability" prop="Vulnerability"></ngx-datatable-column>
-                  <ngx-datatable-column name="Severity" prop="Severity"></ngx-datatable-column>
-                </ngx-datatable>
+            <dx-data-grid id="gridContainer1"
+                          [dataSource]="imageKeys"
+                          [masterDetail]="{ enabled: true, template: 'detail' }"
+                          keyExpr="Image"
+                          [showBorders]="true">
 
+              <dxi-column dataField="Image" [width]="370" caption="Image"></dxi-column>
+              <dxi-column dataField="Vulnerability" caption="Vulnerability"></dxi-column>
+              <dxi-column dataField="Severity" caption="Severity"></dxi-column>
 
-
-                <!--<ngx-datatable
-                  #myTable
-                  class="material expandable"
-                  [columnMode]="'force'"
-                  [groupRowsBy]="'head'"
-                  [headerHeight]="50"
-                  [footerHeight]="50"
-                  [rowHeight]="'auto'"
-                  [externalPaging]="true"
-                  [count]=5
-                  [limit]=pageSize
-                  [rows]="src"
-                  [groupExpansionDefault]="true"
+              <div *dxTemplate="let data of 'detail'">
+                <dx-data-grid
+                  [width]="'auto'"
+                  [dataSource]="getImage(data.key)"
+                  [showBorders]="true"
                 >
-                  &lt;!&ndash; Row Detail Template &ndash;&gt;
-                  <ngx-datatable-row-detail rowHeight="'auto'" #myDetailRow
-                                            (toggle)="onDetailToggle($event)">
-                    <ng-template let-row="row" let-expanded="expanded"
-                                 ngx-datatable-row-detail-template>
-                      <div>
-                        <table class="table">
-                          <thead>
-                            <th>Vulnerability</th>
-                            <th>Severity</th>
-                          </thead>
-                          <tbody>
-                          <tr>
-                            <td>{{row.Vulnerability}}</td>
-                            <td>{{row.Severity}}</td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </ng-template>
-                  </ngx-datatable-row-detail>
-                  <ngx-datatable-column
-                    [width]="50"
-                    [resizeable]="false"
-                    [sortable]="false"
-                    [draggable]="false"
-                    [canAutoResize]="false"
-                  >
-                    <ng-template let-row="row" let-expanded="expanded"
-                                 ngx-datatable-cell-template>
-                      <a
-                        href="javascript:void(0)"
-                        [class.datatable-icon-right]="!expanded"
-                        [class.datatable-icon-down]="expanded"
-                        title="Expand/Collapse Row"
-                        (click)="toggleExpandRow(row)"
-                      >
-                      </a>
-                    </ng-template>
-                  </ngx-datatable-column>
-                  <ngx-datatable-column>
-                    <ng-template ngx-datatable-header-template>
-                      <span>Image</span>
-                    </ng-template>
-                    <ng-template let-row="row" ngx-datatable-cell-template>
-                      {{row.Image}}
-                    </ng-template>
-                  </ngx-datatable-column>
-                 &lt;!&ndash; <ngx-datatable-column name="head" prop="head">
-                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                      <strong>{{value}}</strong>
-                    </ng-template>
-                  </ngx-datatable-column>&ndash;&gt;
-                </ngx-datatable>-->
-                <!--<table class="table">
-                  <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Vulnerability</th>
-                    <th>Severity</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let data of src">
-                    <td>{{data.Image}}</td>
-                    <td>{{data.Vulnerability}}</td>
-                    <td>{{data.Severity}}</td>
-                  </tr>
-                  </tbody>
-                </table>-->
+                  <dxi-column caption="image" ></dxi-column>
+                  <dxi-column dataField="Vulnerability"></dxi-column>
+                  <dxi-column dataField="Severity"></dxi-column>
+
+                </dx-data-grid>
               </div>
-            </div>
+            </dx-data-grid>
           </div>
 
-          <div id="bysev-tab" class="tab-pane  text-center fade">
-            <div class="cnox-protection-table">
-              <div class="table-container tbody-container scroll-bar">
-                <!--<table class="table">
-                  <thead>
-                  <tr>
-                    <th>Sev</th>
-                    <th>CVE</th>
-                    <th>Image</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let data of sevData">
-                    <td>{{data.Severity}}</td>
-                    <td>{{data.Vulnerability}}</td>
-                    <td>{{data.Image}}</td>
-                  </tr>
-                  </tbody>
-                </table>-->
+          <div id="bysev-tab" class="tab-pane fade">
+            <dx-data-grid id="gridContainer2"
+                          [dataSource]="Keys"
+                          [masterDetail]="{ enabled: true, template: 'severityDetails' }"
+                          keyExpr="Severity"
+                          [showBorders]="true">
+
+              <dxi-column dataField="Severity" caption="Severity"></dxi-column>
+              <dxi-column dataField="Vulnerability" caption="Vulnerability"></dxi-column>
+              <dxi-column dataField="Image" [width]="370" caption="Image"></dxi-column>
+
+              <div *dxTemplate="let data of 'severityDetails'">
+                <dx-data-grid
+                  [width]="'auto'"
+                  [dataSource]="getTasks(data.key)"
+                  [showBorders]="true">
+                  <dxi-column dataField="Severity"></dxi-column>
+                  <dxi-column dataField="Vulnerability"></dxi-column>
+                  <dxi-column dataField="Image"></dxi-column>
+
+                </dx-data-grid>
               </div>
-            </div>
+            </dx-data-grid>
           </div>
         </div>
       </div>

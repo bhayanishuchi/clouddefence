@@ -4,6 +4,9 @@ import {UserService} from "../service/socket.service";
 import {Socket} from "ngx-socket-io";
 import {Router} from "@angular/router";
 
+import DataSource from 'devextreme/data/data_source';
+import ArrayStore from 'devextreme/data/array_store';
+
 @Component({
   selector: 'app-software',
   templateUrl: './software.component.html',
@@ -29,10 +32,18 @@ export class SoftwareComponent implements OnInit {
   totalSize;
   pageSize = 5;
 
+  DataSourceStorage: any = [];
+  Keys = [];
+  checkKeys = [];
+
+  imageKeys = [];
+  imageCheckKeys = [];
+  imageDataSourceStorage: any = [];
+
   constructor(private clusterService: ClusterService,
               private userService: UserService,
-              private router: Router,
-              private socket: Socket) {
+              private socket: Socket,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -47,12 +58,60 @@ export class SoftwareComponent implements OnInit {
       const jsonData = JSON.parse(data.summary_json);
       that.ReportTotal = jsonData.severity_count;
       that.src = jsonData.report_by_image;
+      (jsonData.report_by_image).filter((y) => {
+        if ((that.imageCheckKeys).includes(y.Image) === false) {
+          that.imageCheckKeys.push(y.Image);
+          that.imageKeys.push({Severity: y.Severity, Vulnerability: y.Vulnerability, Image: y.Image});
+        }
+      });
       that.sevData = jsonData.report_by_severity;
+      (jsonData.report_by_severity).filter((x) => {
+        if ((that.checkKeys).includes(x.Severity) === false) {
+          that.checkKeys.push(x.Severity);
+          that.Keys.push({Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image});
+        }
+      });
       that.lastScanValue = data.timestamp;
       that.isSevData = true;
       that.isData = true;
       that.newUpdate = true;
     });
+  }
+
+  getTasks(key) {
+    let item = this.DataSourceStorage.find((i) => i.key === key);
+    if (!item) {
+      item = {
+        key: key,
+        dataSourceInstance: new DataSource({
+          store: new ArrayStore({
+            data: this.sevData,
+            key: "Severity"
+          }),
+          filter: ["Severity", "=", key]
+        })
+      };
+      this.DataSourceStorage.push(item);
+    }
+    return item.dataSourceInstance;
+  }
+
+  getImage(key) {
+    let imageItem = this.imageDataSourceStorage.find((i) => i.key === key);
+    if (!imageItem) {
+      imageItem = {
+        key: key,
+        dataSourceInstance1: new DataSource({
+          store: new ArrayStore({
+            data: this.src,
+            key: "Image"
+          }),
+          filter: ["Image", "=", key]
+        })
+      };
+      this.imageDataSourceStorage.push(imageItem);
+    }
+    return imageItem.dataSourceInstance1;
   }
 
   getScanImageData(Cluster, customer) {
@@ -89,7 +148,20 @@ export class SoftwareComponent implements OnInit {
           console.log('jsonData.report_by_image', jsonData.report_by_image);
           this.ReportTotal = jsonData.severity_count;
           this.src = jsonData.report_by_image;
+          (jsonData.report_by_image).filter((y) => {
+            if ((this.imageCheckKeys).includes(y.Image) === false) {
+              this.imageCheckKeys.push(y.Image);
+              this.imageKeys.push({Severity: y.Severity, Vulnerability: y.Vulnerability, Image: y.Image});
+            }
+          });
           this.sevData = jsonData.report_by_severity;
+          (jsonData.report_by_severity).filter((x) => {
+            if ((this.checkKeys).includes(x.Severity) === false) {
+              this.checkKeys.push(x.Severity);
+              this.Keys.push({Severity: x.Severity, Vulnerability: x.Vulnerability, Image: x.Image});
+            }
+          });
+          console.log('keys', this.Keys);
           this.lastScanValue = res.ReportData[0].timestamp;
           this.isSevData = true;
           this.newUpdate = true;

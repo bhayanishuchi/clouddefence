@@ -25,7 +25,7 @@ import { Cluster1Component } from './cluster1/cluster1.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { Cluster2Component } from './cluster2/cluster2.component';
 import { SoftwareComponent } from './software/software.component';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {DxDataGridModule, DxTemplateModule} from "devextreme-angular";
 
 const config: SocketIoConfig = { url: environment.socketUri, options: {} };
 
@@ -46,6 +46,8 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
   ],
   imports: [
     BrowserModule,
+    DxDataGridModule,
+    DxTemplateModule,
     FormsModule,
     AppRoutingModule,
     ChartsModule,
@@ -54,7 +56,6 @@ const config: SocketIoConfig = { url: environment.socketUri, options: {} };
     NiceSelectModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-    NgxDatatableModule
   ],
   providers: [UserService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
