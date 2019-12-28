@@ -58,6 +58,8 @@ export class SoftwareComponent implements OnInit {
       const jsonData = JSON.parse(data.summary_json);
       that.ReportTotal = jsonData.severity_count;
       that.src = jsonData.report_by_image;
+      that.imageCheckKeys = [];
+      that.imageKeys = [];
       (jsonData.report_by_image).filter((y) => {
         if ((that.imageCheckKeys).includes(y.Image) === false) {
           that.imageCheckKeys.push(y.Image);
@@ -65,6 +67,8 @@ export class SoftwareComponent implements OnInit {
         }
       });
       that.sevData = jsonData.report_by_severity;
+      that.checkKeys = [];
+      that.Keys = [];
       (jsonData.report_by_severity).filter((x) => {
         if ((that.checkKeys).includes(x.Severity) === false) {
           that.checkKeys.push(x.Severity);
