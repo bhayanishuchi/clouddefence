@@ -2228,6 +2228,59 @@ exports.appcompliancereport = (req, res) => {
         })
     };
 
+    let sorting = (report, direction) => {
+        console.log("ProcessImageData");
+        return new Promise((resolve, reject) => {
+
+                const dirVal = direction === 'desc' ?  -1 : 1;
+
+                const sortingArr = {
+                    Critical: 1 * dirVal,
+                    High: 2 * dirVal,
+                    Medium: 3 * dirVal,
+                    Low: 4 * dirVal,
+                    Negligible: 5 * dirVal,
+                    Unknown: 6 * dirVal
+                };
+
+                /**
+                 * compare_by_severity
+                 *
+                 * @description Compare Values with Severity
+                 *
+                 * @param {JSON Object: {"Vulnerability":"*","Severity":"*"}} valueA
+                 * @param {JSON Object: {"Vulnerability":"*","Severity":"*"}} valueB
+                 * @param { String } direction desc: DESCENDANCE, false: ASCENDANCE
+                 * @returns {Number} 0: valueA = valueB, 1: valueA > valueB, 2: valueA < valueB
+                 */
+
+                const compare_by_severity = function (valueA, valueB) {
+                    const severityValueA = sortingArr[valueA.Severity];
+                    const severityValueB = sortingArr[valueB.Severity];
+                    return severityValueA === severityValueB? 0: severityValueB - severityValueA;
+                }
+
+                let result = '';
+
+                // Parse Report Text to JSON type
+                // let json_report = JSON.parse(report);
+                let json_report = (report);
+                // Check Correct Type
+                if (!json_report || !json_report.raw_report || !json_report.raw_report.report_by_image) reject('Error Type in Report');
+
+                for (let key in json_report.raw_report.report_by_image){
+                    if(json_report.raw_report.report_by_image.hasOwnProperty(key)){
+                        json_report.raw_report.report_by_image[key].sort(compare_by_severity);
+                    }
+                }
+
+                result =json_report;
+
+                resolve(result);
+
+        })
+    };
+
     let ProcessImageData = () => {
         console.log("ProcessImageData");
         return new Promise((resolve, reject) => {
@@ -2235,27 +2288,35 @@ exports.appcompliancereport = (req, res) => {
             if (!req.body.raw_report || !req.body.raw_report.report_by_image || Object.keys(req.body.raw_report.report_by_image).length < 1) {
                 reject({status: 404, msg: 'raw_report is not in a proper form of json'})
             } else {
-                let ary = [];
-                let ImageName = [];
-                (Object.keys(req.body.raw_report.report_by_image)).filter((x) => {
-                    if ((req.body.raw_report.report_by_image)[x].length > 0) {
-                        ((req.body.raw_report.report_by_image)[x]).filter((y) => {
-                            y['Image'] = x;
-                            ary.push(y);
-                            ImageName.push(y.Image);
-                        });
-                    }
-                });
                 // console.log('ary', ary);
                 // console.log('ImageName', ImageName);
-                findAndUpdateReport(ImageName)
+                let ary = [];
+                let ImageName = [];
+                sorting(req.body, 'desc')
+                    .then((data)=>{
+                        (Object.keys(data.raw_report.report_by_image)).filter((x) => {
+                            ImageName.push(x);
+                            if ((data.raw_report.report_by_image)[x].length > 0) {
+                                ((data.raw_report.report_by_image)[x]).filter((y) => {
+                                    y['Image'] = x;
+                                    ary.push(y);
+
+                                });
+                            }
+                        });
+                        return ImageName;
+                    })
+                    .then(data => findAndUpdateReport(data))
+                    .then(data => resolve({report_by_image: ary}))
+                /*findAndUpdateReport(ImageName)
+                    .then(sorting(req.body, 'desc'))
                     .then((data) => {
                         resolve({report_by_image: ary})
                     })
                     .catch((err) => {
                         console.log('error from update scanimage report ', err);
                         reject(err);
-                    })
+                    })*/
             }
         });
     }; // ProcessImageData
@@ -2270,21 +2331,20 @@ exports.appcompliancereport = (req, res) => {
 
             if (!req.body.raw_report || !req.body.raw_report.report_by_severity || Object.keys(req.body.raw_report.report_by_severity).length < 1) {
                 reject({status: 404, msg: 'raw_report is not in a proper form of json'})
-            }
-            else {
+            } else {
                 (Object.keys(req.body.raw_report.report_by_severity)).forEach(node => {
                     const nodeName = node;
 
                     if (result[nodeName] !== undefined) {
                         result[nodeName] += (req.body.raw_report.report_by_severity)[node].length;
-                        ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
-                            x['Severity']=node;
+                        ((req.body.raw_report.report_by_severity)[node]).filter((x) => {
+                            x['Severity'] = node;
                             ary.push(x);
                         })
-                    }else {
+                    } else {
                         result['Unknown'] += (req.body.raw_report.report_by_severity)[node].length;
-                        ((req.body.raw_report.report_by_severity)[node]).filter((x)=>{
-                            x['Severity']=node;
+                        ((req.body.raw_report.report_by_severity)[node]).filter((x) => {
+                            x['Severity'] = node;
                             ary.push(x);
                         })
                     }
@@ -2373,12 +2433,12 @@ exports.appcompliancereport = (req, res) => {
         .then(CreateRecord)
         .then((resolve) => {
             resolve = resolve.toObject();
-           /* const socket = req.app.io;
-            if (socket !== undefined) {
-                socket.to(req.body.customer_id).emit('AppComplianceReport', resolve);
-            }
-            res.status(200).send(resolve);*/
-            Promise.all([emitAppComplianceReport(req, req.body.customer_id,resolve)])
+            /* const socket = req.app.io;
+             if (socket !== undefined) {
+                 socket.to(req.body.customer_id).emit('AppComplianceReport', resolve);
+             }
+             res.status(200).send(resolve);*/
+            Promise.all([emitAppComplianceReport(req, req.body.customer_id, resolve)])
                 .then((data) => {
                     res.status(200).send(resolve);
                 })
